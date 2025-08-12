@@ -3,90 +3,224 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AmanDesignser | Aman Kumar - Web Designer & Front-End Developer</title>
-  <meta name="description" content="AmanDesignser (Aman Kumar) - Web designer & front-end developer. Clean, modern & responsive websites." />
-  <link rel="canonical" href="https://amandesignser.github.io/" />
-  <!-- Open Graph (social preview) -->
+  <title>AmanDesignser | Aman Kumar — Web & Front-end Developer</title>
+  <meta name="description" content="AmanDesignser (Aman Kumar) — Web designer & front-end developer. Clean, fast, modern and responsive websites." />
+  <link rel="canonical" href="https://amandesignser.github.io/amandesignser/" />
   <meta property="og:title" content="AmanDesignser | Aman Kumar" />
-  <meta property="og:description" content="Web designer & front-end developer creating clean, modern websites." />
-  <meta property="og:url" content="https://amandesignser.github.io/" />
+  <meta property="og:description" content="Web & Front-end developer building clean, fast and modern websites." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://amandesignser.github.io/aman.jpg" />
-<meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto;max-width:900px;margin:30px auto;padding:20px;line-height:1.6;color:#000000;background-color: #4E2A4F;}
-    header{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
-    .avatar{width:120px;height:120px;border-radius:12px;object-fit:cover;border:3px solid #ff4d00}
-    h1{margin:0;font-size:28px}
-    .tag{color:#ff4d00;font-weight:600}
-    nav a{margin-right:12px;text-decoration:none;color:#0366d6}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:18px}
-    .card{padding:0;border-radius:10px;border:1px solid #eee;overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,0.05)}
-    .card img{width:100%;height:auto;display:block}
-    .card-content{padding:12px}
-    footer{margin-top:28px;font-size:14px;color:#000;text-align:center}
-    .cta{display:inline-block;margin-top:10px;padding:8px 14px;border-radius:8px;background:#111;color:#fff;text-decoration:none}
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#98a0b3; --accent:#ff6a00; --glass:rgba(255,255,255,0.04);
+      --maxw:1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Noto Sans',sans-serif;
+      background:
+        radial-gradient(1200px 600px at 10% 10%, rgba(79,20,80,0.12), transparent 6%),
+        linear-gradient(180deg, #071025 0%, #06121b 100%);
+      color:#e6eef8; -webkit-font-smoothing:antialiased;
+      padding:28px 16px;
+      display:flex; justify-content:center;
+    }
+    .wrap{max-width:var(--maxw); width:100%}
+    header{display:flex; gap:20px; align-items:center; padding:18px; border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); box-shadow:0 6px 30px rgba(2,6,23,0.6)}
+    .avatar{
+      width:120px;height:120px;border-radius:14px;flex:0 0 120px;overflow:hidden;border:3px solid rgba(255,106,0,0.15);
+      background:linear-gradient(135deg,#2b2f4a,#3b2744); display:flex;align-items:center;justify-content:center;
+    }
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    .hero h1{margin:0;font-size:22px}
+    .hero .name{color:var(--accent); font-weight:700}
+    .hero p{margin:8px 0 6px;color:var(--muted)}
+    nav.links{margin-top:8px}
+    nav.links a{color:#cfe6ff;text-decoration:none;margin-right:12px;font-weight:600;font-size:14px;opacity:0.95}
+    .btn{display:inline-block;padding:8px 14px;border-radius:10px;background:linear-gradient(90deg,var(--accent),#ff8b3a);color:#06121b;font-weight:700;text-decoration:none;margin-left:6px}
+    main{margin-top:18px}
+    .grid{display:grid;grid-template-columns:1fr 340px;gap:18px}
+    @media (max-width:900px){ .grid{grid-template-columns:1fr} .avatar{margin:auto} header{flex-direction:column;align-items:center;text-align:center} .hero nav.links{display:block} .hero .cta{margin-top:8px} }
+    /* Content Card */
+    .card{background:var(--card);padding:18px;border-radius:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.02)}
+    /* Portfolio */
+    .portfolio{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+    .project{
+      border-radius:10px; overflow:hidden;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.03);
+      transition:transform .28s ease, box-shadow .28s ease;
+    }
+    .project:hover{transform:translateY(-6px); box-shadow:0 18px 50px rgba(2,6,23,0.6)}
+    .project .thumb{height:160px;background:linear-gradient(135deg,#1f2a44,#3b2142);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.12);font-weight:700;font-size:14px}
+    .project .meta{padding:12px}
+    .h2{font-size:18px;margin:0 0 8px}
+    .muted{color:var(--muted);font-size:14px}
+    .skills{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .skill{background:var(--glass);padding:6px 10px;border-radius:999px;font-size:13px;color:#d7e9ff}
+    /* Sidebar */
+    .sidebar .card + .card{margin-top:14px}
+    .contact .line{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.02)}
+    .small{font-size:13px;color:var(--muted)}
+    footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
+    /* utilities */
+    .center{display:flex;align-items:center;gap:10px}
   </style>
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Aman Kumar",
-    "alternateName": "AmanDesignser",
-    "url": "https://amandesignser.github.io/",
-    "sameAs": [
+    "@context":"https://schema.org",
+    "@type":"Person",
+    "name":"Aman Kumar",
+    "alternateName":"AmanDesignser",
+    "url":"https://amandesignser.github.io/",
+    "sameAs":[
       "https://www.instagram.com/amandesignser",
       "https://x.com/amandesignser",
       "https://www.linkedin.com/in/amandesignser"
     ],
-    "jobTitle": "Web Designer & Front-End Developer"
+    "jobTitle":"Web Designer & Front-End Developer",
+    "description":"Web & Front-end developer building clean, fast and modern websites."
   }
   </script>
 </head>
 <body>
-  <header>
-    <!-- Apni photo ka naam yaha same rakho jaise upload karoge -->
-    <img class="avatar" src="aman.jpg" alt="Aman Kumar - AmanDesignser" />
-    <div>
-      <h1>AmanDesignser — <span class="tag">Aman Kumar</span></h1>
-      <div>Web Designer & Front-End Developer • Clean & responsive websites</div>
-      <nav>
-        <a href="https://www.linkedin.com/in/amandesignser" target="_blank">LinkedIn</a>
-        <a href="https://www.instagram.com/amandesignser" target="_blank">Instagram</a>
-        <a href="https://x.com/amandesignser" target="_blank">X (Twitter)</a>
-      </nav>
-      <a class="cta" href="mailto:amanbarnd@gmail.com">Contact: amanbarnd@gmail.com</a>
-    </div>
-  </header>
-
-  <section>
-    <h2>Portfolio</h2>
-    <div class="grid">
-      <div class="card">
-        <img src="project1.jpg" alt="Modern Portfolio Website Project" />
-        <div class="card-content"><strong>Modern Portfolio Website</strong><br/>A clean and responsive personal portfolio design.</div>
+  <div class="wrap">
+    <header>
+      <div class="avatar" id="avatar">
+        <!-- If you upload aman.jpg it will show. Otherwise inline SVG fallback -->
+        <img src="aman.jpg" alt="Aman Kumar" onerror="this.style.display='none';document.getElementById('svfall').style.display='block'">
+        <div id="svfall" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#2b2f4a"/><path d="M12 12a3 3 0 100-6 3 3 0 000 6z" fill="#6b7280"/><path d="M4 20a8 8 0 0116 0H4z" fill="#6b7280"/></svg>
+        </div>
       </div>
-      <div class="card">
-        <img src="project2.jpg" alt="E-Commerce Website Project" />
-        <div class="card-content"><strong>E-Commerce Website</strong><br/>Minimal and user-friendly online store layout.</div>
+
+      <div class="hero" style="flex:1">
+        <h1>AmanDesignser — <span class="name">Aman Kumar</span></h1>
+        <p class="muted">Web Designer & Front-End Developer • Clean • Fast • Responsive</p>
+
+        <nav class="links" aria-label="social links">
+          <a href="https://www.linkedin.com/in/amandesignser" target="_blank">LinkedIn</a>
+          <a href="https://www.instagram.com/amandesignser" target="_blank">Instagram</a>
+          <a href="https://x.com/amandesignser" target="_blank">X</a>
+          <a class="btn" href="mailto:amanbarnd@gmail.com">Contact</a>
+        </nav>
+
+        <div class="small" style="margin-top:10px">Available for freelance • Open to new projects</div>
       </div>
-      <div class="card">
-        <img src="project3.jpg" alt="Business Landing Page Project" />
-        <div class="card-content"><strong>Business Landing Page</strong><br/>Professional landing page for a corporate brand.</div>
-      </div>
-    </div>
-  </section>
+    </header>
 
-  <section>
-    <h2>About</h2>
-    <p>Hi, main Aman (AmanDesignser). Main clean, modern aur responsive websites banata hoon. Front-end: HTML, CSS, JS. Design focus: user experience.</p>
-  </section>
+    <main class="grid" style="margin-top:18px">
+      <section>
+        <div class="card">
+          <h2 class="h2">Featured Work</h2>
+          <p class="muted">Selected projects — modern UI, performance-focused front-end, and pixel-perfect visuals.</p>
 
-  <footer>
-    © <span id="year"></span> AmanDesignser — <a href="https://amandesignser.github.io/amandesignser/">amandesignser.github.io/amandesignser/</a>
-  </footer>
+          <div class="portfolio" style="margin-top:12px">
+            <!-- Project 1 -->
+            <article class="project" aria-label="project 1">
+              <div class="thumb">
+                <!-- If you upload project1.jpg it will show automatically. Otherwise shows title -->
+                <img src="project1.jpg" alt="Project 1" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display='none';this.parentElement.querySelector('.fallback').style.display='flex'">
+                <div class="fallback" style="display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;">
+                  <div style="font-size:13px;color:rgba(255,255,255,0.12)">Project 1</div>
+                </div>
+              </div>
+              <div class="meta">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <strong>Modern Portfolio Website</strong>
+                  <span class="small">2025</span>
+                </div>
+                <div class="muted" style="margin-top:8px">Clean landing, responsive grid, CMS-ready.</div>
+                <div class="skills">
+                  <div class="skill">HTML</div><div class="skill">CSS</div><div class="skill">JS</div><div class="skill">Responsive</div>
+                </div>
+              </div>
+            </article>
 
-  <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+            <!-- Project 2 -->
+            <article class="project" aria-label="project 2">
+              <div class="thumb">
+                <img src="project2.jpg" alt="Project 2" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display='none';this.parentElement.querySelector('.fallback').style.display='flex'">
+                <div class="fallback" style="display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;">
+                  <div style="font-size:13px;color:rgba(255,255,255,0.12)">Project 2</div>
+                </div>
+              </div>
+              <div class="meta">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <strong>E-Commerce UI</strong><span class="small">2024</span>
+                </div>
+                <div class="muted" style="margin-top:8px">Fast shopping experience, checkout UX optimised.</div>
+                <div class="skills"><div class="skill">Figma</div><div class="skill">HTML</div><div class="skill">Stripe</div></div>
+              </div>
+            </article>
+
+            <!-- Project 3 -->
+            <article class="project" aria-label="project 3">
+              <div class="thumb">
+                <img src="project3.jpg" alt="Project 3" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display='none';this.parentElement.querySelector('.fallback').style.display='flex'">
+                <div class="fallback" style="display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;">
+                  <div style="font-size:13px;color:rgba(255,255,255,0.12)">Project 3</div>
+                </div>
+              </div>
+              <div class="meta">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <strong>Business Landing</strong><span class="small">2023</span>
+                </div>
+                <div class="muted" style="margin-top:8px">Conversion-first layout for corporate pages.</div>
+                <div class="skills"><div class="skill">SEO</div><div class="skill">Performance</div></div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h2 class="h2">About Me</h2>
+          <p class="muted">Main Aman (AmanDesignser) — front-end developer aur web designer. Main performance, accessibility aur clean visuals pe focus karta hoon. Tech: HTML, CSS, JavaScript, responsive design.</p>
+          <ul style="margin-top:10px;color:#dbeeff">
+            <li>Front-end: HTML, CSS, JS</li>
+            <li>Design: UI/UX, prototyping</li>
+            <li>Tools: VSCode, Figma, Git</li>
+          </ul>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <div class="card contact">
+          <h3 style="margin:0 0 8px">Contact</h3>
+          <div class="line"><div class="small">Email</div><div>amanbarnd@gmail.com</div></div>
+          <div class="line"><div class="small">Location</div><div>Agra, India</div></div>
+          <div style="margin-top:10px">
+            <a class="btn" href="mailto:amanbarnd@gmail.com">Send email</a>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h3 style="margin:0 0 8px">Services</h3>
+          <div class="muted">UI/UX Design, Front-end Development, Performance Optimisation, Responsive sites</div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h3 style="margin:0 0 8px">Quick Links</h3>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">
+            <a href="https://www.linkedin.com/in/amandesignser" target="_blank" class="small">LinkedIn</a>
+            <a href="https://instagram.com/amandesignser" target="_blank" class="small">Instagram</a>
+            <a href="https://x.com/amandesignser" target="_blank" class="small">X</a>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      © <span id="year"></span> AmanDesignser — Built with care • <span class="small">Made for web</span>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // Small enhancement: if profile image missing, show svg fallback (handled inline with onerror)
+  </script>
 </body>
 </html>
