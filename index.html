@@ -1,226 +1,243 @@
-<!doctype html>
-<html lang="hi">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AmanDesignser | Aman Kumar — Web & Front-end Developer</title>
-  <meta name="description" content="AmanDesignser (Aman Kumar) — Web designer & front-end developer. Clean, fast, modern and responsive websites." />
-  <link rel="canonical" href="https://amandesignser.github.io/amandesignser/" />
-  <meta property="og:title" content="AmanDesignser | Aman Kumar" />
-  <meta property="og:description" content="Web & Front-end developer building clean, fast and modern websites." />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#0f1724; --card:#0b1220; --muted:#98a0b3; --accent:#ff6a00; --glass:rgba(255,255,255,0.04);
-      --maxw:1100px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Noto Sans',sans-serif;
-      background:
-        radial-gradient(1200px 600px at 10% 10%, rgba(79,20,80,0.12), transparent 6%),
-        linear-gradient(180deg, #071025 0%, #06121b 100%);
-      color:#e6eef8; -webkit-font-smoothing:antialiased;
-      padding:28px 16px;
-      display:flex; justify-content:center;
-    }
-    .wrap{max-width:var(--maxw); width:100%}
-    header{display:flex; gap:20px; align-items:center; padding:18px; border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); box-shadow:0 6px 30px rgba(2,6,23,0.6)}
-    .avatar{
-      width:120px;height:120px;border-radius:14px;flex:0 0 120px;overflow:hidden;border:3px solid rgba(255,106,0,0.15);
-      background:linear-gradient(135deg,#2b2f4a,#3b2744); display:flex;align-items:center;justify-content:center;
-    }
-    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
-    .hero h1{margin:0;font-size:22px}
-    .hero .name{color:var(--accent); font-weight:700}
-    .hero p{margin:8px 0 6px;color:var(--muted)}
-    nav.links{margin-top:8px}
-    nav.links a{color:#cfe6ff;text-decoration:none;margin-right:12px;font-weight:600;font-size:14px;opacity:0.95}
-    .btn{display:inline-block;padding:8px 14px;border-radius:10px;background:linear-gradient(90deg,var(--accent),#ff8b3a);color:#06121b;font-weight:700;text-decoration:none;margin-left:6px}
-    main{margin-top:18px}
-    .grid{display:grid;grid-template-columns:1fr 340px;gap:18px}
-    @media (max-width:900px){ .grid{grid-template-columns:1fr} .avatar{margin:auto} header{flex-direction:column;align-items:center;text-align:center} .hero nav.links{display:block} .hero .cta{margin-top:8px} }
-    /* Content Card */
-    .card{background:var(--card);padding:18px;border-radius:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.02)}
-    /* Portfolio */
-    .portfolio{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-    .project{
-      border-radius:10px; overflow:hidden;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.03);
-      transition:transform .28s ease, box-shadow .28s ease;
-    }
-    .project:hover{transform:translateY(-6px); box-shadow:0 18px 50px rgba(2,6,23,0.6)}
-    .project .thumb{height:160px;background:linear-gradient(135deg,#1f2a44,#3b2142);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.12);font-weight:700;font-size:14px}
-    .project .meta{padding:12px}
-    .h2{font-size:18px;margin:0 0 8px}
-    .muted{color:var(--muted);font-size:14px}
-    .skills{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-    .skill{background:var(--glass);padding:6px 10px;border-radius:999px;font-size:13px;color:#d7e9ff}
-    /* Sidebar */
-    .sidebar .card + .card{margin-top:14px}
-    .contact .line{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.02)}
-    .small{font-size:13px;color:var(--muted)}
-    footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
-    /* utilities */
-    .center{display:flex;align-items:center;gap:10px}
-  </style>
-
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Person",
-    "name":"Aman Kumar",
-    "alternateName":"AmanDesignser",
-    "url":"https://amandesignser.github.io/",
-    "sameAs":[
-      "https://www.instagram.com/amandesignser",
-      "https://x.com/amandesignser",
-      "https://www.linkedin.com/in/aman-kumar-940bb0233?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
-    ],
-    "jobTitle":"Web Designer & Front-End Developer",
-    "description":"Web & Front-end developer building clean, fast and modern websites."
-  }
-  </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AmanDesignser | Aman Kumar — Web & Front-end Developer</title>
+    <meta name="description" content="AmanDesignser (Aman Kumar) — Web designer & front-end developer. Clean, fast, modern and responsive websites." />
+    <link rel="canonical" href="https://amandesignser.github.io/amandesignser/" />
+    <meta property="og:title" content="AmanDesignser | Aman Kumar" />
+    <meta property="og:description" content="Web & Front-end developer building clean, fast and modern websites." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Custom Font: Sugar Pie -->
+    <link href="https://fonts.googleapis.com/css2?family=Sugar+Pie&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Sari CSS yahan par hai */
+        body {
+            font-family: 'Sugar Pie', 'Poppins', 'Inter', sans-serif;
+            color: #e2e8f0;
+            background-color: #2F4B80;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0e0d19 100%);
+            background-attachment: fixed;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Background animation ko hata diya gaya hai */
+        .bg-animated {
+            animation: none;
+            background: none;
+        }
+        /* Project cards par hover effect */
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(100, 20, 100, 0.2);
+        }
+        /* Navigation bar ki height kam karne ke liye padding kam kiya gaya */
+        header {
+            padding: 12px 24px; /* Default se kam padding */
+        }
+        @media (min-width: 768px) {
+            header {
+                padding: 12px 24px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="avatar" id="avatar">
-        <!-- If you upload aman.jpg it will show. Otherwise inline SVG fallback -->
-        <img src="aman.jpg" alt="Aman Kumar" onerror="this.style.display='none';document.getElementById('svfall').style.display='block'">
-        <div id="svfall" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;">
-          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#2b2f4a"/><path d="M12 12a3 3 0 100-6 3 3 0 000 6z" fill="#6b7280"/><path d="M4 20a8 8 0 0116 0H4z" fill="#6b7280"/></svg>
-        </div>
-      </div>
-
-      <div class="hero" style="flex:1">
-        <h1>AmanDesignser — <span class="name">Aman Kumar</span></h1>
-        <p class="muted">Web Designer & Front-End Developer • Clean • Fast • Responsive</p>
-
-        <nav class="links" aria-label="social links">
-          <a href="https://www.linkedin.com/in/amandesignser" target="_blank">LinkedIn</a>
-          <a href="https://www.instagram.com/amandesignser" target="_blank">Instagram</a>
-          <a href="https://x.com/amandesignser" target="_blank">X</a>
-          <a class="btn" href="mailto:amanbarnd@gmail.com">Contact</a>
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-[#D6C8F4]">
+        <nav class="container mx-auto flex justify-between items-center">
+            <a href="#home" class="text-3xl font-bold text-[#000]">amandesignser</a>
+            <div class="hidden md:flex space-x-6">
+                <a href="#about" class="text-[#000] hover:text-gray-600 transition duration-300">About</a>
+                <a href="#skills" class="text-[#000] hover:text-gray-600 transition duration-300">Skills</a>
+                <a href="#portfolio" class="text-[#000] hover:text-gray-600 transition duration-300">Portfolio</a>
+                <a href="#contact" class="text-[#000] hover:text-gray-600 transition duration-300">Contact</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-[#000] hover:text-gray-600 transition duration-300 focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
         </nav>
-
-        <div class="small" style="margin-top:10px">Available for freelance • Open to new projects</div>
-      </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#1f1a30] p-4 rounded-b-lg shadow-lg">
+            <a href="#about" class="block py-2 text-white hover:text-[#D6C8F4] transition duration-300">About</a>
+            <a href="#skills" class="block py-2 text-white hover:text-[#D6C8F4] transition duration-300">Skills</a>
+            <a href="#portfolio" class="block py-2 text-white hover:text-[#D6C8F4] transition duration-300">Portfolio</a>
+            <a href="#contact" class="block py-2 text-white hover:text-[#D6C8F4] transition duration-300">Contact</a>
+        </div>
     </header>
 
-    <main class="grid" style="margin-top:18px">
-      <section>
-        <div class="card">
-          <h2 class="h2">Featured Work</h2>
-          <p class="muted">Selected projects — modern UI, performance-focused front-end, and pixel-perfect visuals.</p>
-
-          <div class="portfolio" style="margin-top:12px">
-            <!-- Project 1 -->
-            <article class="project" aria-label="project 1">
-              <div class="thumb">
-                <!-- If you upload project1.jpg it will show automatically. Otherwise shows title -->
-                <img src="project1.jpg" alt="Project 1" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display='none';this.parentElement.querySelector('.fallback').style.display='flex'">
-                <div class="fallback" style="display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;">
-                  <div style="font-size:13px;color:rgba(255,255,255,0.12)">Project 1</div>
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center justify-center text-center p-6 pt-24">
+            <div class="container mx-auto">
+                <h1 class="text-5xl md:text-7xl font-extrabold leading-tight text-white">
+                    Hello, I'm <span class="text-white">Aman Kumar</span>
+                </h1>
+                <p class="mt-4 text-2xl md:text-3xl font-light text-gray-200" id="typewriter-text"></p>
+                <div class="mt-10 space-x-4">
+                    <a href="#portfolio" class="bg-[#ff6a00] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-[#ff8b3a] transition duration-300">View My Work</a>
+                    <a href="#contact" class="border-2 border-white text-white font-semibold py-3 px-8 rounded-full hover:bg-white hover:text-gray-900 transition duration-300">Get in Touch</a>
                 </div>
-              </div>
-              <div class="meta">
-                <div style="display:flex;justify-content:space-between;align-items:center">
-                  <strong>Modern Portfolio Website</strong>
-                  <span class="small">2025</span>
-                </div>
-                <div class="muted" style="margin-top:8px">Clean landing, responsive grid, CMS-ready.</div>
-                <div class="skills">
-                  <div class="skill">HTML</div><div class="skill">CSS</div><div class="skill">JS</div><div class="skill">Responsive</div>
-                </div>
-              </div>
-            </article>
+            </div>
+        </section>
 
-            <!-- Project 2 -->
-            <article class="project" aria-label="project 2">
-              <div class="thumb">
-                <img src="project2.jpg" alt="Project 2" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display='none';this.parentElement.querySelector('.fallback').style.display='flex'">
-                <div class="fallback" style="display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;">
-                  <div style="font-size:13px;color:rgba(255,255,255,0.12)">Project 2</div>
+        <!-- About Section -->
+        <section id="about" class="py-20 px-6">
+            <div class="container mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-10">About Me</h2>
+                <div class="flex flex-col md:flex-row items-center gap-12 max-w-4xl mx-auto">
+                    <div class="md:w-1/2">
+                        <img src="aman.jpg" alt="Aman Kumar Profile Photo" class="w-full h-auto rounded-xl shadow-xl">
+                    </div>
+                    <div class="md:w-1/2 text-left">
+                        <p class="text-lg leading-relaxed text-gray-200">
+                            Hello! My name is Aman Kumar, a passionate **UI/UX Designer** and **Front-end Developer** dedicated to building beautiful, accessible, and high-performing websites. I combine clean code with a strong design sensibility to create digital experiences that delight users.
+                        </p>
+                        <p class="mt-4 text-lg leading-relaxed text-gray-200">
+                            With a focus on modern web standards and user-centric design, I specialize in bringing concepts to life from initial wireframes to the final polished product.
+                        </p>
+                    </div>
                 </div>
-              </div>
-              <div class="meta">
-                <div style="display:flex;justify-content:space-between;align-items:center">
-                  <strong>E-Commerce UI</strong><span class="small">2024</span>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20 px-6 bg-[#1f1a30]">
+            <div class="container mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-10">My Expertise</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div class="p-8 bg-[#2f4b80] rounded-xl shadow-lg">
+                        <i class="fas fa-magic text-5xl text-[#ff6a00] mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-2">UI/UX Design</h3>
+                        <p class="text-gray-200">Crafting intuitive and elegant user interfaces with a focus on seamless user experience.</p>
+                    </div>
+                    <div class="p-8 bg-[#2f4b80] rounded-xl shadow-lg">
+                        <i class="fas fa-laptop-code text-5xl text-[#ff6a00] mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-2">Front-end Development</h3>
+                        <p class="text-gray-200">Bringing designs to life with clean, efficient, and responsive code.</p>
+                    </div>
+                    <div class="p-8 bg-[#2f4b80] rounded-xl shadow-lg">
+                        <i class="fas fa-rocket text-5xl text-[#ff6a00] mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-2">Performance & SEO</h3>
+                        <p class="text-gray-200">Optimizing websites for speed and search engine visibility.</p>
+                    </div>
                 </div>
-                <div class="muted" style="margin-top:8px">Fast shopping experience, checkout UX optimised.</div>
-                <div class="skills"><div class="skill">Figma</div><div class="skill">HTML</div><div class="skill">Stripe</div></div>
-              </div>
-            </article>
+            </div>
+        </section>
 
-            <!-- Project 3 -->
-            <article class="project" aria-label="project 3">
-              <div class="thumb">
-                <img src="project3.jpg" alt="Project 3" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display='none';this.parentElement.querySelector('.fallback').style.display='flex'">
-                <div class="fallback" style="display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;">
-                  <div style="font-size:13px;color:rgba(255,255,255,0.12)">Project 3</div>
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="py-20 px-6">
+            <div class="container mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-10">Selected Projects</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <!-- Project Card 1: E-commerce UI -->
+                    <div class="project-card bg-[#1f1a30] rounded-xl overflow-hidden shadow-lg">
+                        <img src="project1.jpg" alt="E-commerce UI" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-white">E-commerce UI Design</h3>
+                            <p class="text-gray-200 text-sm">A modern and clean UI for an online store, optimized for user experience.</p>
+                        </div>
+                    </div>
+                    <!-- Project Card 2: React App -->
+                    <div class="project-card bg-[#1f1a30] rounded-xl overflow-hidden shadow-lg">
+                        <img src="project2.jpg" alt="React App" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-white">Interactive React Application</h3>
+                            <p class="text-gray-200 text-sm">A dynamic web application built with React, showcasing state management and APIs.</p>
+                        </div>
+                    </div>
+                    <!-- Project Card 3: Website Redesign -->
+                    <div class="project-card bg-[#1f1a30] rounded-xl overflow-hidden shadow-lg">
+                        <img src="project3.jpg" alt="Website Redesign" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-white">Corporate Website Redesign</h3>
+                            <p class="text-gray-200 text-sm">A full website redesign to improve aesthetics, usability, and conversion rates.</p>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="meta">
-                <div style="display:flex;justify-content:space-between;align-items:center">
-                  <strong>Business Landing</strong><span class="small">2023</span>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 px-6 bg-[#1f1a30]">
+            <div class="container mx-auto text-center max-w-xl">
+                <h2 class="text-4xl font-bold mb-4">Let's Work Together</h2>
+                <p class="text-lg text-gray-200 mb-8">Have a project in mind? Let's connect and create something amazing.</p>
+                <a href="mailto:amanbarnd@gmail.com" class="bg-[#ff6a00] text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#ff8b3a] transition duration-300">Send an Email</a>
+                
+                <div class="mt-12">
+                    <h3 class="text-2xl font-bold mb-4">Find me on</h3>
+                    <div class="flex justify-center space-x-6 text-3xl">
+                        <a href="https://www.linkedin.com/in/amandesignser" target="_blank" class="text-gray-200 hover:text-white transition duration-300"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://instagram.com/amandesignser" target="_blank" class="text-gray-200 hover:text-white transition duration-300"><i class="fab fa-instagram"></i></a>
+                        <a href="https://x.com/amandesignser" target="_blank" class="text-gray-200 hover:text-white transition duration-300"><i class="fab fa-twitter"></i></a>
+                        <a href="mailto:amanbarnd@gmail.com" class="text-gray-200 hover:text-white transition duration-300"><i class="fas fa-envelope"></i></a>
+                    </div>
                 </div>
-                <div class="muted" style="margin-top:8px">Conversion-first layout for corporate pages.</div>
-                <div class="skills"><div class="skill">SEO</div><div class="skill">Performance</div></div>
-              </div>
-            </article>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:14px">
-          <h2 class="h2">About Me</h2>
-          <p class="muted">Main Aman (AmanDesignser) — front-end developer aur web designer. Main performance, accessibility aur clean visuals pe focus karta hoon. Tech: HTML, CSS, JavaScript, responsive design.</p>
-          <ul style="margin-top:10px;color:#dbeeff">
-            <li>Front-end: HTML, CSS, JS</li>
-            <li>Design: UI/UX, prototyping</li>
-            <li>Tools: VSCode, Figma, Git</li>
-          </ul>
-        </div>
-      </section>
-
-      <aside class="sidebar">
-        <div class="card contact">
-          <h3 style="margin:0 0 8px">Contact</h3>
-          <div class="line"><div class="small">Email</div><div>amanbarnd@gmail.com</div></div>
-          <div class="line"><div class="small">Location</div><div>Agra, India</div></div>
-          <div style="margin-top:10px">
-            <a class="btn" href="mailto:amanbarnd@gmail.com">Send email</a>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:14px">
-          <h3 style="margin:0 0 8px">Services</h3>
-          <div class="muted">UI/UX Design, Front-end Development, Performance Optimisation, Responsive sites</div>
-        </div>
-
-        <div class="card" style="margin-top:14px">
-          <h3 style="margin:0 0 8px">Quick Links</h3>
-          <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">
-            <a href="https://www.linkedin.com/in/amandesignser" target="_blank" class="small">LinkedIn</a>
-            <a href="https://instagram.com/amandesignser" target="_blank" class="small">Instagram</a>
-            <a href="https://x.com/amandesignser" target="_blank" class="small">X</a>
-          </div>
-        </div>
-      </aside>
+            </div>
+        </section>
     </main>
 
-    <footer>
-      © <span id="year"></span> AmanDesignser — Built with care • <span class="small">Made for web</span>
+    <!-- Footer -->
+    <footer class="text-center text-gray-400 text-sm py-8">
+      © <span id="year"></span> AmanDesignser — Built with passion.
     </footer>
-  </div>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    // Small enhancement: if profile image missing, show svg fallback (handled inline with onerror)
-  </script>
+    <!-- JavaScript for Mobile Menu & Animations -->
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Typewriter Effect
+        const typewriterElement = document.getElementById('typewriter-text');
+        const phrases = ['UI/UX Designer', 'Web Designer', 'Front-end Developer'];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            const currentText = isDeleting ? currentPhrase.substring(0, charIndex--) : currentPhrase.substring(0, charIndex++);
+            typewriterElement.textContent = currentText;
+            let typingSpeed = 100;
+            if (isDeleting) typingSpeed /= 2;
+            if (!isDeleting && charIndex === currentPhrase.length + 1) {
+                typingSpeed = 1500;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typingSpeed = 500;
+            }
+            setTimeout(type, typingSpeed);
+        }
+        document.addEventListener('DOMContentLoaded', type);
+    </script>
 </body>
 </html>
+
