@@ -1,243 +1,304 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="hi">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AmanDesignser | Aman Kumar — Web & Front-end Developer</title>
-    <meta name="description" content="AmanDesignser (Aman Kumar) — Web designer & front-end developer. Clean, fast, modern and responsive websites." />
-    <link rel="canonical" href="https://amandesignser.github.io/amandesignser/" />
-    <meta property="og:title" content="AmanDesignser | Aman Kumar" />
-    <meta property="og:description" content="Web & Front-end developer building clean, fast and modern websites." />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Custom Font: Sugar Pie -->
-    <link href="https://fonts.googleapis.com/css2?family=Sugar+Pie&display=swap" rel="stylesheet">
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Tailwind CSS from CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Sari CSS yahan par hai */
-        body {
-            font-family: 'Sugar Pie', 'Poppins', 'Inter', sans-serif;
-            color: #e2e8f0;
-            background-color: #2F4B80;
-            background: linear-gradient(135deg, #1a1a2e 0%, #0e0d19 100%);
-            background-attachment: fixed;
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>AmanDesignser | Aman Kumar — Web Designer & Front-end Developer</title>
+  <meta name="description" content="AmanDesignser (Aman Kumar) — Web designer & front-end developer. Clean, modern, fast & responsive websites with a focus on user experience." />
+  <link rel="canonical" href="https://amandesignser.github.io/amandesignser/"/>
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="AmanDesignser | Aman Kumar" />
+  <meta property="og:description" content="Web & Front-end developer building clean, modern and responsive websites." />
+  <meta property="og:url" content="https://amandesignser.github.io/amandesignser/" />
+  <meta property="og:image" content="https://amandesignser.github.io/amandesignser/aman.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AmanDesignser | Aman Kumar" />
+  <meta name="twitter:description" content="Clean, modern & responsive web design and front-end development." />
+  <meta name="twitter:image" content="https://amandesignser.github.io/amandesignser/aman.jpg" />
+
+  <!-- Favicon (optional: replace if you add a real logo.png) -->
+  <link rel="icon" href="aman.jpg" type="image/jpeg"/>
+
+  <!-- Fonts & Tailwind -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'] },
+          colors: {
+            brand50:  '#EDE4F0',   /* corrected */
+            brand200: '#CBB4D4',
+            brand400: '#A88BC1',
+            ink:      '#0f1021',
+            ink2:     '#2b2b34'
+          },
+          boxShadow: {
+            soft: '0 20px 40px rgba(168,139,193,0.25)'
+          }
         }
-        html {
-            scroll-behavior: smooth;
-        }
-        /* Background animation ko hata diya gaya hai */
-        .bg-animated {
-            animation: none;
-            background: none;
-        }
-        /* Project cards par hover effect */
-        .project-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .project-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 30px rgba(100, 20, 100, 0.2);
-        }
-        /* Navigation bar ki height kam karne ke liye padding kam kiya gaya */
-        header {
-            padding: 12px 24px; /* Default se kam padding */
-        }
-        @media (min-width: 768px) {
-            header {
-                padding: 12px 24px;
-            }
-        }
-    </style>
+      }
+    }
+  </script>
+  <style>
+    :root{
+      --c1:#EDE4F0; /* light lavender */
+      --c2:#CBB4D4; /* soft lilac */
+      --c3:#A88BC1; /* rich plum-lilac */
+      --ink:#0f1021;
+      --ink2:#2b2b34;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,sans-serif}
+    /* Subtle entrance animations (reduced for users preferring no motion) */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+    .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease}
+    .reveal.show{opacity:1;transform:translateY(0)}
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto}
+      .reveal,.reveal.show{opacity:1;transform:none;animation:none}
+    }
+  </style>
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Person",
+    "name":"Aman Kumar",
+    "alternateName":"AmanDesignser",
+    "url":"https://amandesignser.github.io/amandesignser/",
+    "sameAs":[
+      "https://www.linkedin.com/in/aman-kumar-940bb0233?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      "https://x.com/amandesignser",
+      "https://www.instagram.com/amandesignser",
+      "https://www.facebook.com/share/1EcXP6fpg7/"
+    ],
+    "jobTitle":"Web Designer & Front-End Developer",
+    "image":"https://amandesignser.github.io/amandesignser/aman.jpg",
+    "description":"Web & Front-end developer focused on clean, modern and responsive websites."
+  }
+  </script>
 </head>
-<body>
-    <!-- Header -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-[#D6C8F4]">
-        <nav class="container mx-auto flex justify-between items-center">
-            <a href="#home" class="text-3xl font-bold text-[#000]">amandesignser</a>
-            <div class="hidden md:flex space-x-6">
-                <a href="#about" class="text-[#000] hover:text-gray-600 transition duration-300">About</a>
-                <a href="#skills" class="text-[#000] hover:text-gray-600 transition duration-300">Skills</a>
-                <a href="#portfolio" class="text-[#000] hover:text-gray-600 transition duration-300">Portfolio</a>
-                <a href="#contact" class="text-[#000] hover:text-gray-600 transition duration-300">Contact</a>
-            </div>
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-btn" class="md:hidden text-[#000] hover:text-gray-600 transition duration-300 focus:outline-none">
-                <i class="fas fa-bars text-xl"></i>
-            </button>
-        </nav>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-[#1f1a30] p-4 rounded-b-lg shadow-lg">
-            <a href="#about" class="block py-2 text-white hover:text-[#D6C8F4] transition duration-300">About</a>
-            <a href="#skills" class="block py-2 text-white hover:text-[#D6C8F4] transition duration-300">Skills</a>
-            <a href="#portfolio" class="block py-2 text-white hover:text-[#D6C8F4] transition duration-300">Portfolio</a>
-            <a href="#contact" class="block py-2 text-white hover:text-[#D6C8F4] transition duration-300">Contact</a>
+
+<body class="bg-[radial-gradient(1200px_600px_at_10%_0%,rgba(168,139,193,.25),transparent_50%),linear-gradient(180deg,var(--c1),var(--c2))] text-[var(--ink)]">
+  <!-- Top nav -->
+  <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/60 bg-white/80 border-b border-brand200/40">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="#home" class="font-extrabold tracking-tight text-xl md:text-2xl text-[var(--ink)]">amandesignser</a>
+      <nav class="hidden md:flex items-center gap-6 text-[var(--ink2)] font-semibold">
+        <a href="#about" class="hover:text-[var(--ink)]">About</a>
+        <a href="#skills" class="hover:text-[var(--ink)]">Skills</a>
+        <a href="#portfolio" class="hover:text-[var(--ink)]">Work</a>
+        <a href="#contact" class="hover:text-[var(--ink)]">Contact</a>
+      </nav>
+      <button id="menuBtn" class="md:hidden rounded-lg border border-brand200/60 px-3 py-2 text-[var(--ink)]">Menu</button>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden border-t border-brand200/50 bg-white/90">
+      <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-3 text-[var(--ink2)] font-semibold">
+        <a href="#about" class="hover:text-[var(--ink)]">About</a>
+        <a href="#skills" class="hover:text-[var(--ink)]">Skills</a>
+        <a href="#portfolio" class="hover:text-[var(--ink)]">Work</a>
+        <a href="#contact" class="hover:text-[var(--ink)]">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="home">
+    <!-- HERO -->
+    <section class="max-w-6xl mx-auto px-4 pt-14 md:pt-20">
+      <div class="grid md:grid-cols-[1.1fr_.9fr] items-center gap-8 md:gap-12">
+        <div class="reveal show md:reveal">
+          <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+            Namaste, I'm <span class="text-[var(--ink)]">Aman Kumar</span>
+          </h1>
+          <p class="mt-3 md:mt-4 text-lg md:text-xl text-[var(--ink2)] max-w-2xl">
+            Web Designer & Front-end Developer. I craft <strong>clean, modern</strong> and
+            <strong>responsive</strong> websites that feel fast and look premium.
+          </p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="#portfolio" class="inline-flex items-center gap-2 bg-brand400 text-white font-semibold px-5 py-3 rounded-xl shadow-soft hover:shadow-lg transition">
+              View Work
+            </a>
+            <a href="mailto:amanbarnd@gmail.com" class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition">
+              Contact Me
+            </a>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-6 text-sm">
+            <span class="px-3 py-1 rounded-full bg-white/70 border border-brand200/60">Available for freelance</span>
+            <span class="px-3 py-1 rounded-full bg-white/70 border border-brand200/60">Agra, India</span>
+          </div>
         </div>
-    </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="home" class="min-h-screen flex items-center justify-center text-center p-6 pt-24">
-            <div class="container mx-auto">
-                <h1 class="text-5xl md:text-7xl font-extrabold leading-tight text-white">
-                    Hello, I'm <span class="text-white">Aman Kumar</span>
-                </h1>
-                <p class="mt-4 text-2xl md:text-3xl font-light text-gray-200" id="typewriter-text"></p>
-                <div class="mt-10 space-x-4">
-                    <a href="#portfolio" class="bg-[#ff6a00] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-[#ff8b3a] transition duration-300">View My Work</a>
-                    <a href="#contact" class="border-2 border-white text-white font-semibold py-3 px-8 rounded-full hover:bg-white hover:text-gray-900 transition duration-300">Get in Touch</a>
-                </div>
+        <div class="reveal md:justify-self-end">
+          <div class="relative w-full max-w-sm mx-auto">
+            <div class="absolute -inset-1 rounded-2xl bg-[conic-gradient(from_140deg,rgba(168,139,193,.65),rgba(203,180,212,.35),transparent)] blur-xl"></div>
+            <div class="relative rounded-2xl overflow-hidden border border-brand200 bg-white">
+              <img src="aman.jpg" loading="eager" alt="Aman Kumar portrait"
+                   class="w-full h-full object-cover aspect-square" onerror="this.src=''; this.remove();"/>
             </div>
-        </section>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- About Section -->
-        <section id="about" class="py-20 px-6">
-            <div class="container mx-auto text-center">
-                <h2 class="text-4xl font-bold mb-10">About Me</h2>
-                <div class="flex flex-col md:flex-row items-center gap-12 max-w-4xl mx-auto">
-                    <div class="md:w-1/2">
-                        <img src="aman.jpg" alt="Aman Kumar Profile Photo" class="w-full h-auto rounded-xl shadow-xl">
-                    </div>
-                    <div class="md:w-1/2 text-left">
-                        <p class="text-lg leading-relaxed text-gray-200">
-                            Hello! My name is Aman Kumar, a passionate **UI/UX Designer** and **Front-end Developer** dedicated to building beautiful, accessible, and high-performing websites. I combine clean code with a strong design sensibility to create digital experiences that delight users.
-                        </p>
-                        <p class="mt-4 text-lg leading-relaxed text-gray-200">
-                            With a focus on modern web standards and user-centric design, I specialize in bringing concepts to life from initial wireframes to the final polished product.
-                        </p>
-                    </div>
-                </div>
+    <!-- ABOUT -->
+    <section id="about" class="max-w-6xl mx-auto px-4 mt-16 md:mt-24">
+      <div class="grid md:grid-cols-2 gap-6 md:gap-10">
+        <div class="reveal card p-6 rounded-2xl bg-white/80 border border-brand200/60">
+          <h2 class="text-2xl md:text-3xl font-extrabold">About Me</h2>
+          <p class="mt-3 text-[var(--ink2)]">
+            Main Aman (AmanDesignser). Main performance, accessibility aur pixel-perfect UI par fokus karta hoon.
+            Tech stack: <strong>HTML, CSS, JavaScript</strong> + modern workflows. Goal — fast, clean, business-ready web experiences.
+          </p>
+        </div>
+        <div class="reveal card p-6 rounded-2xl bg-white/80 border border-brand200/60">
+          <h3 class="text-xl font-bold">Highlights</h3>
+          <ul class="mt-3 grid sm:grid-cols-2 gap-2 text-[var(--ink2)]">
+            <li>⚡ Performance-first builds</li>
+            <li>📱 Fully responsive layouts</li>
+            <li>🧭 UX-focused decisions</li>
+            <li>🛠️ Clean, scalable code</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="max-w-6xl mx-auto px-4 mt-16 md:mt-24">
+      <h2 class="text-2xl md:text-3xl font-extrabold">My Expertise</h2>
+      <div class="mt-6 grid md:grid-cols-3 gap-4">
+        <div class="reveal p-6 rounded-2xl bg-white border border-brand200">
+          <div class="text-brand400 text-3xl mb-2">🎨</div>
+          <h3 class="font-bold text-lg">UI/UX Design</h3>
+          <p class="text-[var(--ink2)] mt-1">Intuitive, elegant interfaces with clear hierarchy & delightful micro-details.</p>
+        </div>
+        <div class="reveal p-6 rounded-2xl bg-white border border-brand200">
+          <div class="text-brand400 text-3xl mb-2">💻</div>
+          <h3 class="font-bold text-lg">Front-end Dev</h3>
+          <p class="text-[var(--ink2)] mt-1">Clean HTML/CSS/JS, component thinking & accessibility baked-in.</p>
+        </div>
+        <div class="reveal p-6 rounded-2xl bg-white border border-brand200">
+          <div class="text-brand400 text-3xl mb-2">🚀</div>
+          <h3 class="font-bold text-lg">Performance & SEO</h3>
+          <p class="text-[var(--ink2)] mt-1">Fast loads, semantic markup, meta/OG done right, and Lighthouse-friendly.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="max-w-6xl mx-auto px-4 mt-16 md:mt-24">
+      <div class="flex items-end justify-between">
+        <h2 class="text-2xl md:text-3xl font-extrabold">Selected Work</h2>
+        <a href="mailto:amanbarnd@gmail.com" class="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-[var(--ink)] hover:underline">Start a project →</a>
+      </div>
+
+      <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Project 1 -->
+        <article class="reveal group rounded-2xl overflow-hidden bg-white border border-brand200 hover:shadow-soft transition">
+          <div class="relative aspect-[4/3] overflow-hidden">
+            <img src="project1.jpg" loading="lazy" alt="Modern portfolio website UI" class="w-full h-full object-cover group-hover:scale-[1.03] transition">
+            <div class="absolute inset-0 bg-brand400/0 group-hover:bg-brand400/10 transition"></div>
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold">Modern Portfolio</h3>
+              <span class="text-xs px-2 py-1 rounded-full bg-brand50 border border-brand200">2025</span>
             </div>
-        </section>
+            <p class="text-sm text-[var(--ink2)] mt-1">Responsive grid, clean hero, micro-interactions.</p>
+          </div>
+        </article>
 
-        <!-- Skills Section -->
-        <section id="skills" class="py-20 px-6 bg-[#1f1a30]">
-            <div class="container mx-auto text-center">
-                <h2 class="text-4xl font-bold mb-10">My Expertise</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                    <div class="p-8 bg-[#2f4b80] rounded-xl shadow-lg">
-                        <i class="fas fa-magic text-5xl text-[#ff6a00] mb-4"></i>
-                        <h3 class="text-2xl font-bold mb-2">UI/UX Design</h3>
-                        <p class="text-gray-200">Crafting intuitive and elegant user interfaces with a focus on seamless user experience.</p>
-                    </div>
-                    <div class="p-8 bg-[#2f4b80] rounded-xl shadow-lg">
-                        <i class="fas fa-laptop-code text-5xl text-[#ff6a00] mb-4"></i>
-                        <h3 class="text-2xl font-bold mb-2">Front-end Development</h3>
-                        <p class="text-gray-200">Bringing designs to life with clean, efficient, and responsive code.</p>
-                    </div>
-                    <div class="p-8 bg-[#2f4b80] rounded-xl shadow-lg">
-                        <i class="fas fa-rocket text-5xl text-[#ff6a00] mb-4"></i>
-                        <h3 class="text-2xl font-bold mb-2">Performance & SEO</h3>
-                        <p class="text-gray-200">Optimizing websites for speed and search engine visibility.</p>
-                    </div>
-                </div>
+        <!-- Project 2 -->
+        <article class="reveal group rounded-2xl overflow-hidden bg-white border border-brand200 hover:shadow-soft transition">
+          <div class="relative aspect-[4/3] overflow-hidden">
+            <img src="project2.jpg" loading="lazy" alt="E-commerce UI / product pages" class="w-full h-full object-cover group-hover:scale-[1.03] transition">
+            <div class="absolute inset-0 bg-brand400/0 group-hover:bg-brand400/10 transition"></div>
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold">E-commerce UI</h3>
+              <span class="text-xs px-2 py-1 rounded-full bg-brand50 border border-brand200">2024</span>
             </div>
-        </section>
+            <p class="text-sm text-[var(--ink2)] mt-1">Conversion-first product pages, smooth UX.</p>
+          </div>
+        </article>
 
-        <!-- Portfolio Section -->
-        <section id="portfolio" class="py-20 px-6">
-            <div class="container mx-auto text-center">
-                <h2 class="text-4xl font-bold mb-10">Selected Projects</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                    <!-- Project Card 1: E-commerce UI -->
-                    <div class="project-card bg-[#1f1a30] rounded-xl overflow-hidden shadow-lg">
-                        <img src="project1.jpg" alt="E-commerce UI" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2 text-white">E-commerce UI Design</h3>
-                            <p class="text-gray-200 text-sm">A modern and clean UI for an online store, optimized for user experience.</p>
-                        </div>
-                    </div>
-                    <!-- Project Card 2: React App -->
-                    <div class="project-card bg-[#1f1a30] rounded-xl overflow-hidden shadow-lg">
-                        <img src="project2.jpg" alt="React App" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2 text-white">Interactive React Application</h3>
-                            <p class="text-gray-200 text-sm">A dynamic web application built with React, showcasing state management and APIs.</p>
-                        </div>
-                    </div>
-                    <!-- Project Card 3: Website Redesign -->
-                    <div class="project-card bg-[#1f1a30] rounded-xl overflow-hidden shadow-lg">
-                        <img src="project3.jpg" alt="Website Redesign" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2 text-white">Corporate Website Redesign</h3>
-                            <p class="text-gray-200 text-sm">A full website redesign to improve aesthetics, usability, and conversion rates.</p>
-                        </div>
-                    </div>
-                </div>
+        <!-- Project 3 -->
+        <article class="reveal group rounded-2xl overflow-hidden bg-white border border-brand200 hover:shadow-soft transition">
+          <div class="relative aspect-[4/3] overflow-hidden">
+            <img src="project3.jpg" loading="lazy" alt="Business landing page redesign" class="w-full h-full object-cover group-hover:scale-[1.03] transition">
+            <div class="absolute inset-0 bg-brand400/0 group-hover:bg-brand400/10 transition"></div>
+          </div>
+          <div class="p-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold">Business Landing</h3>
+              <span class="text-xs px-2 py-1 rounded-full bg-brand50 border border-brand200">2023</span>
             </div>
-        </section>
+            <p class="text-sm text-[var(--ink2)] mt-1">Corporate tone with crisp sections.</p>
+          </div>
+        </article>
+      </div>
+    </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="py-20 px-6 bg-[#1f1a30]">
-            <div class="container mx-auto text-center max-w-xl">
-                <h2 class="text-4xl font-bold mb-4">Let's Work Together</h2>
-                <p class="text-lg text-gray-200 mb-8">Have a project in mind? Let's connect and create something amazing.</p>
-                <a href="mailto:amanbarnd@gmail.com" class="bg-[#ff6a00] text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#ff8b3a] transition duration-300">Send an Email</a>
-                
-                <div class="mt-12">
-                    <h3 class="text-2xl font-bold mb-4">Find me on</h3>
-                    <div class="flex justify-center space-x-6 text-3xl">
-                        <a href="https://www.linkedin.com/in/amandesignser" target="_blank" class="text-gray-200 hover:text-white transition duration-300"><i class="fab fa-linkedin"></i></a>
-                        <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=nq43y5n" target="_blank" class="text-gray-200 hover:text-white transition duration-300"><i class="fab fa-instagram"></i></a>
-                        <a href="https://x.com/amandesignser" target="_blank" class="text-gray-200 hover:text-white transition duration-300"><i class="fab fa-twitter"></i></a>
-                        <a href="mailto:amanbarnd@gmail.com" class="text-gray-200 hover:text-white transition duration-300"><i class="fas fa-envelope"></i></a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+    <!-- CONTACT -->
+    <section id="contact" class="max-w-6xl mx-auto px-4 mt-16 md:mt-24 mb-16">
+      <div class="reveal rounded-2xl border border-brand200 bg-white/80 p-6">
+        <h2 class="text-2xl md:text-3xl font-extrabold">Let’s Work Together</h2>
+        <p class="mt-2 text-[var(--ink2)]">Have a project in mind? Drop a message and I’ll reply quickly.</p>
+        <div class="mt-4 flex flex-wrap gap-3">
+          <a href="mailto:amanbarnd@gmail.com" class="inline-flex items-center gap-2 bg-brand400 text-white font-semibold px-5 py-3 rounded-xl shadow-soft hover:shadow-lg transition">
+            Send an Email
+          </a>
 
-    <!-- Footer -->
-    <footer class="text-center text-gray-400 text-sm py-8">
-      © <span id="year"></span> AmanDesignser — Built with passion.
-    </footer>
+          <!-- Facebook button (added) -->
+          <a href="https://www.facebook.com/share/1EcXP6fpg7/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition">
+            Facebook
+          </a>
 
-    <!-- JavaScript for Mobile Menu & Animations -->
-    <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
+          <!-- Updated LinkedIn link (full URL) -->
+          <a href="https://www.linkedin.com/in/aman-kumar-940bb0233?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition">
+            LinkedIn
+          </a>
 
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
+          <a href="https://x.com/amandesignser" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition">
+            X (Twitter)
+          </a>
+          <a href="https://instagram.com/amandesignser" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition">
+            Instagram
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
 
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+  <footer class="border-t border-brand200/60 bg-white/70">
+    <div class="max-w-6xl mx-auto px-4 py-6 text-sm text-[var(--ink2)] flex flex-wrap items-center justify-between gap-2">
+      <div>© <span id="year"></span> AmanDesignser • Built with care</div>
+      <a href="#home" class="px-3 py-1 rounded-lg bg-brand50 border border-brand200 hover:bg-white transition">Back to top ↑</a>
+    </div>
+  </footer>
 
-        // Close mobile menu on link click
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
-        });
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-        // Typewriter Effect
-        const typewriterElement = document.getElementById('typewriter-text');
-        const phrases = ['UI/UX Designer', 'Web Designer', 'Front-end Developer'];
-        let phraseIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        function type() {
-            const currentPhrase = phrases[phraseIndex];
-            const currentText = isDeleting ? currentPhrase.substring(0, charIndex--) : currentPhrase.substring(0, charIndex++);
-            typewriterElement.textContent = currentText;
-            let typingSpeed = 100;
-            if (isDeleting) typingSpeed /= 2;
-            if (!isDeleting && charIndex === currentPhrase.length + 1) {
-                typingSpeed = 1500;
-                isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                phraseIndex = (phraseIndex + 1) % phrases.length;
-                typingSpeed = 500;
-            }
-            setTimeout(type, typingSpeed);
-        }
-        document.addEventListener('DOMContentLoaded', type);
-    </script>
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+    // Simple intersection observer for reveal animations
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } });
+    }, {threshold: 0.1});
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
 </body>
 </html>
-
