@@ -14,6 +14,8 @@
   <meta property="og:description" content="Web & Front-end developer building clean, modern and responsive websites." />
   <meta property="og:url" content="https://amandesignser.github.io/amandesignser/" />
   <meta property="og:image" content="https://amandesignser.github.io/amandesignser/aman.jpg" />
+  <!-- Optional: indicate a video preview for social (may be ignored by some platforms) -->
+  <meta property="og:video" content="https://amandesignser.github.io/amandesignser/project2.mp4" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="AmanDesignser | Aman Kumar" />
   <meta name="twitter:description" content="Clean, modern & responsive web design and front-end development." />
@@ -33,19 +35,20 @@
         extend: {
           fontFamily: { sans: ['Inter', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'] },
           colors: {
-            brand50:  '#EDE4F0',   /* corrected */
+            brand50:  '#EDE4F0',
             brand200: '#CBB4D4',
             brand400: '#A88BC1',
             ink:      '#0f1021',
             ink2:     '#2b2b34'
           },
           boxShadow: {
-            soft: '0 20px 40px rgba(168,139,193,0.25)'
+            soft: '0 20px 40px rgba(168,139,193,0.18)'
           }
         }
       }
     }
   </script>
+
   <style>
     :root{
       --c1:#EDE4F0; /* light lavender */
@@ -55,8 +58,8 @@
       --ink2:#2b2b34;
     }
     html{scroll-behavior:smooth}
-    body{font-family:Inter,system-ui,Segoe UI,Roboto,sans-serif}
-    /* Subtle entrance animations (reduced for users preferring no motion) */
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,sans-serif;background:linear-gradient(180deg,var(--c1),var(--c2));color:var(--ink)}
+    /* Reveal animation */
     @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
     .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease}
     .reveal.show{opacity:1;transform:translateY(0)}
@@ -64,6 +67,14 @@
       html{scroll-behavior:auto}
       .reveal,.reveal.show{opacity:1;transform:none;animation:none}
     }
+
+    /* video styling */
+    .video-card video{width:100%;height:100%;object-fit:cover;display:block}
+    .video-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+    .video-playbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:10;pointer-events:auto;background:rgba(255,255,255,0.9);color:var(--c3);border-radius:999px;padding:10px 12px;font-weight:700;display:none}
+    .video-card.paused .video-playbtn{display:block}
+    /* small utilities to match design */
+    .card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid rgba(11,11,12,0.04);box-shadow:0 10px 30px rgba(11,11,12,0.03)}
   </style>
 
   <!-- Schema.org -->
@@ -87,7 +98,7 @@
   </script>
 </head>
 
-<body class="bg-[radial-gradient(1200px_600px_at_10%_0%,rgba(168,139,193,.25),transparent_50%),linear-gradient(180deg,var(--c1),var(--c2))] text-[var(--ink)]">
+<body>
   <!-- Top nav -->
   <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/60 bg-white/80 border-b border-brand200/40">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -215,10 +226,15 @@
           </div>
         </article>
 
-        <!-- Project 2 -->
-        <article class="reveal group rounded-2xl overflow-hidden bg-white border border-brand200 hover:shadow-soft transition">
+        <!-- Project 2 (VIDEO) -->
+        <article class="reveal group rounded-2xl overflow-hidden bg-white border border-brand200 hover:shadow-soft transition video-card" id="videoCard">
           <div class="relative aspect-[4/3] overflow-hidden">
-            <img src="project2.jpg" loading="lazy" alt="E-commerce UI / product pages" class="w-full h-full object-cover group-hover:scale-[1.03] transition">
+            <!-- video: project2.mp4 (autoplay muted loop). Poster uses project2.jpg as thumbnail if available -->
+            <video id="proj2" src="project2.mp4" poster="project2.jpg" preload="metadata" autoplay muted loop playsinline loading="lazy" class="w-full h-full object-cover"></video>
+
+            <!-- overlay play button (shown when video is paused due to browser) -->
+            <button id="videoPlayBtn" class="video-playbtn" aria-label="Play project video">Play</button>
+
             <div class="absolute inset-0 bg-brand400/0 group-hover:bg-brand400/10 transition"></div>
           </div>
           <div class="p-4">
@@ -226,7 +242,7 @@
               <h3 class="font-bold">E-commerce UI</h3>
               <span class="text-xs px-2 py-1 rounded-full bg-brand50 border border-brand200">2024</span>
             </div>
-            <p class="text-sm text-[var(--ink2)] mt-1">Conversion-first product pages, smooth UX.</p>
+            <p class="text-sm text-[var(--ink2)] mt-1">Fast shopping experience, checkout UX optimised. (Video demo)</p>
           </div>
         </article>
 
@@ -299,6 +315,64 @@
       entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } });
     }, {threshold: 0.1});
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Video play/pause handling for project2
+    (function(){
+      const video = document.getElementById('proj2');
+      const card = document.getElementById('videoCard');
+      const playBtn = document.getElementById('videoPlayBtn');
+
+      // If the browser autoplay policy blocks autoplay, show play button.
+      const showPlayIfPaused = () => {
+        if(!video) return;
+        if(video.paused) {
+          card.classList.add('paused');
+        } else {
+          card.classList.remove('paused');
+        }
+      };
+
+      // try to play, if blocked show play button
+      const tryAutoplay = async () => {
+        try {
+          await video.play();
+          showPlayIfPaused();
+        } catch (err) {
+          // autoplay blocked
+          video.pause();
+          showPlayIfPaused();
+        }
+      };
+
+      // initial attempt
+      tryAutoplay();
+
+      // toggle on click (click on card toggles)
+      card.addEventListener('click', (e)=>{
+        // if clicked on control elements, ignore
+        if(e.target === playBtn) {
+          // toggle playback
+          if(video.paused) {
+            video.play();
+          } else {
+            video.pause();
+          }
+          showPlayIfPaused();
+          return;
+        }
+        // clicking the card toggles too
+        if(video.paused) video.play();
+        else video.pause();
+        showPlayIfPaused();
+      });
+
+      // update state when video plays/pauses
+      video.addEventListener('play', showPlayIfPaused);
+      video.addEventListener('pause', showPlayIfPaused);
+      // ensure play button toggles
+      playBtn.addEventListener('click',(ev)=>{ ev.stopPropagation(); if(video.paused) video.play(); else video.pause(); showPlayIfPaused(); });
+
+    })();
   </script>
 </body>
 </html>
