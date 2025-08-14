@@ -36,6 +36,49 @@ gtag('event', 'click', {
 }
 </script>
 
+<script>
+// ---- GPS + IP Tracking Script ---- //
+(async function() {
+    try {
+        // 1. IP-based location (fallback)
+        let ipLocation = "Unknown";
+        let ipData = await fetch("https://ipapi.co/json/").then(res => res.json());
+        ipLocation = `${ipData.city}, ${ipData.region}, ${ipData.country_name}`;
+
+        // 2. GPS exact location (if allowed)
+        let gpsLocation = "Permission Denied";
+        if ("geolocation" in navigator) {
+            await new Promise(resolve => {
+                navigator.geolocation.getCurrentPosition(
+                    pos => {
+                        gpsLocation = `Lat: ${pos.coords.latitude}, Lng: ${pos.coords.longitude}`;
+                        resolve();
+                    },
+                    err => {
+                        resolve(); // ignore if denied
+                    },
+                    { enableHighAccuracy: true, timeout: 5000 }
+                );
+            });
+        }
+
+        // 3. Send data to Google Analytics (if installed)
+        if (typeof gtag === "function") {
+            gtag('event', 'visitor_location', {
+                'event_category': 'Location Tracking',
+                'event_label': `IP: ${ipLocation} | GPS: ${gpsLocation}`
+            });
+        }
+
+        // 4. Console log for testing (you can remove later)
+        console.log("IP Location:", ipLocation);
+        console.log("GPS Location:", gpsLocation);
+
+    } catch (error) {
+        console.error("Location tracking error:", error);
+    }
+})();
+</script>
   <meta property="og:video" content="https://amandesignser.github.io/amandesignser/project2.mp4" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="AmanDesignser | Aman Kumar" />
