@@ -6,86 +6,27 @@
 
   <title>AmanDesignser | Aman Kumar — Web Designer & Front-end Developer</title>
   <meta name="description" content="AmanDesignser (Aman Kumar) — Web designer & front-end developer. Clean, modern, fast & responsive websites with a focus on user experience." />
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+  <meta name="theme-color" content="#A88BC1" />
   <link rel="canonical" href="https://amandesignser.github.io/amandesignser/"/>
 
-  <!-- Open Graph / Twitter -->
+  <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="AmanDesignser | Aman Kumar" />
   <meta property="og:description" content="Web & Front-end developer building clean, modern and responsive websites." />
   <meta property="og:url" content="https://amandesignser.github.io/amandesignser/" />
   <meta property="og:image" content="https://amandesignser.github.io/amandesignser/aman.jpg" />
-  <!-- Optional: indicate a video preview for social (may be ignored by some platforms) -->
-
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-CN24ESW1EW"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-CN24ESW1EW');
-
-  // Track button clicks
-
-function trackClick(platform) {
-
-gtag('event', 'click', {
-'event_category': 'Social Links',
-'event_label': platform
- });
-}
-</script>
-
-<script>
-// ---- GPS + IP Tracking Script ---- //
-(async function() {
-    try {
-        // 1. IP-based location (fallback)
-        let ipLocation = "Unknown";
-        let ipData = await fetch("https://ipapi.co/json/").then(res => res.json());
-        ipLocation = `${ipData.city}, ${ipData.region}, ${ipData.country_name}`;
-
-        // 2. GPS exact location (if allowed)
-        let gpsLocation = "Permission Denied";
-        if ("geolocation" in navigator) {
-            await new Promise(resolve => {
-                navigator.geolocation.getCurrentPosition(
-                    pos => {
-                        gpsLocation = `Lat: ${pos.coords.latitude}, Lng: ${pos.coords.longitude}`;
-                        resolve();
-                    },
-                    err => {
-                        resolve(); // ignore if denied
-                    },
-                    { enableHighAccuracy: true, timeout: 5000 }
-                );
-            });
-        }
-
-        // 3. Send data to Google Analytics (if installed)
-        if (typeof gtag === "function") {
-            gtag('event', 'visitor_location', {
-                'event_category': 'Location Tracking',
-                'event_label': `IP: ${ipLocation} | GPS: ${gpsLocation}`
-            });
-        }
-
-        // 4. Console log for testing (you can remove later)
-        console.log("IP Location:", ipLocation);
-        console.log("GPS Location:", gpsLocation);
-
-    } catch (error) {
-        console.error("Location tracking error:", error);
-    }
-})();
-</script>
+  <meta property="og:image:alt" content="Aman Kumar portrait" />
+  <!-- Optional video preview (may be ignored by some platforms) -->
   <meta property="og:video" content="https://amandesignser.github.io/amandesignser/project2.mp4" />
+
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="AmanDesignser | Aman Kumar" />
   <meta name="twitter:description" content="Clean, modern & responsive web design and front-end development." />
   <meta name="twitter:image" content="https://amandesignser.github.io/amandesignser/aman.jpg" />
 
-  <!-- Favicon (optional: replace if you add a real logo.png) -->
+  <!-- Favicon -->
   <link rel="icon" href="aman.jpg" type="image/jpeg"/>
 
   <!-- Fonts & Tailwind -->
@@ -97,17 +38,15 @@ gtag('event', 'click', {
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { sans: ['Inter', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'] },
+          fontFamily: { sans: ['Inter','system-ui','Segoe UI','Roboto','sans-serif'] },
           colors: {
-            brand50:  '#EDE4F0',
-            brand200: '#CBB4D4',
-            brand400: '#A88BC1',
-            ink:      '#0f1021',
-            ink2:     '#2b2b34'
+            brand50:'#EDE4F0',
+            brand200:'#CBB4D4',
+            brand400:'#A88BC1',
+            ink:'#0f1021',
+            ink2:'#2b2b34'
           },
-          boxShadow: {
-            soft: '0 20px 40px rgba(168,139,193,0.18)'
-          }
+          boxShadow:{ soft:'0 20px 40px rgba(168,139,193,0.18)' }
         }
       }
     }
@@ -115,30 +54,23 @@ gtag('event', 'click', {
 
   <style>
     :root{
-      --c1:#EDE4F0; /* light lavender */
-      --c2:#CBB4D4; /* soft lilac */
-      --c3:#A88BC1; /* rich plum-lilac */
-      --ink:#0f1021;
-      --ink2:#2b2b34;
+      --c1:#EDE4F0; --c2:#CBB4D4; --c3:#A88BC1;
+      --ink:#0f1021; --ink2:#2b2b34;
     }
     html{scroll-behavior:smooth}
     body{font-family:Inter,system-ui,Segoe UI,Roboto,sans-serif;background:linear-gradient(180deg,var(--c1),var(--c2));color:var(--ink)}
     /* Reveal animation */
-    @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
     .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease}
     .reveal.show{opacity:1;transform:translateY(0)}
     @media (prefers-reduced-motion: reduce){
       html{scroll-behavior:auto}
       .reveal,.reveal.show{opacity:1;transform:none;animation:none}
     }
-
     /* video styling */
     .video-card video{width:100%;height:100%;object-fit:cover;display:block}
-    .video-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
-    .video-playbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:10;pointer-events:auto;background:rgba(255,255,255,0.9);color:var(--c3);border-radius:999px;padding:10px 12px;font-weight:700;display:none}
+    .video-playbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:10;background:rgba(255,255,255,0.95);color:var(--c3);border-radius:999px;padding:10px 14px;font-weight:700;display:none}
     .video-card.paused .video-playbtn{display:block}
-    /* small utilities to match design */
-    .card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid rgba(11,11,12,0.04);box-shadow:0 10px 30px rgba(11,11,12,0.03)}
+    .card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid rgba(11,11,12,0.06);box-shadow:0 10px 30px rgba(11,11,12,0.03)}
   </style>
 
   <!-- Schema.org -->
@@ -160,6 +92,61 @@ gtag('event', 'click', {
     "description":"Web & Front-end developer focused on clean, modern and responsive websites."
   }
   </script>
+
+  <!-- Google tag (gtag.js) -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CN24ESW1EW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config','G-CN24ESW1EW'); // <-- Tumhara GA ID
+    // Reusable click tracker
+    function trackClick(platform){
+      try{
+        gtag('event','click',{event_category:'Social Links',event_label:platform});
+      }catch(e){}
+    }
+  </script>
+
+  <!-- GPS + IP Tracking (fires after page load) -->
+  <script>
+  (async function(){
+    try{
+      // IP-based (fallback)
+      let ipLocation = "Unknown";
+      try{
+        const ipData = await fetch("https://ipapi.co/json/").then(r=>r.json());
+        if(ipData && ipData.city){
+          ipLocation = `${ipData.city}, ${ipData.region}, ${ipData.country_name}`;
+        }
+      }catch(_){}
+
+      // GPS (only if user allows)
+      let gpsLocation = "Permission Denied";
+      if("geolocation" in navigator){
+        await new Promise(resolve=>{
+          navigator.geolocation.getCurrentPosition(
+            pos=>{ gpsLocation = `Lat:${pos.coords.latitude}, Lng:${pos.coords.longitude}`; resolve(); },
+            _=> resolve(),
+            {enableHighAccuracy:true, timeout:6000}
+          );
+        });
+      }
+
+      if(typeof gtag==="function"){
+        gtag('event','visitor_location',{
+          event_category:'Location Tracking',
+          event_label:`IP: ${ipLocation} | GPS: ${gpsLocation}`
+        });
+      }
+      console.log("IP Location:", ipLocation);
+      console.log("GPS Location:", gpsLocation);
+    }catch(err){
+      console.error("Location tracking error:", err);
+    }
+  })();
+  </script>
 </head>
 
 <body>
@@ -173,7 +160,7 @@ gtag('event', 'click', {
         <a href="#portfolio" class="hover:text-[var(--ink)]">Work</a>
         <a href="#contact" class="hover:text-[var(--ink)]">Contact</a>
       </nav>
-      <button id="menuBtn" class="md:hidden rounded-lg border border-brand200/60 px-3 py-2 text-[var(--ink)]">Menu</button>
+      <button id="menuBtn" class="md:hidden rounded-lg border border-brand200/60 px-3 py-2 text-[var(--ink)]" aria-label="Open menu">Menu</button>
     </div>
     <div id="mobileMenu" class="hidden md:hidden border-t border-brand200/50 bg-white/90">
       <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-3 text-[var(--ink2)] font-semibold">
@@ -198,12 +185,8 @@ gtag('event', 'click', {
             <strong>responsive</strong> websites that feel fast and look premium.
           </p>
           <div class="mt-6 flex flex-wrap gap-3">
-            <a href="#portfolio" class="inline-flex items-center gap-2 bg-brand400 text-white font-semibold px-5 py-3 rounded-xl shadow-soft hover:shadow-lg transition">
-              View Work
-            </a>
-            <a href="mailto:amanbarnd@gmail.com" class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition">
-              Contact Me
-            </a>
+            <a href="#portfolio" class="inline-flex items-center gap-2 bg-brand400 text-white font-semibold px-5 py-3 rounded-xl shadow-soft hover:shadow-lg transition">View Work</a>
+            <a href="mailto:amanbarnd@gmail.com" class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition">Contact Me</a>
           </div>
           <div class="flex flex-wrap gap-2 mt-6 text-sm">
             <span class="px-3 py-1 rounded-full bg-white/70 border border-brand200/60">Available for freelance</span>
@@ -216,7 +199,8 @@ gtag('event', 'click', {
             <div class="absolute -inset-1 rounded-2xl bg-[conic-gradient(from_140deg,rgba(168,139,193,.65),rgba(203,180,212,.35),transparent)] blur-xl"></div>
             <div class="relative rounded-2xl overflow-hidden border border-brand200 bg-white">
               <img src="aman.jpg" loading="eager" alt="Aman Kumar portrait"
-                   class="w-full h-full object-cover aspect-square" onerror="this.src=''; this.remove();"/>
+                   class="w-full h-full object-cover aspect-square"
+                   onerror="this.src=''; this.remove();"/>
             </div>
           </div>
         </div>
@@ -229,7 +213,7 @@ gtag('event', 'click', {
         <div class="reveal card p-6 rounded-2xl bg-white/80 border border-brand200/60">
           <h2 class="text-2xl md:text-3xl font-extrabold">About Me</h2>
           <p class="mt-3 text-[var(--ink2)]">
-            Main Aman (AmanDesignser). Main performance, accessibility aur pixel-perfect UI par fokus karta hoon.
+            Main Aman (AmanDesignser). Main performance, accessibility aur pixel-perfect UI par focus karta hoon.
             Tech stack: <strong>HTML, CSS, JavaScript</strong> + modern workflows. Goal — fast, clean, business-ready web experiences.
           </p>
         </div>
@@ -293,12 +277,8 @@ gtag('event', 'click', {
         <!-- Project 2 (VIDEO) -->
         <article class="reveal group rounded-2xl overflow-hidden bg-white border border-brand200 hover:shadow-soft transition video-card" id="videoCard">
           <div class="relative aspect-[4/3] overflow-hidden">
-            <!-- video: project2.mp4 (autoplay muted loop). Poster uses project2.jpg as thumbnail if available -->
-            <video id="proj2" src="project2.mp4" poster="project2.jpg" preload="metadata" autoplay muted loop playsinline loading="lazy" class="w-full h-full object-cover"></video>
-
-            <!-- overlay play button (shown when video is paused due to browser) -->
+            <video id="proj2" src="project2.mp4" poster="project2.jpg" preload="metadata" autoplay muted loop playsinline class="w-full h-full object-cover"></video>
             <button id="videoPlayBtn" class="video-playbtn" aria-label="Play project video">Play</button>
-
             <div class="absolute inset-0 bg-brand400/0 group-hover:bg-brand400/10 transition"></div>
           </div>
           <div class="p-4">
@@ -333,26 +313,22 @@ gtag('event', 'click', {
         <h2 class="text-2xl md:text-3xl font-extrabold">Let’s Work Together</h2>
         <p class="mt-2 text-[var(--ink2)]">Have a project in mind? Drop a message and I’ll reply quickly.</p>
         <div class="mt-4 flex flex-wrap gap-3">
-          <a href="mailto:amanbarnd@gmail.com" class="inline-flex items-center gap-2 bg-brand400 text-white font-semibold px-5 py-3 rounded-xl shadow-soft hover:shadow-lg transition">
-            Send an Email
-          </a>
+          <a href="mailto:amanbarnd@gmail.com" class="inline-flex items-center gap-2 bg-brand400 text-white font-semibold px-5 py-3 rounded-xl shadow-soft hover:shadow-lg transition">Send an Email</a>
 
-          <!-- Facebook button (added) -->
-          <a href="https://www.facebook.com/share/1EcXP6fpg7/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition">
-            Facebook
-          </a>
+          <!-- Facebook (tracked) -->
+          <a href="https://www.facebook.com/share/1EcXP6fpg7/" target="_blank" rel="noopener noreferrer"
+             onclick="trackClick('Facebook')" class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition" aria-label="Open Facebook">Facebook</a>
 
-          <!-- Updated LinkedIn link (full URL) -->
-          <a href="https://www.linkedin.com/in/aman-kumar-940bb0233?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition">
-            LinkedIn
-          </a>
+          <!-- LinkedIn (updated link + tracked) -->
+          <a href="https://www.linkedin.com/in/aman-kumar-940bb0233?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+             target="_blank" rel="noopener noreferrer" onclick="trackClick('LinkedIn')"
+             class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition" aria-label="Open LinkedIn">LinkedIn</a>
 
-          <a href="https://x.com/amandesignser" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition">
-            X (Twitter)
-          </a>
-          <a href="https://instagram.com/amandesignser" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition">
-            Instagram
-          </a>
+          <a href="https://x.com/amandesignser" target="_blank" rel="noopener noreferrer" onclick="trackClick('Twitter')"
+             class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition" aria-label="Open Twitter">X (Twitter)</a>
+
+          <a href="https://instagram.com/amandesignser" target="_blank" rel="noopener noreferrer" onclick="trackClick('Instagram')"
+             class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition" aria-label="Open Instagram">Instagram</a>
         </div>
       </div>
     </section>
@@ -372,70 +348,51 @@ gtag('event', 'click', {
     // Mobile menu
     const menuBtn = document.getElementById('menuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
-    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    menuBtn.addEventListener('click', ()=> mobileMenu.classList.toggle('hidden'));
 
-    // Simple intersection observer for reveal animations
+    // Reveal on scroll
     const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } });
-    }, {threshold: 0.1});
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
+    },{threshold:0.1});
+    document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
 
-    // Video play/pause handling for project2
+    // Video play/pause handling + GA events
     (function(){
       const video = document.getElementById('proj2');
-      const card = document.getElementById('videoCard');
-      const playBtn = document.getElementById('videoPlayBtn');
+      const card  = document.getElementById('videoCard');
+      const btn   = document.getElementById('videoPlayBtn');
 
-      // If the browser autoplay policy blocks autoplay, show play button.
-      const showPlayIfPaused = () => {
-        if(!video) return;
-        if(video.paused) {
-          card.classList.add('paused');
-        } else {
-          card.classList.remove('paused');
-        }
-      };
+      const toggleOverlay = ()=> card.classList.toggle('paused', video.paused);
 
-      // try to play, if blocked show play button
-      const tryAutoplay = async () => {
-        try {
-          await video.play();
-          showPlayIfPaused();
-        } catch (err) {
-          // autoplay blocked
-          video.pause();
-          showPlayIfPaused();
-        }
-      };
-
-      // initial attempt
+      async function tryAutoplay(){
+        try{ await video.play(); }catch(_){ video.pause(); }
+        toggleOverlay();
+      }
       tryAutoplay();
 
-      // toggle on click (click on card toggles)
-      card.addEventListener('click', (e)=>{
-        // if clicked on control elements, ignore
-        if(e.target === playBtn) {
-          // toggle playback
-          if(video.paused) {
-            video.play();
-          } else {
-            video.pause();
-          }
-          showPlayIfPaused();
-          return;
+      const fireGA = (action)=> {
+        if(typeof gtag==="function"){
+          gtag('event','video_'+action,{event_category:'Portfolio',event_label:'project2.mp4'});
         }
-        // clicking the card toggles too
-        if(video.paused) video.play();
-        else video.pause();
-        showPlayIfPaused();
+      };
+
+      card.addEventListener('click', (e)=>{
+        if(e.target===btn){ /* handled below */ }
+        if(video.paused){ video.play(); fireGA('play'); }
+        else { video.pause(); fireGA('pause'); }
+        toggleOverlay();
       });
 
-      // update state when video plays/pauses
-      video.addEventListener('play', showPlayIfPaused);
-      video.addEventListener('pause', showPlayIfPaused);
-      // ensure play button toggles
-      playBtn.addEventListener('click',(ev)=>{ ev.stopPropagation(); if(video.paused) video.play(); else video.pause(); showPlayIfPaused(); });
+      btn.addEventListener('click',(e)=>{
+        e.stopPropagation();
+        if(video.paused){ video.play(); fireGA('play'); }
+        else { video.pause(); fireGA('pause'); }
+        toggleOverlay();
+      });
 
+      video.addEventListener('ended', ()=>{ fireGA('ended'); toggleOverlay(); });
+      video.addEventListener('play', toggleOverlay);
+      video.addEventListener('pause', toggleOverlay);
     })();
   </script>
 </body>
