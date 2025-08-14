@@ -24,6 +24,16 @@
   gtag('js', new Date());
 
   gtag('config', 'G-CN24ESW1EW');
+
+  // Track button clicks
+
+function trackClick(platform) {
+
+gtag('event', 'click', {
+'event_category': 'Social Links',
+'event_label': platform
+ });
+}
 </script>
 
   <meta property="og:video" content="https://amandesignser.github.io/amandesignser/project2.mp4" />
