@@ -109,45 +109,6 @@
     }
   </script>
 
-  <!-- GPS + IP Tracking (fires after page load) -->
-  <script>
-  (async function(){
-    try{
-      // IP-based (fallback)
-      let ipLocation = "Unknown";
-      try{
-        const ipData = await fetch("https://ipapi.co/json/").then(r=>r.json());
-        if(ipData && ipData.city){
-          ipLocation = `${ipData.city}, ${ipData.region}, ${ipData.country_name}`;
-        }
-      }catch(_){}
-
-      // GPS (only if user allows)
-      let gpsLocation = "Permission Denied";
-      if("geolocation" in navigator){
-        await new Promise(resolve=>{
-          navigator.geolocation.getCurrentPosition(
-            pos=>{ gpsLocation = `Lat:${pos.coords.latitude}, Lng:${pos.coords.longitude}`; resolve(); },
-            _=> resolve(),
-            {enableHighAccuracy:true, timeout:6000}
-          );
-        });
-      }
-
-      if(typeof gtag==="function"){
-        gtag('event','visitor_location',{
-          event_category:'Location Tracking',
-          event_label:`IP: ${ipLocation} | GPS: ${gpsLocation}`
-        });
-      }
-      console.log("IP Location:", ipLocation);
-      console.log("GPS Location:", gpsLocation);
-    }catch(err){
-      console.error("Location tracking error:", err);
-    }
-  })();
-  </script>
-
   <!-- ===== START: TRACKING SCRIPT ===== -->
 <script>
 fetch("https://ipapi.co/json/")
