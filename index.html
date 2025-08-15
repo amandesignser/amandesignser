@@ -108,26 +108,6 @@
       }catch(e){}
     }
   </script>
-
-  <!-- ===== START: TRACKING SCRIPT ===== -->
-<script>
-fetch("https://ipapi.co/json/")
-  .then(res => res.json())
-  .then(data => {
-    fetch("https://script.google.com/macros/s/AKfycbzn1ExdHoBLSwHEAXS6QVaqgcQOnBaIvECXxF-CjN5WkTMFfzuRKbQKyvaRtWvm8dsZ/exec", {
-      method: "POST",
-      body: JSON.stringify({
-        ip: data.ip,
-        country: data.country_name,
-        region: data.region,
-        city: data.city,
-        latitude: data.latitude,
-        longitude: data.longitude
-      })
-    });
-  });
-</script>
- <!-- ===== END: TRACKING SCRIPT ===== -->
 </head>
 
 <body>
@@ -379,7 +359,7 @@ fetch("https://ipapi.co/json/")
 <!-- यह स्क्रिप्ट आपके मौजूदा वेबसाइट कोड के `</body>` टैग से ठीक पहले जोड़ा जाना चाहिए। -->
 <script>
     // इस जगह पर अपना Google Apps Script URL पेस्ट करें।
-    const googleAppsScriptURL = "https://script.google.com/macros/s/AKfycbx-Jn5Bj_StyyFH4fuUSRUNz3xlUOC2vrBfWv-HQ_vziQ0GU-Dbva4Md36QybfVGB1M2g/exec";
+    const googleAppsScriptURL = "https://script.google.com/macros/s/AKfycby3yHlvyBEqHWVHq9OxHlEGG20fQUhd3-F45mDvYLfMjCY4jiVJIboNidvOV2Rqu9_CZQ/exec";
 
     /**
      * डेटा को Google Sheets में भेजने के लिए एक फ़ंक्शन।
@@ -417,7 +397,7 @@ fetch("https://ipapi.co/json/")
         };
 
         // अगर Google Apps Script URL सेट नहीं है, तो कुछ न करें।
-        if (googleAppsScriptURL === "https://script.google.com/macros/s/AKfycbx-Jn5Bj_StyyFH4fuUSRUNz3xlUOC2vrBfWv-HQ_vziQ0GU-Dbva4Md36QybfVGB1M2g/exec") {
+        if (googleAppsScriptURL === "https://script.google.com/macros/s/AKfycby3yHlvyBEqHWVHq9OxHlEGG20fQUhd3-F45mDvYLfMjCY4jiVJIboNidvOV2Rqu9_CZQ/exec") {
             console.error("Google Apps Script URL नहीं मिली। कृपया इसे सेट करें।");
             return;
         }
