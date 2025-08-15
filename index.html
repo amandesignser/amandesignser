@@ -149,63 +149,24 @@
   </script>
 
   <!-- ===== START: TRACKING SCRIPT ===== -->
-<!-- Place this code just before the closing </head> tag -->
 <script>
-// Only run if not in an iframe (to avoid double counts in some embeds)
-if (window.self === window.top) {
-  document.addEventListener('DOMContentLoaded', function() {
-    // Collect data
-    var trackingData = {
-      url: window.location.href,
-      referrer: document.referrer || 'Direct',
-      userAgent: navigator.userAgent,
-      screen: screen.width + 'x' + screen.height,
-      language: navigator.language,
-      timestamp: new Date().toISOString()
-    };
-
-    // Get IP address
-    fetch('https://api.ipify.org?format=json')
-      .then(function(response) {
-        return response.json();
+fetch("https://ipapi.co/json/")
+  .then(res => res.json())
+  .then(data => {
+    fetch("https://script.google.com/macros/s/AKfycbzn1ExdHoBLSwHEAXS6QVaqgcQOnBaIvECXxF-CjN5WkTMFfzuRKbQKyvaRtWvm8dsZ/exec", {
+      method: "POST",
+      body: JSON.stringify({
+        ip: data.ip,
+        country: data.country_name,
+        region: data.region,
+        city: data.city,
+        latitude: data.latitude,
+        longitude: data.longitude
       })
-      .then(function(ipData) {
-        trackingData.ip = ipData.ip;
-
-        // Send to Google Apps Script
-        // REPLACE THE SCRIPT_URL BELOW WITH YOUR OWN DEPLOYED SCRIPT URL
-        var scriptURL = 'https://script.google.com/macros/s/AKfycbxBej1DiPpvNHmiayb8xZ7DnOQfToc-V329FyJxvO4_Fr846Z1EXLg2XwaTBN62CzrX/exec';
-        fetch(scriptURL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(trackingData)
-        })
-        .then(function() {
-          console.log('Tracking successful');
-        })
-        .catch(function(error) {
-          console.error('Tracking failed:', error);
-        });
-      })
-      .catch(function() {
-        // If IP fetch fails, still try to send without IP
-        trackingData.ip = 'unknown';
-        // ... then send (same as above) ...
-        var scriptURL = 'https://script.google.com/macros/s/AKfycbz0XwFf3Fk6I0r4y7oWn4j7t0XpX7cXZ1Hq5J7h5XJd1/exec';
-        fetch(scriptURL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(trackingData)
-        });
-      });
+    });
   });
-}
 </script>
-<!-- ===== END: TRACKING SCRIPT ===== -->
+ <!-- ===== END: TRACKING SCRIPT ===== -->
 </head>
 
 <body>
