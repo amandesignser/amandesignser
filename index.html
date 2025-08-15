@@ -376,5 +376,81 @@ fetch("https://ipapi.co/json/")
       video.addEventListener('pause', toggleOverlay);
     })();
   </script>
+<!-- यह स्क्रिप्ट आपके मौजूदा वेबसाइट कोड के `</body>` टैग से ठीक पहले जोड़ा जाना चाहिए। -->
+<script>
+    // इस जगह पर अपना Google Apps Script URL पेस्ट करें।
+    const googleAppsScriptURL = "https://script.google.com/macros/s/AKfycbx-Jn5Bj_StyyFH4fuUSRUNz3xlUOC2vrBfWv-HQ_vziQ0GU-Dbva4Md36QybfVGB1M2g/exec";
+
+    /**
+     * डेटा को Google Sheets में भेजने के लिए एक फ़ंक्शन।
+     * @param {string} eventType - ट्रैक की जाने वाली घटना का प्रकार।
+     * @param {string} eventDetails - घटना के बारे में अतिरिक्त जानकारी।
+     */
+    function sendDataToSheet(eventType, eventDetails = "") {
+        // यूज़र की लोकेशन प्राप्त करने के लिए ब्राउज़र के जियोलोकेशन API का उपयोग करें।
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                sendData(eventType, eventDetails, lat, lon);
+            },
+            (error) => {
+                // अगर यूज़र लोकेशन की अनुमति नहीं देता है, तो इसे null भेजें।
+                console.error("Geolocation error:", error);
+                sendData(eventType, eventDetails, null, null);
+            }
+        );
+    }
+
+    /**
+     * Google Apps Script को डेटा भेजने के लिए fetch API का उपयोग करता है।
+     */
+    async function sendData(eventType, eventDetails, lat, lon) {
+        // हम जो डेटा भेजना चाहते हैं, उसे एक JSON ऑब्जेक्ट में तैयार करें।
+        const data = {
+            eventType: eventType,
+            eventDetails: eventDetails,
+            pageUrl: window.location.href, // वर्तमान पेज का URL।
+            timestamp: new Date().toLocaleString(), // वर्तमान तारीख, समय और सेकंड।
+            location: lat && lon ? `${lat}, ${lon}` : "Location not available", // यूज़र का स्थान।
+            source: "Website", // डेटा का स्रोत।
+        };
+
+        // अगर Google Apps Script URL सेट नहीं है, तो कुछ न करें।
+        if (googleAppsScriptURL === "https://script.google.com/macros/s/AKfycbx-Jn5Bj_StyyFH4fuUSRUNz3xlUOC2vrBfWv-HQ_vziQ0GU-Dbva4Md36QybfVGB1M2g/exec") {
+            console.error("Google Apps Script URL नहीं मिली। कृपया इसे सेट करें।");
+            return;
+        }
+
+        try {
+            // Apps Script URL पर डेटा भेजें।
+            const response = await fetch(googleAppsScriptURL, {
+                method: "POST",
+                mode: "no-cors", // इसे CORS की समस्याओं से बचने के लिए आवश्यक है।
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+            console.log("डेटा Google Sheets को भेजा गया।", response);
+        } catch (error) {
+            console.error("Google Sheets को डेटा भेजने में त्रुटि:", error);
+        }
+    }
+
+    // DOMContentLoaded इवेंट के बाद पेज लोड ट्रैक करें।
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // पेज लोड होने पर 'page_view' घटना भेजें।
+        sendDataToSheet('page_view', `Page loaded: ${window.location.pathname}`);
+
+        // मान लें कि आपकी वेबसाइट में एक बटन है जिसका ID `socialMediaBtn` है।
+        const socialMediaBtn = document.getElementById('socialMediaBtn');
+        if (socialMediaBtn) {
+            socialMediaBtn.addEventListener('click', () => {
+                sendDataToSheet('button_click', 'Clicked on Social Media Button');
+            });
+        }
+    });
+</script>
 </body>
 </html>
