@@ -356,81 +356,48 @@
       video.addEventListener('pause', toggleOverlay);
     })();
   </script>
-<!-- यह स्क्रिप्ट आपके मौजूदा वेबसाइट कोड के `</body>` टैग से ठीक पहले जोड़ा जाना चाहिए। -->
+
 <script>
-    // इस जगह पर अपना Google Apps Script URL पेस्ट करें।
-    const googleAppsScriptURL = "https://script.google.com/macros/s/AKfycby3yHlvyBEqHWVHq9OxHlEGG20fQUhd3-F45mDvYLfMjCY4jiVJIboNidvOV2Rqu9_CZQ/exec";
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxYDMxqk3yI3RRvuekJ75QD2_sSFeKaqKR1ljanFI4-9UpnSTiIkfTLtXRm2xIiO6ht/exec";
 
-    /**
-     * डेटा को Google Sheets में भेजने के लिए एक फ़ंक्शन।
-     * @param {string} eventType - ट्रैक की जाने वाली घटना का प्रकार।
-     * @param {string} eventDetails - घटना के बारे में अतिरिक्त जानकारी।
-     */
-    function sendDataToSheet(eventType, eventDetails = "") {
-        // यूज़र की लोकेशन प्राप्त करने के लिए ब्राउज़र के जियोलोकेशन API का उपयोग करें।
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
-                sendData(eventType, eventDetails, lat, lon);
-            },
-            (error) => {
-                // अगर यूज़र लोकेशन की अनुमति नहीं देता है, तो इसे null भेजें।
-                console.error("Geolocation error:", error);
-                sendData(eventType, eventDetails, null, null);
-            }
-        );
+  // Safe fetch: कोई custom header मत दीजिए (ताकि CORS preflight न हो)
+  function track(eventType, eventDetails = {}, opts = {}) {
+    try {
+      const payload = {
+        timestamp: new Date().toISOString(),
+        eventType,
+        eventDetails: JSON.stringify(eventDetails),
+        pageUrl: location.href,
+        location: opts.location || "", // चाहें तो "Agra, India" आदि
+        source: opts.source || "website"
+      };
+
+      // IMPORTANT: headers न लगाएं (जैसे 'Content-Type: application/json'), सिर्फ body भेजें
+      fetch(WEB_APP_URL, {
+        method: "POST",
+        body: JSON.stringify(payload)
+      })
+      .then(r => r.text())
+      .then(t => { /* चाहें तो console.log(t); */ })
+      .catch(err => { /* console.error(err); */ });
+    } catch (e) {
+      /* console.error(e); */
     }
+  }
 
-    /**
-     * Google Apps Script को डेटा भेजने के लिए fetch API का उपयोग करता है।
-     */
-    async function sendData(eventType, eventDetails, lat, lon) {
-        // हम जो डेटा भेजना चाहते हैं, उसे एक JSON ऑब्जेक्ट में तैयार करें।
-        const data = {
-            eventType: eventType,
-            eventDetails: eventDetails,
-            pageUrl: window.location.href, // वर्तमान पेज का URL।
-            timestamp: new Date().toLocaleString(), // वर्तमान तारीख, समय और सेकंड।
-            location: lat && lon ? `${lat}, ${lon}` : "Location not available", // यूज़र का स्थान।
-            source: "Website", // डेटा का स्रोत।
-        };
+  // 1) Pageview अपने आप भेजें
+  document.addEventListener("DOMContentLoaded", function() {
+    track("pageview");
+  });
 
-        // अगर Google Apps Script URL सेट नहीं है, तो कुछ न करें।
-        if (googleAppsScriptURL === "https://script.google.com/macros/s/AKfycby3yHlvyBEqHWVHq9OxHlEGG20fQUhd3-F45mDvYLfMjCY4jiVJIboNidvOV2Rqu9_CZQ/exec") {
-            console.error("Google Apps Script URL नहीं मिली। कृपया इसे सेट करें।");
-            return;
-        }
-
-        try {
-            // Apps Script URL पर डेटा भेजें।
-            const response = await fetch(googleAppsScriptURL, {
-                method: "POST",
-                mode: "no-cors", // इसे CORS की समस्याओं से बचने के लिए आवश्यक है।
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            });
-            console.log("डेटा Google Sheets को भेजा गया।", response);
-        } catch (error) {
-            console.error("Google Sheets को डेटा भेजने में त्रुटि:", error);
-        }
+  // 2) किसी बटन/लिंक पर click event भेजने का उदाहरण:
+  // <button id="buyBtn">Buy</button>
+  document.addEventListener("click", function(e) {
+    const el = e.target.closest("#buyBtn");
+    if (el) {
+      track("click", { id: "buyBtn", text: el.innerText });
     }
-
-    // DOMContentLoaded इवेंट के बाद पेज लोड ट्रैक करें।
-    document.addEventListener('DOMContentLoaded', (event) => {
-        // पेज लोड होने पर 'page_view' घटना भेजें।
-        sendDataToSheet('page_view', `Page loaded: ${window.location.pathname}`);
-
-        // मान लें कि आपकी वेबसाइट में एक बटन है जिसका ID `socialMediaBtn` है।
-        const socialMediaBtn = document.getElementById('socialMediaBtn');
-        if (socialMediaBtn) {
-            socialMediaBtn.addEventListener('click', () => {
-                sendDataToSheet('button_click', 'Clicked on Social Media Button');
-            });
-        }
-    });
+  });
 </script>
 </body>
 </html>
