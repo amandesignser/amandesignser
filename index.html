@@ -358,46 +358,67 @@
   </script>
 
 <script>
-  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxYDMxqk3yI3RRvuekJ75QD2_sSFeKaqKR1ljanFI4-9UpnSTiIkfTLtXRm2xIiO6ht/exec";
+async function sendTracking(eventType, eventDetails = "") {
+  try {
+    // 1. Get IP address
+    let ipRes = await fetch("https://api.ipify.org?format=json");
+    let ipData = await ipRes.json();
 
-  // Safe fetch: कोई custom header मत दीजिए (ताकि CORS preflight न हो)
-  function track(eventType, eventDetails = {}, opts = {}) {
-    try {
-      const payload = {
-        timestamp: new Date().toISOString(),
-        eventType,
-        eventDetails: JSON.stringify(eventDetails),
-        pageUrl: location.href,
-        location: opts.location || "", // चाहें तो "Agra, India" आदि
-        source: opts.source || "website"
-      };
-
-      // IMPORTANT: headers न लगाएं (जैसे 'Content-Type: application/json'), सिर्फ body भेजें
-      fetch(WEB_APP_URL, {
-        method: "POST",
-        body: JSON.stringify(payload)
-      })
-      .then(r => r.text())
-      .then(t => { /* चाहें तो console.log(t); */ })
-      .catch(err => { /* console.error(err); */ });
-    } catch (e) {
-      /* console.error(e); */
+    // 2. Get location (if available)
+    let locationStr = "";
+    if (navigator.geolocation) {
+      await new Promise((resolve) => {
+        navigator.geolocation.getCurrentPosition(
+          pos => {
+            locationStr = pos.coords.latitude + "," + pos.coords.longitude;
+            resolve();
+          },
+          err => {
+            locationStr = "Denied/Unavailable";
+            resolve();
+          }
+        );
+      });
     }
+
+    // 3. Prepare payload
+    let payload = {
+      timestamp: new Date().toISOString(),
+      eventType: eventType,
+      eventDetails: eventDetails,
+      pageUrl: window.location.href,
+      ipAddress: ipData.ip,
+      location: locationStr,
+      source: "portfolio"
+    };
+
+    // 4. Send to Google Apps Script
+    await fetch("https://script.google.com/macros/s/AKfycbxDeigN4muPCYMhTW0UQm1l80mlivCG8O2i21debWvPjAP8i76pPtyVe5sSuImA5AF-/exec", {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
+
+  } catch (err) {
+    console.error("Tracking error:", err);
   }
+}
 
-  // 1) Pageview अपने आप भेजें
-  document.addEventListener("DOMContentLoaded", function() {
-    track("pageview");
-  });
+// Track Pageview automatically
+sendTracking("pageview");
 
-  // 2) किसी बटन/लिंक पर click event भेजने का उदाहरण:
-  // <button id="buyBtn">Buy</button>
-  document.addEventListener("click", function(e) {
-    const el = e.target.closest("#buyBtn");
-    if (el) {
-      track("click", { id: "buyBtn", text: el.innerText });
-    }
-  });
+// Example: Track button click
+document.addEventListener("click", e => {
+  if (e.target.id) {
+    sendTracking("click", JSON.stringify({id: e.target.id}));
+  }
+});
+
+// Example: Track form submit
+document.addEventListener("submit", e => {
+  if (e.target.id) {
+    sendTracking("form_submit", JSON.stringify({form: e.target.id}));
+  }
+});
 </script>
 </body>
 </html>
