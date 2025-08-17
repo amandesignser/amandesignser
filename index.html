@@ -360,70 +360,306 @@
 
 
 <script>
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby6qfyfqe8FoluLqBDomPqegF-xAH0G7ozkIHRCTjYgfEIKdp-yCMf6pavZQUV1-j5l/exec"; // <-- अपना Apps Script Web App URL
+/***** Client-side Universal Tracker *****/
 
-async function getIpCityCountry() {
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby60lD7E-wO75H47SORUGQDm_MNbVG9O6hNGmzgPBQou5uQhHB3uyT7y8oDUg8HwJmn/exec"; // <-- replace
+const DEBUG = false; // true to see console logs
+
+function log(...args){ if(DEBUG) console.log("[Tracker]", ...args); }
+
+function uid(prefix = "wr") {
+  return prefix + "_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2,8);
+}
+
+function debounce(fn, wait = 200){
+  let t;
+  return (...args) => { clearTimeout(t); t = setTimeout(()=>fn(...args), wait); };
+}
+
+function parseUA(ua) {
+  const res = { browser: "Unknown", browserVersion: "", os: "Unknown", deviceType: "Desktop" };
   try {
-    // IP + City + Country (readable) — no JSON leak in 'location'
+    if (/Firefox\/([0-9\.]+)/.test(ua)) {
+      res.browser = "Firefox"; res.browserVersion = ua.match(/Firefox\/([0-9\.]+)/)[1];
+    } else if (/Edg\/([0-9\.]+)/.test(ua)) {
+      res.browser = "Edge"; res.browserVersion = ua.match(/Edg\/([0-9\.]+)/)[1];
+    } else if (/Chrome\/([0-9\.]+)/.test(ua) && /Safari\//.test(ua)) {
+      res.browser = "Chrome"; res.browserVersion = ua.match(/Chrome\/([0-9\.]+)/)[1];
+    } else if (/Safari\/([0-9\.]+)/.test(ua) && /Version\/([0-9\.]+)/.test(ua)) {
+      res.browser = "Safari"; res.browserVersion = ua.match(/Version\/([0-9\.]+)/)[1];
+    } else if (/OPR\/([0-9\.]+)/.test(ua)) {
+      res.browser = "Opera"; res.browserVersion = ua.match(/OPR\/([0-9\.]+)/)[1];
+    }
+
+    if (/Windows NT/.test(ua)) res.os = "Windows";
+    else if (/Android/.test(ua)) res.os = "Android";
+    else if (/iPhone|iPad|iPod/.test(ua)) res.os = "iOS";
+    else if (/Mac OS X/.test(ua)) res.os = "macOS";
+    else if (/Linux/.test(ua)) res.os = "Linux";
+
+    if (/Mobi|Android|iPhone/.test(ua)) res.deviceType = "Mobile";
+    else if (/iPad|Tablet/.test(ua)) res.deviceType = "Tablet";
+    else res.deviceType = "Desktop";
+  } catch(e){
+    log("parseUA error", e);
+  }
+  return res;
+}
+
+function detectAdBlock() {
+  try {
+    const bait = document.createElement("div");
+    bait.className = "adsbox";
+    bait.style.width = "1px";
+    bait.style.height = "1px";
+    bait.style.position = "absolute";
+    bait.style.left = "-9999px";
+    document.body.appendChild(bait);
+    const blocked = (getComputedStyle(bait).display === "none" || bait.offsetParent === null || bait.offsetHeight === 0);
+    bait.remove();
+    return blocked;
+  } catch(e){
+    return false;
+  }
+}
+
+// --- Global state ---
+const TRACK = {
+  visitorId: null,
+  sessionId: null,
+  isFirstVisit: false,
+  sessionStart: Date.now(),
+  ipInfo: null,
+  geoPos: null,
+  uaInfo: null,
+  screen: `${window.screen.width}x${window.screen.height}`,
+  language: navigator.language || navigator.userLanguage || "unknown",
+  networkType: (navigator.connection && (navigator.connection.effectiveType || navigator.connection.type)) || "unknown",
+  adBlock: false,
+  scrollSent: new Set()
+};
+
+// --- visitor/session ids ---
+(function initIds(){
+  let vid = localStorage.getItem("wr_vid");
+  if (!vid) {
+    vid = uid("visitor");
+    localStorage.setItem("wr_vid", vid);
+    TRACK.isFirstVisit = true;
+  } else TRACK.isFirstVisit = false;
+  TRACK.visitorId = vid;
+
+  let sid = sessionStorage.getItem("wr_sid");
+  if (!sid) {
+    sid = uid("session");
+    sessionStorage.setItem("wr_sid", sid);
+  }
+  TRACK.sessionId = sid;
+})();
+
+// --- IP + geo helper ---
+async function loadIpInfo(){
+  if (TRACK.ipInfo) return TRACK.ipInfo;
+  try {
     const res = await fetch("https://ipapi.co/json/");
     const data = await res.json();
-    const ip = data.ip || "";
-    const city = data.city || "Unknown";
-    const country = (data.country_name || data.country || "Unknown");
-    return { ip, city, country, locationStr: `${city}, ${country}` };
+    TRACK.ipInfo = {
+      ip: data.ip || "",
+      city: data.city || "Unknown",
+      region: data.region || "",
+      country_name: data.country_name || (data.country || "Unknown"),
+      org: data.org || data.orgname || "",
+      latitude: data.latitude || data.lat || "",
+      longitude: data.longitude || data.lon || ""
+    };
+    return TRACK.ipInfo;
   } catch (e) {
-    // Fallback (only IP); location unknown
     try {
-      const res2 = await fetch("https://api.ipify.org?format=json");
-      const { ip } = await res2.json();
-      return { ip: ip || "", city: "Unknown", country: "Unknown", locationStr: "Unknown, Unknown" };
-    } catch {
-      return { ip: "", city: "Unknown", country: "Unknown", locationStr: "Unknown, Unknown" };
+      const r2 = await fetch("https://api.ipify.org?format=json");
+      const j = await r2.json();
+      TRACK.ipInfo = { ip: j.ip || "", city:"Unknown", region:"", country_name:"Unknown", org:"", latitude:"", longitude:"" };
+      return TRACK.ipInfo;
+    } catch (ee) {
+      TRACK.ipInfo = { ip: "", city:"Unknown", region:"", country_name:"Unknown", org:"", latitude:"", longitude:"" };
+      return TRACK.ipInfo;
     }
   }
 }
 
-async function sendTracking(eventType, eventDetails = "") {
-  try {
-    // IP + City + Country (for clean 'location')
-    const info = await getIpCityCountry();
+// --- request GPS (non-blocking) ---
+function requestGeoOnce(timeout = 5000) {
+  return new Promise((resolve) => {
+    if (!navigator.geolocation) return resolve(null);
+    let settled = false;
+    const timer = setTimeout(()=>{ if(!settled){ settled = true; resolve(null); } }, timeout);
+    navigator.geolocation.getCurrentPosition((pos) => {
+      if (settled) return;
+      settled = true; clearTimeout(timer);
+      TRACK.geoPos = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+      resolve(TRACK.geoPos);
+    }, (err) => {
+      if (settled) return;
+      settled = true; clearTimeout(timer);
+      resolve(null);
+    }, { enableHighAccuracy: false, timeout: timeout, maximumAge: 60000 });
+  });
+}
 
-    // Build payload
+// --- send payload to Apps Script ---
+async function sendTracking(eventType, eventDetails = "", extra = {}) {
+  try {
+    const ip = await loadIpInfo();
+    if (!TRACK.uaInfo) TRACK.uaInfo = parseUA(navigator.userAgent);
+
     const payload = {
       timestamp: new Date().toISOString(),
-      eventType,
-      eventDetails,                  // human text (no JSON code look)
+      visitorId: TRACK.visitorId,
+      sessionId: TRACK.sessionId,
+      isFirstVisit: TRACK.isFirstVisit,
+      eventType: eventType,
+      eventDetails: eventDetails,
       pageUrl: window.location.href,
-      ipAddress: info.ip,
-      location: info.locationStr,    // e.g., "Agra, India"
+      referrer: document.referrer || "",
+      ipAddress: ip.ip || "",
+      isp: ip.org || "",
+      city: ip.city || "",
+      region: ip.region || "",
+      country: ip.country_name || "",
+      latitude: TRACK.geoPos ? TRACK.geoPos.lat : (ip.latitude || ""),
+      longitude: TRACK.geoPos ? TRACK.geoPos.lon : (ip.longitude || ""),
+      gps: TRACK.geoPos ? `${TRACK.geoPos.lat},${TRACK.geoPos.lon}` : "",
+      location: (ip.city ? ip.city + ", " + ip.country_name : ip.country_name || ""),
+      userAgent: navigator.userAgent,
+      browser: TRACK.uaInfo.browser || "",
+      browserVersion: TRACK.uaInfo.browserVersion || "",
+      os: TRACK.uaInfo.os || "",
+      deviceType: TRACK.uaInfo.deviceType || "",
+      screen: TRACK.screen,
+      language: TRACK.language,
+      networkType: TRACK.networkType || "unknown",
+      adBlock: TRACK.adBlock ? "yes" : "no",
+      timeSpentSec: extra.timeSpentSec || "",
       source: "portfolio"
     };
 
-    // Send to Apps Script (no headers needed for GAS JSON parse)
+    for (const k in extra) if (!(k in payload)) payload[k] = extra[k];
+
     await fetch(WEB_APP_URL, {
       method: "POST",
       body: JSON.stringify(payload)
     });
-  } catch (err) {
-    console.error("Tracking error:", err);
+
+    log("sent", eventType, eventDetails);
+  } catch (e) {
+    console.error("sendTracking error:", e);
   }
 }
 
-// ---- Track pageview ----
-sendTracking("pageview", "Page loaded");
+// --- Init ---
+(async function initializeTracker(){
+  TRACK.uaInfo = parseUA(navigator.userAgent);
+  TRACK.adBlock = detectAdBlock();
+  TRACK.networkType = (navigator.connection && (navigator.connection.effectiveType || navigator.connection.type)) || TRACK.networkType;
+  await loadIpInfo();
+  requestGeoOnce(5000);
+  sendTracking("pageview", "Page loaded");
+})();
 
-// ---- Track menuBtn click (reliable binding) ----
+// --- menuBtn click tracking ---
 document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("menuBtn");
-  if (btn) {
-    btn.addEventListener("click", () => {
-      // Clean, readable details (no JSON in sheet)
+  const menuBtn = document.getElementById("menuBtn");
+  if (menuBtn) {
+    menuBtn.addEventListener("click", (e) => {
       sendTracking("click", "menuBtn clicked");
-      console.log("menuBtn clicked ✅");
+      log("menuBtn clicked");
     });
   } else {
-    console.warn("menuBtn not found on page ❗");
+    log("menuBtn not found");
   }
+
+  // track elements with data-track attribute too (optional)
+  document.querySelectorAll("[data-track]").forEach(el => {
+    el.addEventListener("click", () => {
+      const label = el.dataset.track || (el.id || el.innerText || el.tagName);
+      sendTracking("click", `${label}`);
+    });
+  });
+});
+
+// --- Scroll depth (25/50/75/100) ---
+const SCROLL_THRESHOLDS = [25,50,75,100];
+window.addEventListener("scroll", debounce(() => {
+  const scrolled = window.scrollY + window.innerHeight;
+  const total = document.documentElement.scrollHeight;
+  if (total <= 0) return;
+  const percent = Math.round((scrolled / total) * 100);
+  SCROLL_THRESHOLDS.forEach(t => {
+    if (percent >= t && !TRACK.scrollSent.has(t)) {
+      TRACK.scrollSent.add(t);
+      sendTracking("scroll_depth", `Reached ${t}%`);
+    }
+  });
+}, 300));
+
+// --- element view tracking (data-track-view attr) ---
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el = e.target;
+        const label = el.dataset.trackView || (el.id || el.className || el.tagName);
+        sendTracking("element_view", `${label}`);
+        io.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll("[data-track-view]").forEach(el => io.observe(el));
+}
+
+// --- Time spent on page (send on unload) ---
+const PAGE_START = Date.now();
+function sendTimeSpentAndClose() {
+  const secs = Math.round((Date.now() - PAGE_START) / 1000);
+  try {
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(WEB_APP_URL, JSON.stringify({
+        timestamp: new Date().toISOString(),
+        visitorId: TRACK.visitorId,
+        sessionId: TRACK.sessionId,
+        isFirstVisit: TRACK.isFirstVisit,
+        eventType: "time_spent",
+        eventDetails: `${secs} seconds`,
+        pageUrl: window.location.href,
+        timeSpentSec: secs,
+        source: "portfolio"
+      }));
+    } else {
+      fetch(WEB_APP_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          timestamp: new Date().toISOString(),
+          visitorId: TRACK.visitorId,
+          sessionId: TRACK.sessionId,
+          isFirstVisit: TRACK.isFirstVisit,
+          eventType: "time_spent",
+          eventDetails: `${secs} seconds`,
+          pageUrl: window.location.href,
+          timeSpentSec: secs,
+          source: "portfolio"
+        }),
+        keepalive: true
+      });
+    }
+  } catch (e) {
+    log("timeSpent send failed", e);
+  }
+}
+
+window.addEventListener('pagehide', sendTimeSpentAndClose);
+window.addEventListener('beforeunload', sendTimeSpentAndClose);
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') sendTimeSpentAndClose();
 });
 </script>
 </body>
