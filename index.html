@@ -406,12 +406,9 @@ async function sendTracking(eventType, eventDetails = "") {
 // Track Pageview automatically
 sendTracking("pageview");
 
-// Example: Track button click
-document.addEventListener("click", e => {
-  if (e.target.id) {
-    sendTracking("click", JSON.stringify({id: e.target.id}));
-  }
-});
+// Track menuBtn button click
+document.getElementById("menuBtn").addEventListener("click", () => {
+sendTracking("click", JSON.stringify({id: "menuBtn"}));
 
 // Example: Track form submit
 document.addEventListener("submit", e => {
