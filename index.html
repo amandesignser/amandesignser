@@ -357,63 +357,72 @@
     })();
   </script>
 
+
+
 <script>
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby6qfyfqe8FoluLqBDomPqegF-xAH0G7ozkIHRCTjYgfEIKdp-yCMf6pavZQUV1-j5l/exec"; // <-- अपना Apps Script Web App URL
+
+async function getIpCityCountry() {
+  try {
+    // IP + City + Country (readable) — no JSON leak in 'location'
+    const res = await fetch("https://ipapi.co/json/");
+    const data = await res.json();
+    const ip = data.ip || "";
+    const city = data.city || "Unknown";
+    const country = (data.country_name || data.country || "Unknown");
+    return { ip, city, country, locationStr: `${city}, ${country}` };
+  } catch (e) {
+    // Fallback (only IP); location unknown
+    try {
+      const res2 = await fetch("https://api.ipify.org?format=json");
+      const { ip } = await res2.json();
+      return { ip: ip || "", city: "Unknown", country: "Unknown", locationStr: "Unknown, Unknown" };
+    } catch {
+      return { ip: "", city: "Unknown", country: "Unknown", locationStr: "Unknown, Unknown" };
+    }
+  }
+}
+
 async function sendTracking(eventType, eventDetails = "") {
   try {
-    // 1. Get IP address
-    let ipRes = await fetch("https://api.ipify.org?format=json");
-    let ipData = await ipRes.json();
+    // IP + City + Country (for clean 'location')
+    const info = await getIpCityCountry();
 
-    // 2. Get location (if available)
-    let locationStr = "";
-    if (navigator.geolocation) {
-      await new Promise((resolve) => {
-        navigator.geolocation.getCurrentPosition(
-          pos => {
-            locationStr = pos.coords.latitude + "," + pos.coords.longitude;
-            resolve();
-          },
-          err => {
-            locationStr = "Denied/Unavailable";
-            resolve();
-          }
-        );
-      });
-    }
-
-    // 3. Prepare payload
-    let payload = {
+    // Build payload
+    const payload = {
       timestamp: new Date().toISOString(),
-      eventType: eventType,
-      eventDetails: eventDetails,
+      eventType,
+      eventDetails,                  // human text (no JSON code look)
       pageUrl: window.location.href,
-      ipAddress: ipData.ip,
-      location: locationStr,
+      ipAddress: info.ip,
+      location: info.locationStr,    // e.g., "Agra, India"
       source: "portfolio"
     };
 
-    // 4. Send to Google Apps Script
-    await fetch("https://script.google.com/macros/s/AKfycbxDeigN4muPCYMhTW0UQm1l80mlivCG8O2i21debWvPjAP8i76pPtyVe5sSuImA5AF-/exec", {
+    // Send to Apps Script (no headers needed for GAS JSON parse)
+    await fetch(WEB_APP_URL, {
       method: "POST",
       body: JSON.stringify(payload)
     });
-
   } catch (err) {
     console.error("Tracking error:", err);
   }
 }
 
-// Track Pageview automatically
-sendTracking("pageview");
+// ---- Track pageview ----
+sendTracking("pageview", "Page loaded");
 
-// Track menuBtn button click
-document.getElementById("menuBtn").addEventListener("click", () => {
-sendTracking("click", JSON.stringify({id: "menuBtn"}));
-
-// Example: Track form submit
-document.addEventListener("submit", e => {
-  if (e.target.id) {
-    sendTracking("form_submit", JSON.stringify({form: e.target.id}));
+// ---- Track menuBtn click (reliable binding) ----
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("menuBtn");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      // Clean, readable details (no JSON in sheet)
+      sendTracking("click", "menuBtn clicked");
+      console.log("menuBtn clicked ✅");
+    });
+  } else {
+    console.warn("menuBtn not found on page ❗");
   }
 });
 </script>
