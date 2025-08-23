@@ -29,7 +29,28 @@
   <meta name="twitter:description" content="Portfolio of Aman Designser (Aman Kumar) — Web Designer & Front-end Developer. Modern, clean & responsive web design." />
   <meta name="twitter:image" content="https://amandesignser.github.io/amandesignser/aman.jpg" />
 
-  <!-- Structured Data (JSON-LD for Google Knowledge Graph) -->
+  <style>
+    :root{
+      --c1:#EDE4F0; --c2:#CBB4D4; --c3:#A88BC1;
+      --ink:#0f1021; --ink2:#2b2b34;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,sans-serif;background:linear-gradient(180deg,var(--c1),var(--c2));color:var(--ink)}
+    /* Reveal animation */
+    .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease}
+    .reveal.show{opacity:1;transform:translateY(0)}
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto}
+      .reveal,.reveal.show{opacity:1;transform:none;animation:none}
+    }
+    /* video styling */
+    .video-card video{width:100%;height:100%;object-fit:cover;display:block}
+    .video-playbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:10;background:rgba(255,255,255,0.95);color:var(--c3);border-radius:999px;padding:10px 14px;font-weight:700;display:none}
+    .video-card.paused .video-playbtn{display:block}
+    .card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid rgba(11,11,12,0.06);box-shadow:0 10px 30px rgba(11,11,12,0.03)}
+  </style>
+
+    <!-- Structured Data (JSON-LD for Google Knowledge Graph) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -78,27 +99,6 @@
       }
     }
   </script>
-
-  <style>
-    :root{
-      --c1:#EDE4F0; --c2:#CBB4D4; --c3:#A88BC1;
-      --ink:#0f1021; --ink2:#2b2b34;
-    }
-    html{scroll-behavior:smooth}
-    body{font-family:Inter,system-ui,Segoe UI,Roboto,sans-serif;background:linear-gradient(180deg,var(--c1),var(--c2));color:var(--ink)}
-    /* Reveal animation */
-    .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease}
-    .reveal.show{opacity:1;transform:translateY(0)}
-    @media (prefers-reduced-motion: reduce){
-      html{scroll-behavior:auto}
-      .reveal,.reveal.show{opacity:1;transform:none;animation:none}
-    }
-    /* video styling */
-    .video-card video{width:100%;height:100%;object-fit:cover;display:block}
-    .video-playbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:10;background:rgba(255,255,255,0.95);color:var(--c3);border-radius:999px;padding:10px 14px;font-weight:700;display:none}
-    .video-card.paused .video-playbtn{display:block}
-    .card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid rgba(11,11,12,0.06);box-shadow:0 10px 30px rgba(11,11,12,0.03)}
-  </style>
 
   <!-- Schema.org -->
   <script type="application/ld+json">
