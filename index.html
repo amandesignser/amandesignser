@@ -17,7 +17,7 @@
   <meta property="og:title" content="amandesignser | Aman Kumar — Web Designer & Developer" />
   <meta property="og:description" content="Portfolio of Aman Designser (Aman Kumar) — Web Designer & Front-end Developer. Explore modern, clean & responsive websites." />
   <meta property="og:url" content="https://amandesignser.github.io/amandesignser/" />
-  <meta property="og:image" content="https://amandesignser.github.io/amandesignser/aman.jpg" />
+  <meta property="og:image" content="https://amandesignser.github.io/amandesignser/aman.webp" />
   <meta property="og:image:alt" content="Aman Kumar portrait" />
 
   <!-- Optional video preview -->
@@ -27,53 +27,18 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="amandesignser | Aman Kumar — Web Designer & Developer" />
   <meta name="twitter:description" content="Portfolio of Aman Designser (Aman Kumar) — Web Designer & Front-end Developer. Modern, clean & responsive web design." />
-  <meta name="twitter:image" content="https://amandesignser.github.io/amandesignser/aman.jpg" />
+  <meta name="twitter:image" content="https://amandesignser.github.io/amandesignser/aman.webp" />
 
-  <!-- Preload critical resources -->
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" /></noscript>
+  <!-- Preconnect to external domains for faster loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+
+  <!-- Optimized Google Fonts - Variable font with font-display swap -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" /></noscript>
   
-  <!-- Inline critical CSS -->
-  <style>
-    :root{
-      --c1:#EDE4F0; --c2:#CBB4D4; --c3:#A88BC1;
-      --ink:#0f1021; --ink2:#2b2b34;
-    }
-    html{scroll-behavior:smooth}
-    body{font-family:system-ui,Segoe UI,Roboto,sans-serif;background:linear-gradient(180deg,var(--c1),var(--c2));color:var(--ink);margin:0}
-    /* Reveal animation */
-    .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease}
-    .reveal.show{opacity:1;transform:translateY(0)}
-    @media (prefers-reduced-motion: reduce){
-      html{scroll-behavior:auto}
-      .reveal,.reveal.show{opacity:1;transform:none;animation:none}
-    }
-    /* video styling */
-    .video-card video{width:100%;height:100%;object-fit:cover;display:block}
-    .video-playbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:10;background:rgba(255,255,255,0.95);color:var(--c3);border-radius:999px;padding:10px 14px;font-weight:700;display:none}
-    .video-card.paused .video-playbtn{display:block}
-    .card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid rgba(11,11,12,0.06);box-shadow:0 10px 30px rgba(11,11,12,0.03)}
-    
-    /* Critical layout styles */
-    .sticky{position:sticky;top:0;z-index:40}
-    .backdrop-blur{backdrop-filter:blur(8px)}
-    .max-w-6xl{max-width:72rem}
-    .mx-auto{margin-left:auto;margin-right:auto}
-    .px-4{padding-left:1rem;padding-right:1rem}
-    .py-3{padding-top:0.75rem;padding-bottom:0.75rem}
-    .flex{display:flex}
-    .items-center{align-items:center}
-    .justify-between{justify-content:space-between}
-    .hidden{display:none}
-    .font-extrabold{font-weight:800}
-    .text-xl{font-size:1.25rem}
-    .border-b{border-bottom-width:1px}
-    .bg-white{background-color:#fff}
-    .bg-white\/80{background-color:rgba(255,255,255,0.8)}
-    .border-brand200\/40{border-color:rgba(203,180,212,0.4)}
-    .md\\:flex{display:flex}
-  </style>
-
   <!-- Structured Data (JSON-LD for Google Knowledge Graph) -->
   <script type="application/ld+json">
   {
@@ -82,7 +47,7 @@
     "name": "amandesignser",
     "alternateName": "Aman Kumar",
     "url": "https://amandesignser.github.io/amandesignser/",
-    "image": "https://amandesignser.github.io/amandesignser/aman.jpg",
+    "image": "https://amandesignser.github.io/amandesignser/aman.webp",
     "jobTitle": "Web Designer & Front-end Developer",
     "worksFor": {
       "@type": "Organization",
@@ -98,49 +63,297 @@
   }
   </script>
 
-  <!-- Favicon -->
-  <link rel="icon" href="aman.jpg" type="image/jpeg"/>
+  <!-- Optimized Favicon -->
+  <link rel="icon" href="aman.webp" type="image/webp"/>
 
-  <!-- Preconnect to external domains -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
-
-  <!-- Google tag (gtag.js) - Load asynchronously -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CN24ESW1EW"></script>
+  <!-- Google Analytics - Optimized loading -->
   <script>
+    // Load GA asynchronously after page interaction
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config','G-CN24ESW1EW');
+    gtag('config','G-CN24ESW1EW', {
+      page_title: 'amandesignser Portfolio',
+      page_location: window.location.href,
+      send_page_view: false
+    });
+    
     function trackClick(platform){
       try{
         gtag('event','click',{event_category:'Social Links',event_label:platform});
       }catch(e){}
     }
+
+    // Load GA script only after user interaction or after 3 seconds
+    let gaLoaded = false;
+    function loadGA() {
+      if (gaLoaded) return;
+      gaLoaded = true;
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-CN24ESW1EW';
+      document.head.appendChild(script);
+      gtag('event', 'page_view');
+    }
+    
+    ['mousedown', 'touchstart', 'scroll'].forEach(event => {
+      document.addEventListener(event, loadGA, { once: true, passive: true });
+    });
+    setTimeout(loadGA, 3000);
   </script>
   <meta name="google-site-verification" content="k6IgufhCa3pYTwacnAQHmD1ChvkPoMs5C-jWKeFiILc" />
+
+  <!-- Comprehensive CSS - Inlined and optimized -->
+  <style>
+    /* CSS Custom Properties */
+    :root{
+      --c1:#EDE4F0; --c2:#CBB4D4; --c3:#A88BC1;
+      --ink:#0f1021; --ink2:#2b2b34;
+    }
+    
+    /* Base Styles */
+    *,::before,::after{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}
+    ::before,::after{--tw-content:''}
+    html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;scroll-behavior:smooth}
+    body{margin:0;line-height:inherit;font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(180deg,var(--c1),var(--c2));color:var(--ink);min-height:100vh}
+    
+    /* Typography */
+    h1,h2,h3,h4,h5,h6{margin:0;font-size:inherit;font-weight:inherit}
+    p{margin:0}
+    a{color:inherit;text-decoration:inherit}
+    b,strong{font-weight:bolder}
+    
+    /* Form elements */
+    button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;font-weight:inherit;line-height:inherit;color:inherit;margin:0;padding:0}
+    button,select{text-transform:none}
+    button,[type='button'],[type='reset'],[type='submit']{-webkit-appearance:button;background-color:transparent;background-image:none}
+    
+    /* Media */
+    img,svg,video,canvas,audio,iframe,embed,object{display:block;vertical-align:middle}
+    img,video{max-width:100%;height:auto}
+    
+    /* Lists */
+    ol,ul,menu{list-style:none;margin:0;padding:0}
+    
+    /* Utilities */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}
+    
+    /* Layout */
+    .container{width:100%}
+    .mx-auto{margin-left:auto;margin-right:auto}
+    .max-w-6xl{max-width:72rem}
+    .px-4{padding-left:1rem;padding-right:1rem}
+    .py-3{padding-top:0.75rem;padding-bottom:0.75rem}
+    .py-6{padding-top:1.5rem;padding-bottom:1.5rem}
+    .pt-14{padding-top:3.5rem}
+    .mt-3{margin-top:0.75rem}
+    .mt-4{margin-top:1rem}
+    .mt-6{margin-top:1.5rem}
+    .mt-16{margin-top:4rem}
+    .mb-16{margin-bottom:4rem}
+    
+    /* Flexbox */
+    .flex{display:flex}
+    .inline-flex{display:inline-flex}
+    .flex-col{flex-direction:column}
+    .flex-wrap{flex-wrap:wrap}
+    .items-center{align-items:center}
+    .items-end{align-items:flex-end}
+    .justify-between{justify-content:space-between}
+    .gap-2{gap:0.5rem}
+    .gap-3{gap:0.75rem}
+    .gap-4{gap:1rem}
+    .gap-5{gap:1.25rem}
+    .gap-6{gap:1.5rem}
+    .gap-8{gap:2rem}
+    
+    /* Grid */
+    .grid{display:grid}
+    .grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}
+    
+    /* Position */
+    .relative{position:relative}
+    .absolute{position:absolute}
+    .sticky{position:sticky}
+    .top-0{top:0px}
+    .left-0{left:0px}
+    .inset-0{inset:0px}
+    .-inset-1{inset:-0.25rem}
+    .z-10{z-index:10}
+    .z-40{z-index:40}
+    
+    /* Display */
+    .hidden{display:none}
+    .block{display:block}
+    
+    /* Sizing */
+    .w-full{width:100%}
+    .h-full{height:100%}
+    .max-w-sm{max-width:24rem}
+    .max-w-2xl{max-width:42rem}
+    
+    /* Colors & Backgrounds */
+    .bg-white{background-color:rgb(255 255 255)}
+    .bg-white\/60{background-color:rgb(255 255 255 / 0.6)}
+    .bg-white\/70{background-color:rgb(255 255 255 / 0.7)}
+    .bg-white\/80{background-color:rgb(255 255 255 / 0.8)}
+    .bg-white\/90{background-color:rgb(255 255 255 / 0.9)}
+    .text-white{color:rgb(255 255 255)}
+    
+    /* Brand Colors */
+    .bg-brand50{background-color:#EDE4F0}
+    .bg-brand400{background-color:#A88BC1}
+    .text-brand400{color:#A88BC1}
+    .border-brand200{border-color:#CBB4D4}
+    .border-brand200\/40{border-color:rgb(203 180 212 / 0.4)}
+    .border-brand200\/50{border-color:rgb(203 180 212 / 0.5)}
+    .border-brand200\/60{border-color:rgb(203 180 212 / 0.6)}
+    
+    /* Typography */
+    .text-xs{font-size:0.75rem;line-height:1rem}
+    .text-sm{font-size:0.875rem;line-height:1.25rem}
+    .text-lg{font-size:1.125rem;line-height:1.75rem}
+    .text-xl{font-size:1.25rem;line-height:1.75rem}
+    .text-2xl{font-size:1.5rem;line-height:2rem}
+    .text-3xl{font-size:1.875rem;line-height:2.25rem}
+    .text-4xl{font-size:2.25rem;line-height:2.5rem}
+    .font-semibold{font-weight:600}
+    .font-bold{font-weight:700}
+    .font-extrabold{font-weight:800}
+    .leading-tight{line-height:1.25}
+    .tracking-tight{letter-spacing:-0.025em}
+    
+    /* Borders */
+    .border{border-width:1px}
+    .border-t{border-top-width:1px}
+    .border-b{border-bottom-width:1px}
+    .rounded-lg{border-radius:0.5rem}
+    .rounded-xl{border-radius:0.75rem}
+    .rounded-2xl{border-radius:1rem}
+    .rounded-full{border-radius:9999px}
+    .overflow-hidden{overflow:hidden}
+    
+    /* Spacing */
+    .p-4{padding:1rem}
+    .p-6{padding:1.5rem}
+    .px-2{padding-left:0.5rem;padding-right:0.5rem}
+    .px-3{padding-left:0.75rem;padding-right:0.75rem}
+    .px-5{padding-left:1.25rem;padding-right:1.25rem}
+    .py-1{padding-top:0.25rem;padding-bottom:0.25rem}
+    .py-2{padding-top:0.5rem;padding-bottom:0.5rem}
+    
+    /* Effects */
+    .shadow-soft{box-shadow:0 20px 40px rgba(168,139,193,0.18)}
+    .shadow-lg{box-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)}
+    .backdrop-blur{backdrop-filter:blur(8px)}
+    .blur-xl{filter:blur(24px)}
+    
+    /* Transitions */
+    .transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-timing-function:cubic-bezier(0.4,0,0.2,1);transition-duration:150ms}
+    
+    /* Hover states */
+    .hover\:text-brand400:hover{color:#A88BC1}
+    .hover\:bg-brand50:hover{background-color:#EDE4F0}
+    .hover\:bg-white:hover{background-color:rgb(255 255 255)}
+    .hover\:shadow-lg:hover{box-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)}
+    .hover\:shadow-soft:hover{box-shadow:0 20px 40px rgba(168,139,193,0.18)}
+    .hover\:scale-\[1\.03\]:hover{transform:scale(1.03)}
+    .hover\:underline:hover{text-decoration-line:underline}
+    .group:hover .group-hover\:scale-\[1\.03\]{transform:scale(1.03)}
+    .group:hover .group-hover\:bg-brand400\/10{background-color:rgb(168 139 193 / 0.1)}
+    
+    /* Object fit */
+    .object-cover{object-fit:cover}
+    .aspect-square{aspect-ratio:1 / 1}
+    .aspect-\[4\/3\]{aspect-ratio:4 / 3}
+    
+    /* Custom animations */
+    .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease}
+    .reveal.show{opacity:1;transform:translateY(0)}
+    
+    /* Video specific styles */
+    .video-card video{width:100%;height:100%;object-fit:cover;display:block}
+    .video-playbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:10;background:rgba(255,255,255,0.95);color:var(--c3);border-radius:999px;padding:10px 14px;font-weight:700;display:none}
+    .video-card.paused .video-playbtn{display:block}
+    
+    /* Card styles */
+    .card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid rgba(11,11,12,0.06);box-shadow:0 10px 30px rgba(11,11,12,0.03)}
+    
+    /* Responsive Design */
+    @media (min-width: 640px) {
+      .sm\\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    
+    @media (min-width: 768px) {
+      .md\\:pt-20{padding-top:5rem}
+      .md\\:mt-24{margin-top:6rem}
+      .md\\:text-2xl{font-size:1.5rem;line-height:2rem}
+      .md\\:text-3xl{font-size:1.875rem;line-height:2.25rem}
+      .md\\:text-6xl{font-size:3.75rem;line-height:1}
+      .md\\:text-xl{font-size:1.25rem;line-height:1.75rem}
+      .md\\:gap-12{gap:3rem}
+      .md\\:gap-10{gap:2.5rem}
+      .md\\:mt-4{margin-top:1rem}
+      .md\\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .md\\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .md\\:grid-cols-\\[1\\.1fr_\\.9fr\\]{grid-template-columns:1.1fr .9fr}
+      .md\\:justify-self-end{justify-self:end}
+      .md\\:flex{display:flex}
+      .md\\:hidden{display:none}
+      .md\\:inline-flex{display:inline-flex}
+      .md\\:reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease}
+    }
+    
+    @media (min-width: 1024px) {
+      .lg\\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    }
+
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+      html{scroll-behavior:auto}
+      .reveal,.reveal.show,.md\\:reveal{opacity:1 !important;transform:none !important;transition:none !important}
+      .transition{transition:none !important}
+      .hover\\:scale-\\[1\\.03\\]:hover{transform:none !important}
+      .group:hover .group-hover\\:scale-\\[1\\.03\\]{transform:none !important}
+    }
+
+    /* Performance optimizations */
+    img {
+      content-visibility: auto;
+      contain-intrinsic-size: 300px 200px;
+    }
+    
+    .card {
+      contain: layout style paint;
+    }
+    
+    /* Focus styles for accessibility */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--c3);
+      outline-offset: 2px;
+    }
+  </style>
 </head>
 
 <body>
   <!-- Top nav -->
-  <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/60 bg-white/80 border-b border-brand200/40">
+  <header class="sticky top-0 z-40 backdrop-blur bg-white/60 border-b border-brand200/40">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="#home" class="font-extrabold tracking-tight text-xl md:text-2xl text-[var(--ink)]">amandesignser</a>
-      <nav class="hidden md:flex items-center gap-6 text-[var(--ink2)] font-semibold">
-        <a href="#about" class="hover:text-[var(--ink)]">About</a>
-        <a href="#skills" class="hover:text-[var(--ink)]">Skills</a>
-        <a href="#portfolio" class="hover:text-[var(--ink)]">Work</a>
-        <a href="#contact" class="hover:text-[var(--ink)]">Contact</a>
+      <a href="#home" class="font-extrabold tracking-tight text-xl md:text-2xl">amandesignser</a>
+      <nav class="hidden md:flex items-center gap-6 font-semibold">
+        <a href="#about" class="hover:text-brand400">About</a>
+        <a href="#skills" class="hover:text-brand400">Skills</a>
+        <a href="#portfolio" class="hover:text-brand400">Work</a>
+        <a href="#contact" class="hover:text-brand400">Contact</a>
       </nav>
-      <button id="menuBtn" class="md:hidden rounded-lg border border-brand200/60 px-3 py-2 text-[var(--ink)]" aria-label="Open menu">Menu</button>
+      <button id="menuBtn" class="md:hidden rounded-lg border border-brand200/60 px-3 py-2" aria-label="Open menu">Menu</button>
     </div>
     <div id="mobileMenu" class="hidden md:hidden border-t border-brand200/50 bg-white/90">
-      <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-3 text-[var(--ink2)] font-semibold">
-        <a href="#about" class="hover:text-[var(--ink)]">About</a>
-        <a href="#skills" class="hover:text-[var(--ink)]">Skills</a>
-        <a href="#portfolio" class="hover:text-[var(--ink)]">Work</a>
-        <a href="#contact" class="hover:text-[var(--ink)]">Contact</a>
+      <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-3 font-semibold">
+        <a href="#about" class="hover:text-brand400">About</a>
+        <a href="#skills" class="hover:text-brand400">Skills</a>
+        <a href="#portfolio" class="hover:text-brand400">Work</a>
+        <a href="#contact" class="hover:text-brand400">Contact</a>
       </div>
     </div>
   </header>
@@ -151,15 +364,15 @@
       <div class="grid md:grid-cols-[1.1fr_.9fr] items-center gap-8 md:gap-12">
         <div class="reveal show md:reveal">
           <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
-            Namaste, I'm <span class="text-[var(--ink)]">Aman Kumar</span>
+            Namaste, I'm <span>Aman Kumar</span>
           </h1>
-          <p class="mt-3 md:mt-4 text-lg md:text-xl text-[var(--ink2)] max-w-2xl">
+          <p class="mt-3 md:mt-4 text-lg md:text-xl max-w-2xl">
             Web Designer & Front-end Developer. I craft <strong>clean, modern</strong> and
             <strong>responsive</strong> websites that feel fast and look premium.
           </p>
           <div class="mt-6 flex flex-wrap gap-3">
             <a href="#portfolio" class="inline-flex items-center gap-2 bg-brand400 text-white font-semibold px-5 py-3 rounded-xl shadow-soft hover:shadow-lg transition">View Work</a>
-            <a href="mailto:amanbarnd@gmail.com" class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition">Contact Me</a>
+            <a href="mailto:amanbarnd@gmail.com" class="inline-flex items-center gap-2 bg-white border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition">Contact Me</a>
           </div>
           <div class="flex flex-wrap gap-2 mt-6 text-sm">
             <span class="px-3 py-1 rounded-full bg-white/70 border border-brand200/60">Available for freelance</span>
@@ -169,11 +382,16 @@
 
         <div class="reveal md:justify-self-end">
           <div class="relative w-full max-w-sm mx-auto">
-            <div class="absolute -inset-1 rounded-2xl bg-[conic-gradient(from_140deg,rgba(168,139,193,.65),rgba(203,180,212,.35),transparent)] blur-xl"></div>
+            <div class="absolute -inset-1 rounded-2xl bg-gradient-to-br from-brand400/65 via-brand200/35 to-transparent blur-xl"></div>
             <div class="relative rounded-2xl overflow-hidden border border-brand200 bg-white">
-              <img src="aman.jpg" loading="eager" alt="Aman Kumar portrait"
-                   class="w-full h-full object-cover aspect-square"
-                   onerror="this.src=''; this.remove();"/>
+              <picture>
+                <source srcset="aman.avif" type="image/avif">
+                <source srcset="aman.webp" type="image/webp">
+                <img src="aman.jpg" loading="eager" alt="Aman Kumar portrait"
+                     class="w-full h-full object-cover aspect-square"
+                     width="400" height="400"
+                     onerror="this.style.display='none';"/>
+              </picture>
             </div>
           </div>
         </div>
@@ -185,14 +403,14 @@
       <div class="grid md:grid-cols-2 gap-6 md:gap-10">
         <div class="reveal card p-6 rounded-2xl bg-white/80 border border-brand200/60">
           <h2 class="text-2xl md:text-3xl font-extrabold">About Me</h2>
-          <p class="mt-3 text-[var(--ink2)]">
+          <p class="mt-3">
             Main Aman (AmanDesignser). Main performance, accessibility aur pixel-perfect UI par focus karta hoon.
             Tech stack: <strong>HTML, CSS, JavaScript</strong> + modern workflows. Goal — fast, clean, business-ready web experiences.
           </p>
         </div>
         <div class="reveal card p-6 rounded-2xl bg-white/80 border border-brand200/60">
           <h3 class="text-xl font-bold">Highlights</h3>
-          <ul class="mt-3 grid sm:grid-cols-2 gap-2 text-[var(--ink2)]">
+          <ul class="mt-3 grid sm:grid-cols-2 gap-2">
             <li>⚡ Performance-first builds</li>
             <li>📱 Fully responsive layouts</li>
             <li>🧭 UX-focused decisions</li>
@@ -209,17 +427,17 @@
         <div class="reveal p-6 rounded-2xl bg-white border border-brand200">
           <div class="text-brand400 text-3xl mb-2">🎨</div>
           <h3 class="font-bold text-lg">UI/UX Design</h3>
-          <p class="text-[var(--ink2)] mt-1">Intuitive, elegant interfaces with clear hierarchy & delightful micro-details.</p>
+          <p class="mt-1">Intuitive, elegant interfaces with clear hierarchy & delightful micro-details.</p>
         </div>
         <div class="reveal p-6 rounded-2xl bg-white border border-brand200">
           <div class="text-brand400 text-3xl mb-2">💻</div>
           <h3 class="font-bold text-lg">Front-end Dev</h3>
-          <p class="text-[var(--ink2)] mt-1">Clean HTML/CSS/JS, component thinking & accessibility baked-in.</p>
+          <p class="mt-1">Clean HTML/CSS/JS, component thinking & accessibility baked-in.</p>
         </div>
         <div class="reveal p-6 rounded-2xl bg-white border border-brand200">
           <div class="text-brand400 text-3xl mb-2">🚀</div>
           <h3 class="font-bold text-lg">Performance & SEO</h3>
-          <p class="text-[var(--ink2)] mt-1">Fast loads, semantic markup, meta/OG done right, and Lighthouse-friendly.</p>
+          <p class="mt-1">Fast loads, semantic markup, meta/OG done right, and Lighthouse-friendly.</p>
         </div>
       </div>
     </section>
@@ -228,14 +446,20 @@
     <section id="portfolio" class="max-w-6xl mx-auto px-4 mt-16 md:mt-24">
       <div class="flex items-end justify-between">
         <h2 class="text-2xl md:text-3xl font-extrabold">Selected Work</h2>
-        <a href="mailto:amanbarnd@gmail.com" class="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-[var(--ink)] hover:underline">Start a project →</a>
+        <a href="mailto:amanbarnd@gmail.com" class="hidden md:inline-flex items-center gap-2 text-sm font-semibold hover:underline">Start a project →</a>
       </div>
 
       <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         <!-- Project 1 -->
         <article class="reveal group rounded-2xl overflow-hidden bg-white border border-brand200 hover:shadow-soft transition">
           <div class="relative aspect-[4/3] overflow-hidden">
-            <img src="project1.jpg" loading="lazy" alt="Modern portfolio website UI" class="w-full h-full object-cover group-hover:scale-[1.03] transition">
+            <picture>
+              <source srcset="project1.avif" type="image/avif">
+              <source srcset="project1.webp" type="image/webp">
+              <img src="project1.jpg" loading="lazy" alt="Modern portfolio website UI" 
+                   class="w-full h-full object-cover group-hover:scale-[1.03] transition"
+                   width="400" height="300">
+            </picture>
             <div class="absolute inset-0 bg-brand400/0 group-hover:bg-brand400/10 transition"></div>
           </div>
           <div class="p-4">
@@ -243,15 +467,18 @@
               <h3 class="font-bold">Modern Portfolio</h3>
               <span class="text-xs px-2 py-1 rounded-full bg-brand50 border border-brand200">2025</span>
             </div>
-            <p class="text-sm text-[var(--ink2)] mt-1">Responsive grid, clean hero, micro-interactions.</p>
+            <p class="text-sm mt-1">Responsive grid, clean hero, micro-interactions.</p>
           </div>
         </article>
 
         <!-- Project 2 (VIDEO) -->
         <article class="reveal group rounded-2xl overflow-hidden bg-white border border-brand200 hover:shadow-soft transition video-card" id="videoCard">
           <div class="relative aspect-[4/3] overflow-hidden">
-            <video id="proj2" src="project2.mp4" poster="project2.jpg" preload="metadata" muted loop playsinline class="w-full h-full object-cover"></video>
-            <button id="videoPlayBtn" class="video-playbtn" aria-label="Play project video">Play</button>
+            <video id="proj2" preload="none" muted loop playsinline class="w-full h-full object-cover" poster="project2.webp">
+              <source src="project2.webm" type="video/webm">
+              <source src="project2.mp4" type="video/mp4">
+            </video>
+            <button id="videoPlayBtn" class="video-playbtn" aria-label="Play project video">▶️</button>
             <div class="absolute inset-0 bg-brand400/0 group-hover:bg-brand400/10 transition"></div>
           </div>
           <div class="p-4">
@@ -259,14 +486,20 @@
               <h3 class="font-bold">E-commerce UI</h3>
               <span class="text-xs px-2 py-1 rounded-full bg-brand50 border border-brand200">2024</span>
             </div>
-            <p class="text-sm text-[var(--ink2)] mt-1">Fast shopping experience, checkout UX optimised. (Video demo)</p>
+            <p class="text-sm mt-1">Fast shopping experience, checkout UX optimised. (Video demo)</p>
           </div>
         </article>
 
         <!-- Project 3 -->
         <article class="reveal group rounded-2xl overflow-hidden bg-white border border-brand200 hover:shadow-soft transition">
           <div class="relative aspect-[4/3] overflow-hidden">
-            <img src="project3.jpg" loading="lazy" alt="Business landing page redesign" class="w-full h-full object-cover group-hover:scale-[1.03] transition">
+            <picture>
+              <source srcset="project3.avif" type="image/avif">
+              <source srcset="project3.webp" type="image/webp">
+              <img src="project3.jpg" loading="lazy" alt="Business landing page redesign" 
+                   class="w-full h-full object-cover group-hover:scale-[1.03] transition"
+                   width="400" height="300">
+            </picture>
             <div class="absolute inset-0 bg-brand400/0 group-hover:bg-brand400/10 transition"></div>
           </div>
           <div class="p-4">
@@ -274,7 +507,7 @@
               <h3 class="font-bold">Business Landing</h3>
               <span class="text-xs px-2 py-1 rounded-full bg-brand50 border border-brand200">2023</span>
             </div>
-            <p class="text-sm text-[var(--ink2)] mt-1">Corporate tone with crisp sections.</p>
+            <p class="text-sm mt-1">Corporate tone with crisp sections.</p>
           </div>
         </article>
       </div>
@@ -284,421 +517,249 @@
     <section id="contact" class="max-w-6xl mx-auto px-4 mt-16 md:mt-24 mb-16">
       <div class="reveal rounded-2xl border border-brand200 bg-white/80 p-6">
         <h2 class="text-2xl md:text-3xl font-extrabold">Let's Work Together</h2>
-        <p class="mt-2 text-[var(--ink2)]">Have a project in mind? Drop a message and I'll reply quickly.</p>
+        <p class="mt-2">Have a project in mind? Drop a message and I'll reply quickly.</p>
         <div class="mt-4 flex flex-wrap gap-3">
           <a href="mailto:amanbarnd@gmail.com" class="inline-flex items-center gap-2 bg-brand400 text-white font-semibold px-5 py-3 rounded-xl shadow-soft hover:shadow-lg transition">Send an Email</a>
 
-          <!-- Facebook (tracked) -->
+          <!-- Social Links with tracking -->
           <a href="https://www.facebook.com/share/1EcXP6fpg7/" target="_blank" rel="noopener noreferrer"
-             onclick="trackClick('Facebook')" class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition" aria-label="Open Facebook">Facebook</a>
+             onclick="trackClick('Facebook')" class="inline-flex items-center gap-2 bg-white border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition" aria-label="Open Facebook">Facebook</a>
 
-          <!-- LinkedIn (updated link + tracked) -->
           <a href="https://www.linkedin.com/in/aman-kumar-940bb0233?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
              target="_blank" rel="noopener noreferrer" onclick="trackClick('LinkedIn')"
-             class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition" aria-label="Open LinkedIn">LinkedIn</a>
+             class="inline-flex items-center gap-2 bg-white border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition" aria-label="Open LinkedIn">LinkedIn</a>
 
           <a href="https://x.com/amandesignser" target="_blank" rel="noopener noreferrer" onclick="trackClick('Twitter')"
-             class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition" aria-label="Open Twitter">X (Twitter)</a>
+             class="inline-flex items-center gap-2 bg-white border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition" aria-label="Open Twitter">X (Twitter)</a>
 
           <a href="https://instagram.com/amandesignser" target="_blank" rel="noopener noreferrer" onclick="trackClick('Instagram')"
-             class="inline-flex items-center gap-2 bg-white text-[var(--ink)] border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition" aria-label="Open Instagram">Instagram</a>
+             class="inline-flex items-center gap-2 bg-white border border-brand200 font-semibold px-5 py-3 rounded-xl hover:bg-brand50 transition" aria-label="Open Instagram">Instagram</a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="border-t border-brand200/60 bg-white/70">
-    <div class="max-w-6xl mx-auto px-4 py-6 text-sm text-[var(--ink2)] flex flex-wrap items-center justify-between gap-2">
+    <div class="max-w-6xl mx-auto px-4 py-6 text-sm flex flex-wrap items-center justify-between gap-2">
       <div>© <span id="year"></span> AmanDesignser • Built with care</div>
       <a href="#home" class="px-3 py-1 rounded-lg bg-brand50 border border-brand200 hover:bg-white transition">Back to top ↑</a>
     </div>
   </footer>
 
-  <!-- Load non-critical resources after page load -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" media="print" onload="this.media='all'" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Optimized JavaScript - Loaded with high priority optimizations -->
   <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter','system-ui','Segoe UI','Roboto','sans-serif'] },
-          colors: {
-            brand50:'#EDE4F0',
-            brand200:'#CBB4D4',
-            brand400:'#A88BC1',
-            ink:'#0f1021',
-            ink2:'#2b2b34'
-          },
-          boxShadow:{ soft:'0 20px 40px rgba(168,139,193,0.18)' }
-        }
-      }
-    }
-  </script>
+    // Critical path optimizations
+    const year = new Date().getFullYear();
+    document.getElementById('year').textContent = year;
 
-  <script>
-    // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Mobile menu
+    // Mobile menu toggle with performance optimization
     const menuBtn = document.getElementById('menuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
-    menuBtn.addEventListener('click', ()=> mobileMenu.classList.toggle('hidden'));
+    
+    if (menuBtn && mobileMenu) {
+      menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      }, { passive: true });
+    }
 
-    // Reveal on scroll
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
-    },{threshold:0.1});
-    document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+    // Intersection Observer for reveal animations - optimized with will-change
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.willChange = 'transform, opacity';
+          entry.target.classList.add('show');
+          // Clean up will-change after animation
+          setTimeout(() => {
+            entry.target.style.willChange = 'auto';
+          }, 600);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { 
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px' // Start animation earlier for better UX
+    });
 
-    // Video play/pause handling + GA events
-    (function(){
+    // Observe all reveal elements
+    document.querySelectorAll('.reveal').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // Optimized video handling with lazy loading and performance tracking
+    (function initVideoPlayer() {
       const video = document.getElementById('proj2');
-      const card  = document.getElementById('videoCard');
-      const btn   = document.getElementById('videoPlayBtn');
+      const card = document.getElementById('videoCard');
+      const btn = document.getElementById('videoPlayBtn');
 
-      const toggleOverlay = ()=> card.classList.toggle('paused', video.paused);
+      if (!video || !card || !btn) return;
 
-      // Don't autoplay video - let user initiate playback for better performance
-      video.pause();
-      toggleOverlay();
+      let isLoaded = false;
 
-      const fireGA = (action)=> {
-        if(typeof gtag==="function"){
-          gtag('event','video_'+action,{event_category:'Portfolio',event_label:'project2.mp4'});
+      // Lazy load video sources only when needed
+      function loadVideo() {
+        if (isLoaded) return;
+        isLoaded = true;
+        
+        // Set preload to metadata for faster loading
+        video.preload = 'metadata';
+        
+        // Load video sources if not already loaded
+        if (!video.src && video.children.length === 0) {
+          const webmSource = document.createElement('source');
+          webmSource.src = 'project2.webm';
+          webmSource.type = 'video/webm';
+          video.appendChild(webmSource);
+          
+          const mp4Source = document.createElement('source');
+          mp4Source.src = 'project2.mp4';
+          mp4Source.type = 'video/mp4';
+          video.appendChild(mp4Source);
+        }
+      }
+
+      const toggleOverlay = () => {
+        card.classList.toggle('paused', video.paused);
+      };
+
+      // GA tracking function
+      const fireGA = (action) => {
+        if (typeof gtag === "function") {
+          gtag('event', 'video_' + action, {
+            event_category: 'Portfolio',
+            event_label: 'project2.mp4'
+          });
         }
       };
 
-      card.addEventListener('click', (e)=>{
-        if(e.target===btn){ /* handled below */ }
-        if(video.paused){ video.play(); fireGA('play'); }
-        else { video.pause(); fireGA('pause'); }
-        toggleOverlay();
-      });
+      // Start with paused state
+      video.pause();
+      toggleOverlay();
 
-      btn.addEventListener('click',(e)=>{
+      // Load video on hover or click for better performance
+      card.addEventListener('mouseenter', loadVideo, { once: true, passive: true });
+      card.addEventListener('touchstart', loadVideo, { once: true, passive: true });
+
+      // Video play/pause handling
+      const handlePlayPause = (e) => {
+        e.preventDefault();
         e.stopPropagation();
-        if(video.paused){ video.play(); fireGA('play'); }
-        else { video.pause(); fireGA('pause'); }
+        
+        loadVideo(); // Ensure video is loaded
+        
+        if (video.paused) {
+          const playPromise = video.play();
+          if (playPromise) {
+            playPromise.then(() => {
+              fireGA('play');
+            }).catch(() => {
+              // Handle play failure silently
+            });
+          }
+        } else {
+          video.pause();
+          fireGA('pause');
+        }
         toggleOverlay();
+      };
+
+      card.addEventListener('click', handlePlayPause);
+      btn.addEventListener('click', handlePlayPause);
+
+      // Video event listeners
+      video.addEventListener('ended', () => {
+        fireGA('ended');
+        toggleOverlay();
+      }, { passive: true });
+
+      video.addEventListener('play', toggleOverlay, { passive: true });
+      video.addEventListener('pause', toggleOverlay, { passive: true });
+
+      // Handle video load errors gracefully
+      video.addEventListener('error', () => {
+        card.style.display = 'none';
+      }, { passive: true });
+    })();
+
+    // Load heavy tracking script only after everything else is ready
+    let trackerLoaded = false;
+    function loadTracker() {
+      if (trackerLoaded) return;
+      trackerLoaded = true;
+
+      // Optimized tracker with reduced API calls
+      const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby60lD7E-wO75H47SORUGQDm_MNbVG9O6hNGmzgPBQou5uQhHB3uyT7y8oDUg8HwJmn/exec";
+      
+      const TRACK = {
+        visitorId: localStorage.getItem("wr_vid") || (() => {
+          const id = "visitor_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2,8);
+          localStorage.setItem("wr_vid", id);
+          return id;
+        })(),
+        sessionId: sessionStorage.getItem("wr_sid") || (() => {
+          const id = "session_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2,8);
+          sessionStorage.setItem("wr_sid", id);
+          return id;
+        })(),
+        startTime: Date.now()
+      };
+
+      // Simplified tracking function
+      async function track(eventType, details = "") {
+        try {
+          const payload = {
+            timestamp: new Date().toISOString(),
+            visitorId: TRACK.visitorId,
+            sessionId: TRACK.sessionId,
+            eventType: eventType,
+            eventDetails: details,
+            pageUrl: location.href,
+            referrer: document.referrer || "",
+            userAgent: navigator.userAgent,
+            source: "portfolio"
+          };
+
+          // Use sendBeacon for better performance
+          if (navigator.sendBeacon) {
+            navigator.sendBeacon(WEB_APP_URL, JSON.stringify(payload));
+          } else {
+            fetch(WEB_APP_URL, {
+              method: "POST", 
+              body: JSON.stringify(payload),
+              keepalive: true
+            }).catch(() => {});
+          }
+        } catch(e) {
+          // Fail silently to not impact user experience
+        }
+      }
+
+      // Track pageview
+      track("pageview", "Page loaded");
+
+      // Track time spent on unload
+      const trackTimeSpent = () => {
+        const timeSpent = Math.round((Date.now() - TRACK.startTime) / 1000);
+        track("time_spent", timeSpent + " seconds");
+      };
+
+      // Multiple unload event handlers for better coverage
+      ['pagehide', 'beforeunload'].forEach(event => {
+        addEventListener(event, trackTimeSpent, { passive: true });
       });
 
-      video.addEventListener('ended', ()=>{ fireGA('ended'); toggleOverlay(); });
-      video.addEventListener('play', toggleOverlay);
-      video.addEventListener('pause', toggleOverlay);
-    })();
-  </script>
-
-  <!-- Load heavy tracking script only after everything else is loaded -->
-  <script>
-    window.addEventListener('load', function() {
-      setTimeout(function() {
-        /***** Client-side Universal Tracker *****/
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby60lD7E-wO75H47SORUGQDm_MNbVG9O6hNGmzgPBQou5uQhHB3uyT7y8oDUg8HwJmn/exec";
-        const DEBUG = false;
-
-        function log(...args){ if(DEBUG) console.log("[Tracker]", ...args); }
-
-        function uid(prefix = "wr") {
-          return prefix + "_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2,8);
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') {
+          trackTimeSpent();
         }
+      }, { passive: true });
+    }
 
-        function debounce(fn, wait = 200){
-          let t;
-          return (...args) => { clearTimeout(t); t = setTimeout(()=>fn(...args), wait); };
-        }
-
-        function parseUA(ua) {
-          const res = { browser: "Unknown", browserVersion: "", os: "Unknown", deviceType: "Desktop" };
-          try {
-            if (/Firefox\/([0-9\.]+)/.test(ua)) {
-              res.browser = "Firefox"; res.browserVersion = ua.match(/Firefox\/([0-9\.]+)/)[1];
-            } else if (/Edg\/([0-9\.]+)/.test(ua)) {
-              res.browser = "Edge"; res.browserVersion = ua.match(/Edg\/([0-9\.]+)/)[1];
-            } else if (/Chrome\/([0-9\.]+)/.test(ua) && /Safari\//.test(ua)) {
-              res.browser = "Chrome"; res.browserVersion = ua.match(/Chrome\/([0-9\.]+)/)[1];
-            } else if (/Safari\/([0-9\.]+)/.test(ua) && /Version\/([0-9\.]+)/.test(ua)) {
-              res.browser = "Safari"; res.browserVersion = ua.match(/Version\/([0-9\.]+)/)[1];
-            } else if (/OPR\/([0-9\.]+)/.test(ua)) {
-              res.browser = "Opera"; res.browserVersion = ua.match(/OPR\/([0-9\.]+)/)[1];
-            }
-
-            if (/Windows NT/.test(ua)) res.os = "Windows";
-            else if (/Android/.test(ua)) res.os = "Android";
-            else if (/iPhone|iPad|iPod/.test(ua)) res.os = "iOS";
-            else if (/Mac OS X/.test(ua)) res.os = "macOS";
-            else if (/Linux/.test(ua)) res.os = "Linux";
-
-            if (/Mobi|Android|iPhone/.test(ua)) res.deviceType = "Mobile";
-            else if (/iPad|Tablet/.test(ua)) res.deviceType = "Tablet";
-            else res.deviceType = "Desktop";
-          } catch(e){
-            log("parseUA error", e);
-          }
-          return res;
-        }
-
-        function detectAdBlock() {
-          try {
-            const bait = document.createElement("div");
-            bait.className = "adsbox";
-            bait.style.width = "1px";
-            bait.style.height = "1px";
-            bait.style.position = "absolute";
-            bait.style.left = "-9999px";
-            document.body.appendChild(bait);
-            const blocked = (getComputedStyle(bait).display === "none" || bait.offsetParent === null || bait.offsetHeight === 0);
-            bait.remove();
-            return blocked;
-          } catch(e){
-            return false;
-          }
-        }
-
-        // --- Global state ---
-        const TRACK = {
-          visitorId: null,
-          sessionId: null,
-          isFirstVisit: false,
-          sessionStart: Date.now(),
-          ipInfo: null,
-          geoPos: null,
-          uaInfo: null,
-          screen: `${window.screen.width}x${window.screen.height}`,
-          language: navigator.language || navigator.userLanguage || "unknown",
-          networkType: (navigator.connection && (navigator.connection.effectiveType || navigator.connection.type)) || "unknown",
-          adBlock: false,
-          scrollSent: new Set()
-        };
-
-        // --- visitor/session ids ---
-        (function initIds(){
-          let vid = localStorage.getItem("wr_vid");
-          if (!vid) {
-            vid = uid("visitor");
-            localStorage.setItem("wr_vid", vid);
-            TRACK.isFirstVisit = true;
-          } else TRACK.isFirstVisit = false;
-          TRACK.visitorId = vid;
-
-          let sid = sessionStorage.getItem("wr_sid");
-          if (!sid) {
-            sid = uid("session");
-            sessionStorage.setItem("wr_sid", sid);
-          }
-          TRACK.sessionId = sid;
-        })();
-
-        // --- IP + geo helper ---
-        async function loadIpInfo(){
-          if (TRACK.ipInfo) return TRACK.ipInfo;
-          try {
-            const res = await fetch("https://ipapi.co/json/");
-            const data = await res.json();
-            TRACK.ipInfo = {
-              ip: data.ip || "",
-              city: data.city || "Unknown",
-              region: data.region || "",
-              country_name: data.country_name || (data.country || "Unknown"),
-              org: data.org || data.orgname || "",
-              latitude: data.latitude || data.lat || "",
-              longitude: data.longitude || data.lon || ""
-            };
-            return TRACK.ipInfo;
-          } catch (e) {
-            try {
-              const r2 = await fetch("https://api.ipify.org?format=json");
-              const j = await r2.json();
-              TRACK.ipInfo = { ip: j.ip || "", city:"Unknown", region:"", country_name:"Unknown", org:"", latitude:"", longitude:"" };
-              return TRACK.ipInfo;
-            } catch (ee) {
-              TRACK.ipInfo = { ip: "", city:"Unknown", region:"", country_name:"Unknown", org:"", latitude:"", longitude:"" };
-              return TRACK.ipInfo;
-            }
-          }
-        }
-
-        // --- request GPS (non-blocking) ---
-        function requestGeoOnce(timeout = 5000) {
-          return new Promise((resolve) => {
-            if (!navigator.geolocation) return resolve(null);
-            let settled = false;
-            const timer = setTimeout(()=>{ if(!settled){ settled = true; resolve(null); } }, timeout);
-            navigator.geolocation.getCurrentPosition((pos) => {
-              if (settled) return;
-              settled = true; clearTimeout(timer);
-              TRACK.geoPos = { lat: pos.coords.latitude, lon: pos.coords.longitude };
-              resolve(TRACK.geoPos);
-            }, (err) => {
-              if (settled) return;
-              settled = true; clearTimeout(timer);
-              resolve(null);
-            }, { enableHighAccuracy: false, timeout: timeout, maximumAge: 60000 });
-          });
-        }
-
-        // --- send payload to Apps Script ---
-        async function sendTracking(eventType, eventDetails = "", extra = {}) {
-          try {
-            const ip = await loadIpInfo();
-            if (!TRACK.uaInfo) TRACK.uaInfo = parseUA(navigator.userAgent);
-
-            const payload = {
-              timestamp: new Date().toISOString(),
-              visitorId: TRACK.visitorId,
-              sessionId: TRACK.sessionId,
-              isFirstVisit: TRACK.isFirstVisit,
-              eventType: eventType,
-              eventDetails: eventDetails,
-              pageUrl: window.location.href,
-              referrer: document.referrer || "",
-              ipAddress: ip.ip || "",
-              isp: ip.org || "",
-              city: ip.city || "",
-              region: ip.region || "",
-              country: ip.country_name || "",
-              latitude: TRACK.geoPos ? TRACK.geoPos.lat : (ip.latitude || ""),
-              longitude: TRACK.geoPos ? TRACK.geoPos.lon : (ip.longitude || ""),
-              gps: TRACK.geoPos ? `${TRACK.geoPos.lat},${TRACK.geoPos.lon}` : "",
-              location: (ip.city ? ip.city + ", " + ip.country_name : ip.country_name || ""),
-              userAgent: navigator.userAgent,
-              browser: TRACK.uaInfo.browser || "",
-              browserVersion: TRACK.uaInfo.browserVersion || "",
-              os: TRACK.uaInfo.os || "",
-              deviceType: TRACK.uaInfo.deviceType || "",
-              screen: TRACK.screen,
-              language: TRACK.language,
-              networkType: TRACK.networkType || "unknown",
-              adBlock: TRACK.adBlock ? "yes" : "no",
-              timeSpentSec: extra.timeSpentSec || "",
-              source: "portfolio"
-            };
-
-            for (const k in extra) if (!(k in payload)) payload[k] = extra[k];
-
-            // Use beacon API for better performance on unload
-            if (navigator.sendBeacon && (eventType === 'time_spent' || eventType === 'pageview')) {
-              navigator.sendBeacon(WEB_APP_URL, JSON.stringify(payload));
-            } else {
-              await fetch(WEB_APP_URL, {
-                method: "POST",
-                body: JSON.stringify(payload)
-              });
-            }
-
-            log("sent", eventType, eventDetails);
-          } catch (e) {
-            console.error("sendTracking error:", e);
-          }
-        }
-
-        // --- Init ---
-        (async function initializeTracker(){
-          TRACK.uaInfo = parseUA(navigator.userAgent);
-          TRACK.adBlock = detectAdBlock();
-          TRACK.networkType = (navigator.connection && (navigator.connection.effectiveType || navigator.connection.type)) || TRACK.networkType;
-          await loadIpInfo();
-          requestGeoOnce(5000);
-          sendTracking("pageview", "Page loaded");
-        })();
-
-        // --- menuBtn click tracking ---
-        document.addEventListener("DOMContentLoaded", () => {
-          const menuBtn = document.getElementById("menuBtn");
-          if (menuBtn) {
-            menuBtn.addEventListener("click", (e) => {
-              sendTracking("click", "menuBtn clicked");
-              log("menuBtn clicked");
-            });
-          } else {
-            log("menuBtn not found");
-          }
-
-          // track elements with data-track attribute too (optional)
-          document.querySelectorAll("[data-track]").forEach(el => {
-            el.addEventListener("click", () => {
-              const label = el.dataset.track || (el.id || el.innerText || el.tagName);
-              sendTracking("click", `${label}`);
-            });
-          });
-        });
-
-        // --- Scroll depth (25/50/75/100) ---
-        const SCROLL_THRESHOLDS = [25,50,75,100];
-        window.addEventListener("scroll", debounce(() => {
-          const scrolled = window.scrollY + window.innerHeight;
-          const total = document.documentElement.scrollHeight;
-          if (total <= 0) return;
-          const percent = Math.round((scrolled / total) * 100);
-          SCROLL_THRESHOLDS.forEach(t => {
-            if (percent >= t && !TRACK.scrollSent.has(t)) {
-              TRACK.scrollSent.add(t);
-              sendTracking("scroll_depth", `Reached ${t}%`);
-            }
-          });
-        }, 300));
-
-        // --- element view tracking (data-track-view attr) ---
-        if ('IntersectionObserver' in window) {
-          const io = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-              if (e.isIntersecting) {
-                const el = e.target;
-                const label = el.dataset.trackView || (el.id || el.className || el.tagName);
-                sendTracking("element_view", `${label}`);
-                io.unobserve(el);
-              }
-            });
-          }, { threshold: 0.5 });
-
-          document.querySelectorAll("[data-track-view]").forEach(el => io.observe(el));
-        }
-
-        // --- Time spent on page (send on unload) ---
-        const PAGE_START = Date.now();
-        function sendTimeSpentAndClose() {
-          const secs = Math.round((Date.now() - PAGE_START) / 1000);
-          try {
-            if (navigator.sendBeacon) {
-              navigator.sendBeacon(WEB_APP_URL, JSON.stringify({
-                timestamp: new Date().toISOString(),
-                visitorId: TRACK.visitorId,
-                sessionId: TRACK.sessionId,
-                isFirstVisit: TRACK.isFirstVisit,
-                eventType: "time_spent",
-                eventDetails: `${secs} seconds`,
-                pageUrl: window.location.href,
-                timeSpentSec: secs,
-                source: "portfolio"
-              }));
-            } else {
-              fetch(WEB_APP_URL, {
-                method: "POST",
-                body: JSON.stringify({
-                  timestamp: new Date().toISOString(),
-                  visitorId: TRACK.visitorId,
-                  sessionId: TRACK.sessionId,
-                  isFirstVisit: TRACK.isFirstVisit,
-                  eventType: "time_spent",
-                  eventDetails: `${secs} seconds`,
-                  pageUrl: window.location.href,
-                  timeSpentSec: secs,
-                  source: "portfolio"
-                }),
-                keepalive: true
-              });
-            }
-          } catch (e) {
-            log("timeSpent send failed", e);
-          }
-        }
-
-        window.addEventListener('pagehide', sendTimeSpentAndClose);
-        window.addEventListener('beforeunload', sendTimeSpentAndClose);
-        document.addEventListener('visibilitychange', () => {
-          if (document.visibilityState === 'hidden') sendTimeSpentAndClose();
-        });
-      }, 1000); // Delay execution by 1 second after page load
+    // Load tracker after user interaction or timeout
+    ['click', 'scroll', 'touchstart', 'mousemove'].forEach(event => {
+      document.addEventListener(event, loadTracker, { once: true, passive: true });
     });
+    
+    setTimeout(loadTracker, 5000);
   </script>
 </body>
 </html>
