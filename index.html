@@ -356,7 +356,7 @@
       const card  = document.getElementById('videoCard');
       const btn   = document.getElementById('videoPlayBtn');
 
-      const toggleOverlay = ()=> card.classList.toggle('paused', video.paused);
+      const toggleOverlay = ()=> card.classList.toggle('autoplay', video.paused);
 
       // Don't autoplay video - let user initiate playback for better performance
       video.pause();
