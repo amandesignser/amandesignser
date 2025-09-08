@@ -335,58 +335,58 @@
     }
   </script>
 
-  <script>
-    // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
+ <script>
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Mobile menu
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    menuBtn.addEventListener('click', ()=> mobileMenu.classList.toggle('hidden'));
+  // Mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', ()=> mobileMenu.classList.toggle('hidden'));
 
-    // Reveal on scroll
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
-    },{threshold:0.1});
-    document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
+  },{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
 
-    // Video play/pause handling + GA events
-    (function(){
-      const video = document.getElementById('proj2');
-      const card  = document.getElementById('videoCard');
-      const btn   = document.getElementById('videoPlayBtn');
+  // Video play/pause handling + GA events
+  (function(){
+    const video = document.getElementById('proj2');
+    const card  = document.getElementById('videoCard');
+    const btn   = document.getElementById('videoPlayBtn');
 
-      const toggleOverlay = ()=> card.classList.toggle('autoplay', video.paused);
+    const toggleOverlay = ()=> card.classList.toggle('autoplay', video.paused);
 
-      // Don't autoplay video - let user initiate playback for better performance
-      video.pause();
+    // Autoplay video
+    video.play();
+    toggleOverlay();
+
+    const fireGA = (action)=> {
+      if(typeof gtag==="function"){
+        gtag('event','video_'+action,{event_category:'Portfolio',event_label:'project2.mp4'});
+      }
+    };
+
+    card.addEventListener('click', (e)=>{
+      if(e.target===btn){ /* handled below */ }
+      if(video.paused){ video.play(); fireGA('play'); }
+      else { video.pause(); fireGA('pause'); }
       toggleOverlay();
+    });
 
-      const fireGA = (action)=> {
-        if(typeof gtag==="function"){
-          gtag('event','video_'+action,{event_category:'Portfolio',event_label:'project2.mp4'});
-        }
-      };
+    btn.addEventListener('click',(e)=>{
+      e.stopPropagation();
+      if(video.paused){ video.play(); fireGA('play'); }
+      else { video.pause(); fireGA('pause'); }
+      toggleOverlay();
+    });
 
-      card.addEventListener('click', (e)=>{
-        if(e.target===btn){ /* handled below */ }
-        if(video.paused){ video.play(); fireGA('play'); }
-        else { video.pause(); fireGA('pause'); }
-        toggleOverlay();
-      });
-
-      btn.addEventListener('click',(e)=>{
-        e.stopPropagation();
-        if(video.paused){ video.play(); fireGA('play'); }
-        else { video.pause(); fireGA('pause'); }
-        toggleOverlay();
-      });
-
-      video.addEventListener('ended', ()=>{ fireGA('ended'); toggleOverlay(); });
-      video.addEventListener('play', toggleOverlay);
-      video.addEventListener('pause', toggleOverlay);
-    })();
-  </script>
+    video.addEventListener('ended', ()=>{ fireGA('ended'); toggleOverlay(); });
+    video.addEventListener('play', toggleOverlay);
+    video.addEventListener('pause', toggleOverlay);
+  })();
+</script>
 
   <!-- Load heavy tracking script only after everything else is loaded -->
   <script>
