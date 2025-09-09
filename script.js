@@ -1,3 +1,14 @@
+// Google Analytics config
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config','G-CN24ESW1EW');
+function trackClick(platform){
+  try{
+    gtag('event','click',{event_category:'Social Links',event_label:platform});
+  }catch(e){}
+}
+
 // Set current year
 document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -55,8 +66,8 @@ document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => 
 
   const toggleOverlay = () => card.classList.toggle('paused', video.paused);
 
-  // Initially pause and show overlay
-  video.pause();
+  // Initially autoplay and show overlay
+  video.play();
   toggleOverlay();
 
   const fireGA = (action) => {
