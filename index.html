@@ -1,40 +1,43 @@
-<!doctype html>
-<html lang="hi">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>amandesignser | Aman Kumar — Web Designer & Front-end Developer</title>
+  <title>amandesignser | Aman Kumar — Professional Web Designer & Frontend Developer</title>
 
-  <meta name="description" content="Official portfolio of Aman Designser (Aman Kumar) — Web Designer & Front-end Developer. Clean, modern, fast & responsive websites with a focus on user experience." />
-  <meta name="keywords" content="amandesignser, Aman Kumar, Web Designer, Web Developer, Front-end Developer, UI UX Designer, Portfolio" />
+  <meta name="description" content="Official portfolio of Aman Kumar (amandesignser) — Professional Web Designer & Frontend Developer. Specializing in clean, modern, fast & responsive websites with exceptional user experience." />
+  <meta name="keywords" content="amandesignser, Aman Kumar, Professional Web Designer, Frontend Developer, UI UX Designer, Responsive Web Design, Modern Websites, Portfolio" />
   <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
   <meta name="theme-color" content="#00ffff" />
+  <meta name="author" content="Aman Kumar" />
   <link rel="canonical" href="https://amandesignser.github.io/amandesignser/" />
 
   <!-- Open Graph (Facebook, LinkedIn, etc.) -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="amandesignser | Aman Kumar — Web Designer & Developer" />
-  <meta property="og:description" content="Portfolio of Aman Designser (Aman Kumar) — Web Designer & Front-end Developer. Explore modern, clean & responsive websites." />
+  <meta property="og:title" content="amandesignser | Aman Kumar — Professional Web Designer & Developer" />
+  <meta property="og:description" content="Professional portfolio of Aman Kumar (amandesignser) — Expert Web Designer & Frontend Developer. Explore modern, clean & responsive websites that drive results." />
   <meta property="og:url" content="https://amandesignser.github.io/amandesignser/" />
   <meta property="og:image" content="https://amandesignser.github.io/amandesignser/aman.jpg" />
-  <meta property="og:image:alt" content="Aman Kumar portrait" />
+  <meta property="og:image:alt" content="Aman Kumar - Professional Web Designer & Developer" />
+  <meta property="og:site_name" content="amandesignser Portfolio" />
 
   <!-- Optional video preview -->
   <meta property="og:video" content="https://amandesignser.github.io/amandesignser/project2.mp4" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="amandesignser | Aman Kumar — Web Designer & Developer" />
-  <meta name="twitter:description" content="Portfolio of Aman Designser (Aman Kumar) — Web Designer & Front-end Developer. Modern, clean & responsive web design." />
+  <meta name="twitter:title" content="amandesignser | Aman Kumar — Professional Web Designer & Developer" />
+  <meta name="twitter:description" content="Professional portfolio of Aman Kumar (amandesignser) — Expert Web Designer & Frontend Developer. Modern, clean & responsive web solutions." />
   <meta name="twitter:image" content="https://amandesignser.github.io/amandesignser/aman.jpg" />
+  <meta name="twitter:creator" content="@amandesignser" />
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manufacturing+Consent&display=swap" rel="stylesheet">
 
-  <!-- google icon link -->
+  <!-- Google Material Icons -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
   <!-- Structured Data (JSON-LD for Google Knowledge Graph) -->
@@ -42,14 +45,20 @@
   {
     "@context": "https://schema.org",
     "@type": "Person",
-    "name": "amandesignser",
-    "alternateName": "Aman Kumar",
+    "name": "Aman Kumar",
+    "alternateName": "amandesignser",
     "url": "https://amandesignser.github.io/amandesignser/",
     "image": "https://amandesignser.github.io/amandesignser/aman.jpg",
-    "jobTitle": "Web Designer & Front-end Developer",
+    "jobTitle": "Professional Web Designer & Frontend Developer",
+    "description": "Expert in creating modern, responsive websites with exceptional user experience",
     "worksFor": {
       "@type": "Organization",
       "name": "amandesignser"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Agra",
+      "addressCountry": "India"
     },
     "sameAs": [
       "https://x.com/amandesignser",
@@ -57,12 +66,15 @@
       "https://www.instagram.com/amandesignser?igsh=OWozNnRpdTRpbHJw",
       "https://www.linkedin.com/in/aman-kumar-940bb0233?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
       "https://github.com/amandesignser/amandesignser"
-    ]
+    ],
+    "knowsAbout": ["Web Design", "Frontend Development", "UI/UX Design", "Responsive Design", "HTML", "CSS", "JavaScript"],
+    "email": "amanbarnd@gmail.com"
   }
   </script>
 
   <!-- Favicon -->
   <link rel="icon" href="aman.jpg" type="image/jpeg"/>
+  <link rel="apple-touch-icon" href="aman.jpg" />
 
   <!-- Preconnect to external domains -->
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
@@ -84,23 +96,23 @@
     <div class="container">
       <div class="flex items-center justify-between py-4">
         <a href="#home" class="navbar-brand">AMANDESIGNSER</a>
-        
+
         <div class="navbar-nav desktop md:flex items-center gap-6 hidden" id="navMenu">
           <a href="#about" class="nav-link">About</a>
-          <a href="#skills" class="nav-link">Skills</a>
-          <a href="#portfolio" class="nav-link">Work</a>
+          <a href="#skills" class="nav-link">Expertise</a>
+          <a href="#portfolio" class="nav-link">Portfolio</a>
           <a href="#contact" class="nav-link">Contact</a>
         </div>
 
-        <button id="menuBtn" class="mobile-menu-btn md:hidden px-4 py-3 rounded-lg border border-cyan-500/30 text-cyan-500 hover:bg-cyan-500/10 font-semibold" aria-label="Open menu">
+        <button id="menuBtn" class="mobile-menu-btn md:hidden px-4 py-3 rounded-lg border border-cyan-500/30 text-cyan-500 hover:bg-cyan-500/10 font-semibold" aria-label="Open navigation menu">
           Menu
         </button>
       </div>
-      
+
       <div id="mobileMenu" class="hidden flex-col gap-3 py-4 border-t border-cyan-500/20">
         <a href="#about" class="nav-link">About</a>
-        <a href="#skills" class="nav-link">Skills</a>
-        <a href="#portfolio" class="nav-link">Work</a>
+        <a href="#skills" class="nav-link">Expertise</a>
+        <a href="#portfolio" class="nav-link">Portfolio</a>
         <a href="#contact" class="nav-link">Contact</a>
       </div>
     </div>
@@ -113,25 +125,25 @@
         <div class="grid md:grid-cols-2 items-center gap-12">
           <div class="reveal-left">
             <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6">
-              Namaste, I'm <span class="gradient-text">Aman Kumar</span>
+              Hello, I'm <span class="gradient-text">Aman Kumar</span>
             </h1>
             <p class="text-xl text-gray-300 mb-8 leading-relaxed">
-              Web Designer & Front-end Developer. I craft <strong class="text-cyan-400">clean, modern</strong> and
-              <strong class="text-cyan-400">responsive</strong> websites that feel fast and look premium.
+              Professional Web Designer & Frontend Developer. I create <strong class="text-cyan-400">clean, modern</strong> and
+              <strong class="text-cyan-400">responsive</strong> websites that deliver exceptional performance and premium user experiences.
             </p>
             <div class="flex flex-wrap gap-4 mb-8">
               <a href="#portfolio" class="btn-primary">
-                <span>View Work</span>
+                <span>View Portfolio</span>
                 <span>→</span>
               </a>
               <a href="mailto:amanbarnd@gmail.com" class="btn-secondary">
-                <span>Contact Me</span>
+                <span>Get In Touch</span>
                 <span>✉</span>
               </a>
             </div>
             <div class="flex flex-wrap gap-3">
-              <span class="status-badge">✅ Available for freelance</span>
-              <span class="status-badge">📍 Agra, India</span>
+              <span class="status-badge">✅ Available for Projects</span>
+              <span class="status-badge">📍 Based in Agra, India</span>
             </div>
           </div>
 
@@ -139,7 +151,7 @@
             <div class="relative w-full max-w-sm">
               <div class="absolute -inset-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 blur-xl opacity-30 animate-pulse"></div>
               <div class="relative rounded-2xl overflow-hidden glass neon-glow">
-                <img src="aman.jpg" loading="eager" alt="Aman Kumar portrait"
+                <img src="aman.jpg" loading="eager" alt="Aman Kumar - Professional Web Designer & Developer"
                      class="w-full aspect-square object-cover"
                      onerror="this.src=''; this.remove();"/>
               </div>
@@ -156,23 +168,25 @@
           <div class="reveal glass p-8 neon-glow">
             <h2 class="text-3xl font-extrabold gradient-text mb-4">About Me</h2>
             <p class="text-gray-300 leading-relaxed">
-              Main Aman (AmanDesignser). Main performance, accessibility aur pixel-perfect UI par focus karta hoon.
-              Tech stack: <strong class="text-cyan-400">HTML, CSS, JavaScript</strong> + modern workflows. Goal — fast, clean, business-ready web experiences.
+              I'm Aman Kumar, known professionally as AmanDesignser. I specialize in creating high-performance, 
+              accessible, and pixel-perfect user interfaces. My technical expertise spans 
+              <strong class="text-cyan-400">HTML, CSS, JavaScript</strong> with modern development workflows. 
+              My goal is to deliver fast, clean, and business-ready web experiences that drive results.
             </p>
           </div>
-          
+
           <div class="reveal glass p-8 neon-glow">
-            <h3 class="text-2xl font-bold gradient-text mb-4">Highlights</h3>
+            <h3 class="text-2xl font-bold gradient-text mb-4">Core Values</h3>
             <div class="grid grid-cols-2 gap-4 text-gray-300">
               <div class="items-center gap-3">
                 <span class="text-purple-400">⚡</span>
-                <span>Performance-first builds</span><br>
+                <span>Performance-first approach</span><br>
                 <span class="text-purple-400">📱</span>
-                <span>Fully responsive layouts</span><br>
+                <span>Fully responsive designs</span><br>
                 <span class="text-purple-400">🧭</span>
-                <span>UX-focused decisions</span><br>
+                <span>User-centered decisions</span><br>
                 <span class="text-purple-400">🛠️</span>
-                <span>Clean, scalable code</span>
+                <span>Clean, maintainable code</span>
               </div>
             </div>
           </div>
@@ -187,26 +201,32 @@
         <div class="grid md:grid-cols-3 gap-8">
           <div class="reveal glass p-8 text-center neon-glow">
             <div class="text-6xl mb-4">
-              <span class="gradient-text"><></span>
+              <span class="gradient-text">
+                <i class="material-icons" style="font-size:60px;">palette</i>
+              </span>
             </div>
             <h3 class="text-xl font-bold mb-4 text-cyan-400">UI/UX Design</h3>
-            <p class="text-gray-300">Intuitive, elegant interfaces with clear hierarchy & delightful micro-details.</p>
+            <p class="text-gray-300">Crafting intuitive, elegant interfaces with clear visual hierarchy and delightful micro-interactions that enhance user engagement.</p>
           </div>
-          
+
           <div class="reveal glass p-8 text-center neon-glow">
             <div class="text-6xl mb-4">
-              <span class="gradient-text"><i class="material-icons" style="font-size:45px;">laptop</i></span>
+              <span class="gradient-text">
+                <i class="material-icons" style="font-size:60px;">code</i>
+              </span>
             </div>
-            <h3 class="text-xl font-bold mb-4 text-pink-400">Front-end Dev</h3>
-            <p class="text-gray-300">Clean HTML/CSS/JS, component thinking & accessibility baked-in.</p>
+            <h3 class="text-xl font-bold mb-4 text-pink-400">Frontend Development</h3>
+            <p class="text-gray-300">Building robust, scalable web applications with clean HTML/CSS/JavaScript, component-based architecture, and accessibility standards.</p>
           </div>
-          
+
           <div class="reveal glass p-8 text-center neon-glow">
             <div class="text-6xl mb-4">
-              <span class="gradient-text"><i class="material-icons" style="font-size:45px;">rocket_launch</i></span>
+              <span class="gradient-text">
+                <i class="material-icons" style="font-size:60px;">speed</i>
+              </span>
             </div>
             <h3 class="text-xl font-bold mb-4 text-green-400">Performance & SEO</h3>
-            <p class="text-gray-300">Fast loads, semantic markup, meta/OG done right, and Lighthouse-friendly.</p>
+            <p class="text-gray-300">Optimizing for lightning-fast load times, semantic markup, comprehensive meta/OG implementation, and Lighthouse-perfect scores.</p>
           </div>
         </div>
       </div>
@@ -216,9 +236,9 @@
     <section id="portfolio" class="py-16">
       <div class="container">
         <div class="flex items-end justify-between mb-12">
-          <h2 class="text-4xl font-extrabold gradient-text">Selected Work</h2>
+          <h2 class="text-4xl font-extrabold gradient-text">Selected Projects</h2>
           <a href="mailto:amanbarnd@gmail.com" class="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-cyan-400 hover:text-cyan-300 transition">
-            Start a project →
+            Start Your Project →
           </a>
         </div>
 
@@ -226,16 +246,16 @@
           <!-- Project 1 -->
           <article class="reveal project-card">
             <div class="relative aspect-43 overflow-hidden">
-              <img src="project1.jpg" loading="lazy" alt="Modern portfolio website UI" 
+              <img src="project1.jpg" loading="lazy" alt="Modern portfolio website with responsive grid layout" 
                    class="w-full h-full object-cover"
                    onerror="this.style.display='none'"/>
             </div>
             <div class="p-6">
               <div class="flex items-center justify-between mb-2">
-                <h3 class="text-xl font-bold text-white">Modern Portfolio</h3>
+                <h3 class="text-xl font-bold text-white">Modern Portfolio Website</h3>
                 <span class="year-badge">2025</span>
               </div>
-              <p class="text-gray-300 text-sm">Responsive grid, clean hero, micro-interactions.</p>
+              <p class="text-gray-300 text-sm">Responsive grid system, clean hero section, and smooth micro-interactions for enhanced user experience.</p>
             </div>
           </article>
 
@@ -244,30 +264,30 @@
             <div class="relative aspect-43 overflow-hidden">
               <video id="proj2" src="project2.mp4" poster="project2.jpg" preload="metadata" 
                      muted loop playsinline class="w-full h-full object-cover"></video>
-              <button id="videoPlayBtn" class="video-playbtn" aria-label="Play project video">▶ Play</button>
+              <button id="videoPlayBtn" class="video-playbtn" aria-label="Play project demonstration video">▶ Play Demo</button>
             </div>
             <div class="p-6">
               <div class="flex items-center justify-between mb-2">
-                <h3 class="text-xl font-bold text-white">E-commerce UI</h3>
+                <h3 class="text-xl font-bold text-white">E-commerce Platform UI</h3>
                 <span class="year-badge">2024</span>
               </div>
-              <p class="text-gray-300 text-sm">Fast shopping experience, checkout UX optimised. (Video demo)</p>
+              <p class="text-gray-300 text-sm">High-conversion shopping experience with optimized checkout flow and seamless user journey. (Interactive video demo)</p>
             </div>
           </article>
 
           <!-- Project 3 -->
           <article class="reveal project-card">
             <div class="relative aspect-43 overflow-hidden">
-              <img src="project3.jpg" loading="lazy" alt="Business landing page redesign" 
+              <img src="project3.jpg" loading="lazy" alt="Professional business landing page design" 
                    class="w-full h-full object-cover"
                    onerror="this.style.display='none'"/>
             </div>
             <div class="p-6">
               <div class="flex items-center justify-between mb-2">
-                <h3 class="text-xl font-bold text-white">Business Landing</h3>
+                <h3 class="text-xl font-bold text-white">Business Landing Page</h3>
                 <span class="year-badge">2023</span>
               </div>
-              <p class="text-gray-300 text-sm">Corporate tone with crisp sections.</p>
+              <p class="text-gray-300 text-sm">Professional corporate design with strategic content sections and conversion-focused layout.</p>
             </div>
           </article>
         </div>
@@ -278,34 +298,34 @@
     <section id="contact" class="py-16 mb-16">
       <div class="container">
         <div class="reveal glass p-8 neon-glow text-center">
-          <h2 class="text-4xl font-extrabold gradient-text mb-4">Let's Work Together</h2>
-          <p class="text-xl text-gray-300 mb-8">Have a project in mind? Drop a message and I'll reply quickly.</p>
-          
+          <h2 class="text-4xl font-extrabold gradient-text mb-4">Let's Create Something Amazing</h2>
+          <p class="text-xl text-gray-300 mb-8">Have a project in mind? Let's discuss how we can bring your vision to life with exceptional web solutions.</p>
+
           <div class="flex flex-wrap justify-center gap-4">
             <a href="mailto:amanbarnd@gmail.com" class="btn-primary">
-              <span>Send an Email</span>
+              <span>Start Conversation</span>
               <span>✉</span>
             </a>
 
             <!-- Social Links with tracking -->
             <a href="https://www.facebook.com/share/1EcXP6fpg7/" target="_blank" rel="noopener noreferrer"
-               onclick="trackClick('Facebook')" class="btn-secondary" aria-label="Open Facebook">
+               onclick="trackClick('Facebook')" class="btn-secondary" aria-label="Connect on Facebook">
                <span>Facebook</span>
             </a>
 
             <a href="https://www.linkedin.com/in/aman-kumar-940bb0233?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
                target="_blank" rel="noopener noreferrer" onclick="trackClick('LinkedIn')"
-               class="btn-secondary" aria-label="Open LinkedIn">
+               class="btn-secondary" aria-label="Connect on LinkedIn">
                <span>LinkedIn</span>
             </a>
 
             <a href="https://x.com/amandesignser" target="_blank" rel="noopener noreferrer" onclick="trackClick('Twitter')"
-               class="btn-secondary" aria-label="Open Twitter">
+               class="btn-secondary" aria-label="Follow on X (Twitter)">
                <span>X (Twitter)</span>
             </a>
 
             <a href="https://instagram.com/amandesignser" target="_blank" rel="noopener noreferrer" onclick="trackClick('Instagram')"
-               class="btn-secondary" aria-label="Open Instagram">
+               class="btn-secondary" aria-label="Follow on Instagram">
                <span>Instagram</span>
             </a>
           </div>
@@ -318,9 +338,9 @@
   <footer class="border-t border-cyan-500/20 glass py-6">
     <div class="container">
       <div class="flex flex-wrap items-center justify-between gap-4 text-sm text-gray-300">
-        <div>© <span id="year"></span> AmanDesignser • Built with care</div>
+        <div>© <span id="year"></span> AmanDesignser • Crafted with precision and passion</div>
         <a href="#home" class="btn-secondary py-2 px-4 text-sm">
-          <span>Back to top</span>
+          <span>Back to Top</span>
           <span>↑</span>
         </a>
       </div>
