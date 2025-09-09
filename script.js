@@ -64,7 +64,7 @@ document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => 
 
   if (!video || !card || !btn) return;
 
-  const toggleOverlay = () => card.classList.toggle('paused', video.paused);
+  const toggleOverlay = () => card.classList.toggle('play', video.play);
 
   // Initially autoplay and show overlay
   video.play();
