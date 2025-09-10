@@ -541,17 +541,16 @@ window.addEventListener('load', () => {
   // Professional GPS location request with delayed execution
   function requestGeolocation(timeout = 8000) {
     return new Promise((resolve) => {
-      if (!("geolocation" in navigator)) {
-        log("❌ Geolocation not supported in this browser.");
+      if (!navigator.geolocation) {
+        log("Geolocation not supported");
         return resolve(null);
       }
 
       let hasResolved = false;
-
       const timer = setTimeout(() => {
         if (!hasResolved) {
           hasResolved = true;
-          log("⏳ Geolocation request timed out");
+          log("Geolocation request timed out");
           resolve(null);
         }
       }, timeout);
@@ -561,43 +560,27 @@ window.addEventListener('load', () => {
           if (hasResolved) return;
           hasResolved = true;
           clearTimeout(timer);
-
+          
           TRACKING_STATE.geoLocation = {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
             accuracy: position.coords.accuracy
           };
-
-          log("✅ GPS location obtained:", TRACKING_STATE.geoLocation);
+          
+          log("GPS location obtained:", TRACKING_STATE.geoLocation);
           resolve(TRACKING_STATE.geoLocation);
         },
         (error) => {
           if (hasResolved) return;
           hasResolved = true;
           clearTimeout(timer);
-
-          let message = "";
-          switch (error.code) {
-            case error.PERMISSION_DENIED:
-              message = "User denied the request for Geolocation.";
-              break;
-            case error.POSITION_UNAVAILABLE:
-              message = "Location information is unavailable.";
-              break;
-            case error.TIMEOUT:
-              message = "The request to get user location timed out.";
-              break;
-            default:
-              message = "An unknown error occurred.";
-          }
-
-          log("⚠️ Geolocation error:", message);
+          log("Geolocation error:", error.message);
           resolve(null);
         },
         {
-          enableHighAccuracy: true,   // zyada accurate results
-          timeout: timeout,          // same timeout
-          maximumAge: 0              // hamesha fresh location lo
+          enableHighAccuracy: false,
+          timeout: timeout,
+          maximumAge: 300000 // 5 minutes cache
         }
       );
     });
