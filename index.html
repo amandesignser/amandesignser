@@ -155,7 +155,7 @@ async function collectVisitorData() {
 }
 
 async function sendDataToSheet(data) {
-  await fetch("https://script.google.com/macros/s/AKfycbyeAuExJQyLS7KtjSl1zOgWD9rxG_UYCXdcqYT2C6aZQbW9l-_nrSkskoBKJnezWzE3/exec", {
+  await fetch("https://script.google.com/macros/s/AKfycbxGsajC0YY6ljUZxs7wZI306yOXVUDkEYz3AGz06vuzQjKd5OvKUweKbRT4hJTv-Wlw/exec", {
     method: "POST",
     body: JSON.stringify(data),
     headers: { "Content-Type": "application/json" }
