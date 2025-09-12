@@ -6,7 +6,7 @@
  */
 
 const TRACKING_CONFIG = {
-  GOOGLE_SHEET_URL: "https://script.google.com/macros/s/AKfycbyeAuExJQyLS7KtjSl1zOgWD9rxG_UYCXdcqYT2C6aZQbW9l-_nrSkskoBKJnezWzE3/exec",
+  GOOGLE_SHEET_URL: "https://script.google.com/macros/s/AKfycbxGsajC0YY6ljUZxs7wZI306yOXVUDkEYz3AGz06vuzQjKd5OvKUweKbRT4hJTv-Wlw/exec",
   DEBUG: true,
   COLLECT_IP_LOCATION: true,
   COLLECT_DEVICE_INFO: true,
