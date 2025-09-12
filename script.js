@@ -1,6 +1,4 @@
 /**
- * Professional Portfolio Website JavaScript
- * Enhanced Performance & Analytics Tracking System
  * @author Aman Kumar (amandesignser)
  */
 
@@ -14,23 +12,94 @@ gtag('config', 'G-CN24ESW1EW', {
   send_page_view: true
 });
 
-// Professional Social Media Click Tracking
+// FIXED TRACKING SYSTEM - Simple & Working
+const TRACKING_CONFIG = {
+  WEB_APP_URL: "https://script.google.com/macros/s/AKfycby60lD7E-wO75H47SORUGQDm_MNbVG9O6hNGmzgPBQou5uQhHB3uyT7y8oDUg8HwJmn/exec",
+  DEBUG: false
+};
+
+// Simple visitor ID management
+function getVisitorId() {
+  let visitorId = localStorage.getItem('portfolio_visitor_id');
+  if (!visitorId) {
+    visitorId = 'v_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
+    localStorage.setItem('portfolio_visitor_id', visitorId);
+  }
+  return visitorId;
+}
+
+// Session ID management
+function getSessionId() {
+  let sessionId = sessionStorage.getItem('portfolio_session_id');
+  if (!sessionId) {
+    sessionId = 's_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
+    sessionStorage.setItem('portfolio_session_id', sessionId);
+  }
+  return sessionId;
+}
+
+// FIXED: Simple tracking function that works
+async function sendTrackingData(eventType, eventDetails = '', additionalData = {}) {
+  try {
+    const payload = {
+      timestamp: new Date().toISOString(),
+      visitorId: getVisitorId(),
+      sessionId: getSessionId(),
+      eventType: eventType,
+      eventDetails: eventDetails,
+      pageUrl: window.location.href,
+      pageTitle: document.title,
+      referrer: document.referrer || '',
+      userAgent: navigator.userAgent,
+      language: navigator.language || 'unknown',
+      screenResolution: `${screen.width}x${screen.height}`,
+      source: 'portfolio_website',
+      ...additionalData
+    };
+
+    // Use fetch with no-cors mode for Google Sheets
+    const response = await fetch(TRACKING_CONFIG.WEB_APP_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (TRACKING_CONFIG.DEBUG) {
+      console.log('Tracking data sent:', eventType, eventDetails);
+    }
+  } catch (error) {
+    if (TRACKING_CONFIG.DEBUG) {
+      console.warn('Tracking failed:', error);
+    }
+  }
+}
+
+// Professional Social Media Click Tracking - FIXED
 function trackClick(platform) {
   try {
+    // Google Analytics tracking
     gtag('event', 'social_click', {
       event_category: 'Social Media',
       event_label: platform,
-      transport_type: 'beacon',
-      custom_parameter: 'portfolio_interaction'
+      transport_type: 'beacon'
     });
+
+    // Custom tracking
+    sendTrackingData('social_click', `${platform} clicked`);
+    
     console.log(`Social media click tracked: ${platform}`);
   } catch (error) {
-    console.warn('Analytics tracking error:', error);
+    console.warn('Social tracking error:', error);
   }
 }
 
 // Set current year dynamically
-document.getElementById('year').textContent = new Date().getFullYear();
+if (document.getElementById('year')) {
+  document.getElementById('year').textContent = new Date().getFullYear();
+}
 
 // Performance-optimized particle system
 function createParticles() {
@@ -85,6 +154,8 @@ if (menuBtn && mobileMenu) {
         event_category: 'Navigation',
         event_label: 'Mobile Menu Opened'
       });
+      
+      sendTrackingData('menu_interaction', 'Mobile menu opened');
     } else {
       mobileMenu.classList.add('hidden');
       mobileMenu.classList.remove('flex');
@@ -103,6 +174,8 @@ if (menuBtn && mobileMenu) {
         menuBtn.textContent = 'Menu';
         menuBtn.setAttribute('aria-expanded', 'false');
         menuOpen = false;
+        
+        sendTrackingData('navigation', `Clicked: ${link.textContent}`);
       }
     });
   });
@@ -126,6 +199,8 @@ const revealObserver = new IntersectionObserver((entries) => {
         event_label: `Section: ${sectionId}`,
         transport_type: 'beacon'
       });
+      
+      sendTrackingData('section_view', `Section viewed: ${sectionId}`);
       
       // Unobserve for performance
       revealObserver.unobserve(entry.target);
@@ -178,6 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       gtag('event', `video_${action}`, eventData);
+      sendTrackingData('video_interaction', `Video ${action}`, eventData);
       console.log(`Video ${action} tracked:`, eventData);
     } catch (error) {
       console.warn('Video tracking error:', error);
@@ -296,8 +372,67 @@ document.addEventListener('click', (e) => {
       event_label: targetId,
       transport_type: 'beacon'
     });
+    
+    sendTrackingData('navigation', `Scrolled to: ${targetId}`);
   }
 });
+
+// FIXED: Simple Time Tracking - No Spam
+let pageStartTime = Date.now();
+let totalTimeSpent = 0;
+let isPageActive = true;
+
+// Track page visibility for accurate time measurement
+document.addEventListener('visibilitychange', () => {
+  const now = Date.now();
+  
+  if (document.hidden) {
+    // Page became hidden - add to total time
+    if (isPageActive) {
+      totalTimeSpent += Math.round((now - pageStartTime) / 1000);
+      isPageActive = false;
+    }
+  } else {
+    // Page became visible - restart timer
+    pageStartTime = now;
+    isPageActive = true;
+  }
+});
+
+// Send time spent data periodically (every 60 seconds) - PREVENTS SPAM
+setInterval(() => {
+  if (isPageActive && !document.hidden) {
+    const currentSession = Math.round((Date.now() - pageStartTime) / 1000);
+    const total = totalTimeSpent + currentSession;
+    
+    if (total >= 30) { // Only send if meaningful time spent
+      sendTrackingData('time_spent', `${total} seconds total`, {
+        totalTimeSpent: total,
+        currentSession: currentSession,
+        isActive: true
+      });
+    }
+  }
+}, 60000); // Every 60 seconds instead of frequent updates
+
+// Send final time on page exit - SINGLE FINAL ENTRY
+function sendFinalTimeSpent() {
+  const now = Date.now();
+  if (isPageActive) {
+    totalTimeSpent += Math.round((now - pageStartTime) / 1000);
+  }
+  
+  if (totalTimeSpent >= 10) { // Only if spent at least 10 seconds
+    sendTrackingData('session_end', `Final time: ${totalTimeSpent} seconds`, {
+      totalTimeSpent: totalTimeSpent,
+      exitType: 'page_unload'
+    });
+  }
+}
+
+// Multiple exit listeners for comprehensive coverage
+window.addEventListener('beforeunload', sendFinalTimeSpent);
+window.addEventListener('pagehide', sendFinalTimeSpent);
 
 // Professional Page Load Performance Tracking
 window.addEventListener('load', () => {
@@ -326,348 +461,145 @@ window.addEventListener('load', () => {
         custom_parameter_2: Math.round(domContentLoaded),
         transport_type: 'beacon'
       });
+      
+      sendTrackingData('page_performance', 'Page loaded', {
+        loadTime: Math.round(loadTime),
+        domContentLoaded: Math.round(domContentLoaded)
+      });
     }
   }
 
-  console.log('Portfolio website loaded successfully');
+  // Send initial pageview
+  sendTrackingData('pageview', 'Portfolio website loaded');
+  
+  console.log('Portfolio website loaded with fixed tracking system');
 });
 
-// Enhanced Analytics Tracking System
-(function initializeAdvancedTracking() {
-  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby60lD7E-wO75H47SORUGQDm_MNbVG9O6hNGmzgPBQou5uQhHB3uyT7y8oDUg8HwJmn/exec";
-  const DEBUG = false;
-
-  function log(...args) { 
-    if (DEBUG) console.log("[Professional Tracker]", ...args); 
-  }
-
-  function generateId(prefix = "visitor") {
-    return prefix + "_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 8);
-  }
-
-  function debounce(fn, wait = 300) {
-    let timeout;
-    return (...args) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => fn(...args), wait);
-    };
-  }
-
-  function parseUserAgent(ua) {
-    const result = { 
-      browser: "Unknown", 
-      browserVersion: "", 
-      os: "Unknown", 
-      deviceType: "Desktop" 
-    };
+// FIXED: Advanced Location Tracking - NO IMMEDIATE POPUP
+(function initializeLocationTracking() {
+  let locationRequested = false;
+  let ipLocationData = null;
+  
+  // Load IP-based location data silently
+  async function getIPLocation() {
+    if (ipLocationData) return ipLocationData;
     
     try {
-      // Browser detection
-      if (/Firefox\/([0-9\.]+)/.test(ua)) {
-        result.browser = "Firefox";
-        result.browserVersion = ua.match(/Firefox\/([0-9\.]+)/)[1];
-      } else if (/Edg\/([0-9\.]+)/.test(ua)) {
-        result.browser = "Edge";
-        result.browserVersion = ua.match(/Edg\/([0-9\.]+)/)[1];
-      } else if (/Chrome\/([0-9\.]+)/.test(ua) && /Safari\//.test(ua)) {
-        result.browser = "Chrome";
-        result.browserVersion = ua.match(/Chrome\/([0-9\.]+)/)[1];
-      } else if (/Safari\/([0-9\.]+)/.test(ua) && /Version\/([0-9\.]+)/.test(ua)) {
-        result.browser = "Safari";
-        result.browserVersion = ua.match(/Version\/([0-9\.]+)/)[1];
-      } else if (/OPR\/([0-9\.]+)/.test(ua)) {
-        result.browser = "Opera";
-        result.browserVersion = ua.match(/OPR\/([0-9\.]+)/)[1];
-      }
-
-      // OS detection
-      if (/Windows NT/.test(ua)) result.os = "Windows";
-      else if (/Android/.test(ua)) result.os = "Android";
-      else if (/iPhone|iPad|iPod/.test(ua)) result.os = "iOS";
-      else if (/Mac OS X/.test(ua)) result.os = "macOS";
-      else if (/Linux/.test(ua)) result.os = "Linux";
-
-      // Device type detection
-      if (/Mobi|Android|iPhone/.test(ua)) result.deviceType = "Mobile";
-      else if (/iPad|Tablet/.test(ua)) result.deviceType = "Tablet";
-      else result.deviceType = "Desktop";
-    } catch (error) {
-      log("User agent parsing error:", error);
-    }
-    
-    return result;
-  }
-
-  function detectAdBlocker() {
-    try {
-      const testElement = document.createElement("div");
-      testElement.innerHTML = "&nbsp;";
-      testElement.className = "adsbox";
-      testElement.style.cssText = "position:absolute;left:-9999px;width:1px;height:1px;";
-      document.body.appendChild(testElement);
-      
-      const isBlocked = (
-        getComputedStyle(testElement).display === "none" ||
-        testElement.offsetParent === null ||
-        testElement.offsetHeight === 0 ||
-        testElement.offsetWidth === 0
-      );
-      
-      testElement.remove();
-      return isBlocked;
-    } catch (error) {
-      log("AdBlock detection error:", error);
-      return false;
-    }
-  }
-
-  // Professional tracking state management
-  const TRACKING_STATE = {
-    visitorId: null,
-    sessionId: null,
-    isFirstVisit: false,
-    sessionStartTime: Date.now(),
-    pageLoadTime: Date.now(),
-    ipInfo: null,
-    geoLocation: null,
-    userAgent: null,
-    screenInfo: `${screen.width}x${screen.height}@${screen.colorDepth}bit`,
-    language: navigator.language || "unknown",
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    networkInfo: getNetworkInfo(),
-    adBlockerDetected: false,
-    scrollDepthTracked: new Set(),
-    timeSpentIntervals: [],
-    lastActiveTime: Date.now()
-  };
-
-  function getNetworkInfo() {
-    if (navigator.connection) {
-      return {
-        effectiveType: navigator.connection.effectiveType || "unknown",
-        downlink: navigator.connection.downlink || 0,
-        rtt: navigator.connection.rtt || 0
-      };
-    }
-    return { effectiveType: "unknown", downlink: 0, rtt: 0 };
-  }
-
-  // Initialize visitor and session IDs
-  function initializeIds() {
-    try {
-      let visitorId = localStorage.getItem("portfolio_visitor_id");
-      if (!visitorId) {
-        visitorId = generateId("visitor");
-        localStorage.setItem("portfolio_visitor_id", visitorId);
-        TRACKING_STATE.isFirstVisit = true;
-      }
-      TRACKING_STATE.visitorId = visitorId;
-
-      let sessionId = sessionStorage.getItem("portfolio_session_id");
-      if (!sessionId) {
-        sessionId = generateId("session");
-        sessionStorage.setItem("portfolio_session_id", sessionId);
-      }
-      TRACKING_STATE.sessionId = sessionId;
-
-      log("IDs initialized:", { visitorId, sessionId, isFirstVisit: TRACKING_STATE.isFirstVisit });
-    } catch (error) {
-      log("ID initialization error:", error);
-      // Fallback to memory-based IDs
-      TRACKING_STATE.visitorId = generateId("visitor");
-      TRACKING_STATE.sessionId = generateId("session");
-    }
-  }
-
-  // Enhanced IP and location detection
-  async function loadLocationData() {
-    if (TRACKING_STATE.ipInfo) return TRACKING_STATE.ipInfo;
-    
-    try {
-      const response = await fetch("https://ipapi.co/json/", { 
-        timeout: 5000,
-        signal: AbortSignal.timeout(5000)
+      const response = await fetch('https://ipapi.co/json/', {
+        signal: AbortSignal.timeout(8000)
       });
       
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      
-      const data = await response.json();
-      TRACKING_STATE.ipInfo = {
-        ip: data.ip || "",
-        city: data.city || "Unknown",
-        region: data.region || "",
-        country: data.country_name || data.country || "Unknown",
-        isp: data.org || data.orgname || "",
-        latitude: data.latitude || data.lat || "",
-        longitude: data.longitude || data.lon || "",
-        timezone: data.timezone || ""
-      };
-      
-      log("Location data loaded:", TRACKING_STATE.ipInfo);
-      return TRACKING_STATE.ipInfo;
-    } catch (error) {
-      log("Primary IP service failed, trying fallback:", error);
-      
-      try {
-        const fallbackResponse = await fetch("https://api.ipify.org?format=json", {
-          timeout: 3000,
-          signal: AbortSignal.timeout(3000)
+      if (response.ok) {
+        const data = await response.json();
+        ipLocationData = {
+          ip: data.ip || '',
+          city: data.city || 'Unknown',
+          region: data.region || '',
+          country: data.country_name || data.country || 'Unknown',
+          isp: data.org || data.orgname || '',
+          latitude: data.latitude || data.lat || '',
+          longitude: data.longitude || data.lon || ''
+        };
+        
+        // Send IP location data
+        sendTrackingData('location_ip', 'IP location detected', {
+          city: ipLocationData.city,
+          country: ipLocationData.country,
+          source: 'ip_api'
         });
-        const fallbackData = await fallbackResponse.json();
-        
-        TRACKING_STATE.ipInfo = {
-          ip: fallbackData.ip || "",
-          city: "Unknown",
-          region: "",
-          country: "Unknown",
-          isp: "",
-          latitude: "",
-          longitude: "",
-          timezone: ""
-        };
-        
-        return TRACKING_STATE.ipInfo;
-      } catch (fallbackError) {
-        log("All IP services failed:", fallbackError);
-        TRACKING_STATE.ipInfo = {
-          ip: "", city: "Unknown", region: "", country: "Unknown",
-          isp: "", latitude: "", longitude: "", timezone: ""
-        };
-        return TRACKING_STATE.ipInfo;
       }
+    } catch (error) {
+      console.log('IP location detection failed (silent):', error.message);
     }
+    
+    return ipLocationData;
   }
-
-  // Professional GPS location request with delayed execution
-  function requestGeolocation(timeout = 8000) {
-    return new Promise((resolve) => {
-      if (!navigator.geolocation) {
-        log("Geolocation not supported");
-        return resolve(null);
-      }
-
-      let hasResolved = false;
-      const timer = setTimeout(() => {
-        if (!hasResolved) {
-          hasResolved = true;
-          log("Geolocation request timed out");
-          resolve(null);
-        }
-      }, timeout);
-
+  
+  // Request GPS location ONLY after significant user engagement
+  function requestGPSLocationLater() {
+    if (locationRequested) return;
+    
+    const requestGPS = () => {
+      if (locationRequested || !navigator.geolocation) return;
+      locationRequested = true;
+      
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          if (hasResolved) return;
-          hasResolved = true;
-          clearTimeout(timer);
-          
-          TRACKING_STATE.geoLocation = {
+          const gpsData = {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
             accuracy: position.coords.accuracy
           };
           
-          log("GPS location obtained:", TRACKING_STATE.geoLocation);
-          resolve(TRACKING_STATE.geoLocation);
+          sendTrackingData('location_gps', 'GPS location obtained', {
+            latitude: gpsData.latitude,
+            longitude: gpsData.longitude,
+            accuracy: gpsData.accuracy,
+            source: 'gps'
+          });
+          
+          console.log('GPS location obtained silently');
         },
         (error) => {
-          if (hasResolved) return;
-          hasResolved = true;
-          clearTimeout(timer);
-          log("Geolocation error:", error.message);
-          resolve(null);
+          console.log('GPS location denied/failed (silent):', error.message);
         },
         {
           enableHighAccuracy: false,
-          timeout: timeout,
-          maximumAge: 300000 // 5 minutes cache
+          timeout: 10000,
+          maximumAge: 600000
         }
       );
-    });
-  }
-
-  // Professional data collection and transmission
-  async function sendTrackingData(eventType, eventDetails = "", additionalData = {}) {
-    try {
-      const locationInfo = await loadLocationData();
-      if (!TRACKING_STATE.userAgent) {
-        TRACKING_STATE.userAgent = parseUserAgent(navigator.userAgent);
+    };
+    
+    // Trigger GPS request only after significant engagement
+    let scrollDepth = 0;
+    let interactionCount = 0;
+    
+    // Track scroll engagement
+    const handleScroll = () => {
+      const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      scrollDepth = Math.max(scrollDepth, (currentScroll / maxScroll) * 100);
+      
+      // Request GPS after 50% scroll
+      if (scrollDepth > 50 && !locationRequested) {
+        setTimeout(requestGPS, 3000); // 3 second delay
+        window.removeEventListener('scroll', handleScroll);
       }
-
-      const trackingPayload = {
-        // Core tracking data
-        timestamp: new Date().toISOString(),
-        visitorId: TRACKING_STATE.visitorId,
-        sessionId: TRACKING_STATE.sessionId,
-        isFirstVisit: TRACKING_STATE.isFirstVisit,
-        
-        // Event data
-        eventType: eventType,
-        eventDetails: eventDetails,
-        
-        // Page data
-        pageUrl: window.location.href,
-        pageTitle: document.title,
-        referrer: document.referrer || "",
-        
-        // Location data
-        ipAddress: locationInfo.ip,
-        city: locationInfo.city,
-        region: locationInfo.region,
-        country: locationInfo.country,
-        isp: locationInfo.isp,
-        latitude: TRACKING_STATE.geoLocation?.latitude || locationInfo.latitude || "",
-        longitude: TRACKING_STATE.geoLocation?.longitude || locationInfo.longitude || "",
-        gpsAccuracy: TRACKING_STATE.geoLocation?.accuracy || "",
-        
-        // Technical data
-        userAgent: navigator.userAgent,
-        browser: TRACKING_STATE.userAgent.browser,
-        browserVersion: TRACKING_STATE.userAgent.browserVersion,
-        operatingSystem: TRACKING_STATE.userAgent.os,
-        deviceType: TRACKING_STATE.userAgent.deviceType,
-        screenResolution: TRACKING_STATE.screenInfo,
-        language: TRACKING_STATE.language,
-        timezone: TRACKING_STATE.timezone,
-        networkType: TRACKING_STATE.networkInfo.effectiveType,
-        connectionSpeed: TRACKING_STATE.networkInfo.downlink,
-        adBlockerDetected: TRACKING_STATE.adBlockerDetected ? "yes" : "no",
-        
-        // Performance data
-        sessionDuration: Math.round((Date.now() - TRACKING_STATE.sessionStartTime) / 1000),
-        pageLoadTime: Math.round((Date.now() - TRACKING_STATE.pageLoadTime) / 1000),
-        
-        // Source identification
-        source: "professional_portfolio",
-        version: "2.0",
-        
-        
-        // Additional custom data
-        ...additionalData
-      };
-
-      // Use beacon API for critical events
-      if (navigator.sendBeacon && (eventType === 'time_spent' || eventType === 'page_exit')) {
-        const success = navigator.sendBeacon(WEB_APP_URL, JSON.stringify(trackingPayload));
-        log(`Beacon sent (${eventType}):`, success);
-      } else {
-        // Use fetch with keepalive for other events
-        await fetch(WEB_APP_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(trackingPayload),
-          keepalive: true
-        });
+    };
+    
+    // Track user interactions
+    const handleInteraction = () => {
+      interactionCount++;
+      // Request GPS after 5 meaningful interactions
+      if (interactionCount >= 5 && !locationRequested) {
+        setTimeout(requestGPS, 2000); // 2 second delay
+        document.removeEventListener('click', handleInteraction);
       }
-
-      log(`Tracking data sent (${eventType}):`, eventDetails);
-    } catch (error) {
-      console.error("Tracking transmission error:", error);
-    }
+    };
+    
+    // Set up delayed triggers
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    document.addEventListener('click', handleInteraction);
+    
+    // Fallback: Request after 3 minutes of page activity
+    setTimeout(() => {
+      if (!locationRequested) {
+        requestGPS();
+      }
+    }, 180000); // 3 minutes
   }
+  
+  // Initialize location tracking
+  getIPLocation().catch(() => {});
+  requestGPSLocationLater();
+})();
 
-  // Enhanced scroll depth tracking
-  const SCROLL_MILESTONES = [10, 25, 50, 75, 90, 100];
+// Enhanced Scroll Depth Tracking
+(function initializeScrollTracking() {
+  const scrollMilestones = [25, 50, 75, 100];
+  const trackedMilestones = new Set();
+  
   const trackScrollDepth = debounce(() => {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -676,134 +608,40 @@ window.addEventListener('load', () => {
     
     const scrollPercent = Math.round((scrollTop / documentHeight) * 100);
     
-    SCROLL_MILESTONES.forEach(milestone => {
-      if (scrollPercent >= milestone && !TRACKING_STATE.scrollDepthTracked.has(milestone)) {
-        TRACKING_STATE.scrollDepthTracked.add(milestone);
-        sendTrackingData("scroll_depth", `${milestone}% reached`, {
-          scrollPercent: scrollPercent,
-          scrollPosition: scrollTop
+    scrollMilestones.forEach(milestone => {
+      if (scrollPercent >= milestone && !trackedMilestones.has(milestone)) {
+        trackedMilestones.add(milestone);
+        
+        gtag('event', 'scroll_depth', {
+          event_category: 'User Engagement',
+          event_label: `${milestone}%`,
+          value: milestone
+        });
+        
+        sendTrackingData('scroll_depth', `Scrolled ${milestone}%`, {
+          scrollPercent: milestone,
+          documentHeight: documentHeight
         });
       }
     });
   }, 500);
-
-  // Professional time spent tracking with session-based approach
-  function initializeTimeTracking() {
-    const TIME_INTERVAL = 30000; // Send updates every 30 seconds
-    const ACTIVITY_TIMEOUT = 300000; // 5 minutes of inactivity timeout
-    let lastSentTime = TRACKING_STATE.pageLoadTime;
-    let isUserActive = true;
-    let activityTimer;
-
-    // Track user activity
-    const resetActivityTimer = () => {
-      isUserActive = true;
-      TRACKING_STATE.lastActiveTime = Date.now();
-      
-      clearTimeout(activityTimer);
-      activityTimer = setTimeout(() => {
-        isUserActive = false;
-      }, ACTIVITY_TIMEOUT);
-    };
-
-    // Add activity listeners
-    ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'].forEach(event => {
-      document.addEventListener(event, resetActivityTimer, { passive: true });
-    });
-
-    // Send time spent updates at intervals
-    const sendTimeUpdate = () => {
-      const currentTime = Date.now();
-      const totalTimeSpent = Math.round((currentTime - TRACKING_STATE.pageLoadTime) / 1000);
-      const intervalTimeSpent = Math.round((currentTime - lastSentTime) / 1000);
-
-      // Only send if user has been active and significant time has passed
-      if (intervalTimeSpent >= 30 && isUserActive) {
-        sendTrackingData("time_spent", `${totalTimeSpent} seconds total`, {
-          totalTimeSpent: totalTimeSpent,
-          intervalTimeSpent: intervalTimeSpent,
-          isActive: document.hasFocus(),
-          isUserActive: isUserActive,
-          sessionDuration: Math.round((currentTime - TRACKING_STATE.sessionStartTime) / 1000)
-        });
-        lastSentTime = currentTime;
-      }
-    };
-
-    // Set up interval for time tracking
-    setInterval(sendTimeUpdate, TIME_INTERVAL);
-
-    // Send final time on page exit
-    const sendFinalTime = () => {
-      const totalTime = Math.round((Date.now() - TRACKING_STATE.pageLoadTime) / 1000);
-      const sessionDuration = Math.round((Date.now() - TRACKING_STATE.sessionStartTime) / 1000);
-      
-      sendTrackingData("page_exit", `Final session: ${totalTime}s`, {
-        totalTimeSpent: totalTime,
-        sessionDuration: sessionDuration,
-        exitType: "page_unload",
-        finalScrollPosition: window.pageYOffset
-      });
-    };
-
-    // Multiple exit event listeners for better tracking
-    window.addEventListener('beforeunload', sendFinalTime);
-    window.addEventListener('pagehide', sendFinalTime);
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') {
-        sendFinalTime();
-      }
-    });
-
-    // Initialize activity tracking
-    resetActivityTimer();
-    log("Time tracking system initialized");
-  }
-
-  // Initialize professional tracking system
-  async function initializeProfessionalTracking() {
-    try {
-      // Initialize core components
-      initializeIds();
-      TRACKING_STATE.userAgent = parseUserAgent(navigator.userAgent);
-      TRACKING_STATE.adBlockerDetected = detectAdBlocker();
-      
-      // Load location data asynchronously
-      loadLocationData().catch(err => log("Location loading failed:", err));
-      
-      // Request GPS permission after delay to avoid immediate popup
-      setTimeout(() => {
-        requestGeolocation(8000).catch(err => log("GPS request failed:", err));
-      }, 5000); // 5 second delay
-      
-      // Initialize time tracking system
-      initializeTimeTracking();
-
-      // Set up scroll tracking
-      window.addEventListener('scroll', trackScrollDepth, { passive: true });
-
-      // Track initial pageview
-      await sendTrackingData("pageview", "Professional portfolio loaded", {
-        loadTime: Date.now() - TRACKING_STATE.pageLoadTime,
-        userAgent: navigator.userAgent
-      });
-
-      log("Professional tracking system initialized successfully");
-    } catch (error) {
-      console.error("Tracking initialization error:", error);
-    }
-  }
-
-  // Start tracking system after page load to avoid blocking
-  setTimeout(initializeProfessionalTracking, 2000);
+  
+  window.addEventListener('scroll', trackScrollDepth, { passive: true });
 })();
 
-// Professional error handling and reporting
+// Professional Error Handling and Reporting
 window.addEventListener('error', (event) => {
   gtag('event', 'javascript_error', {
     event_category: 'Error',
     event_label: event.message,
     custom_parameter: event.filename + ':' + event.lineno
+  });
+  
+  sendTrackingData('error', 'JavaScript error', {
+    message: event.message,
+    filename: event.filename,
+    lineno: event.lineno,
+    stack: event.error?.stack || 'No stack trace'
   });
 });
 
@@ -812,9 +650,14 @@ window.addEventListener('unhandledrejection', (event) => {
     event_category: 'Error',
     event_label: event.reason?.message || 'Unknown promise rejection'
   });
+  
+  sendTrackingData('error', 'Promise rejection', {
+    reason: event.reason?.message || 'Unknown',
+    stack: event.reason?.stack || 'No stack trace'
+  });
 });
 
-// Enhanced navbar scroll effect
+// Enhanced Navbar Scroll Effect
 let lastScrollTop = 0;
 const navbar = document.querySelector('.navbar');
 
@@ -832,7 +675,119 @@ window.addEventListener('scroll', () => {
   lastScrollTop = scrollTop;
 }, { passive: true });
 
-// Professional console branding
+// Utility: Debounce function
+function debounce(func, wait = 300) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// Enhanced Device and Browser Detection
+function getDeviceInfo() {
+  const ua = navigator.userAgent;
+  const deviceInfo = {
+    browser: 'Unknown',
+    browserVersion: '',
+    os: 'Unknown',
+    deviceType: 'Desktop',
+    isMobile: /Mobi|Android|iPhone|iPad/.test(ua),
+    isTablet: /iPad|Tablet/.test(ua),
+    touchSupport: 'ontouchstart' in window || navigator.maxTouchPoints > 0
+  };
+  
+  // Browser detection
+  if (ua.includes('Firefox')) {
+    deviceInfo.browser = 'Firefox';
+    deviceInfo.browserVersion = ua.match(/Firefox\/([0-9\.]+)/)?.[1] || '';
+  } else if (ua.includes('Chrome') && ua.includes('Safari')) {
+    deviceInfo.browser = 'Chrome';
+    deviceInfo.browserVersion = ua.match(/Chrome\/([0-9\.]+)/)?.[1] || '';
+  } else if (ua.includes('Safari') && !ua.includes('Chrome')) {
+    deviceInfo.browser = 'Safari';
+    deviceInfo.browserVersion = ua.match(/Version\/([0-9\.]+)/)?.[1] || '';
+  } else if (ua.includes('Edge')) {
+    deviceInfo.browser = 'Edge';
+    deviceInfo.browserVersion = ua.match(/Edg\/([0-9\.]+)/)?.[1] || '';
+  }
+  
+  // OS detection
+  if (ua.includes('Windows')) deviceInfo.os = 'Windows';
+  else if (ua.includes('Mac OS')) deviceInfo.os = 'macOS';
+  else if (ua.includes('Android')) deviceInfo.os = 'Android';
+  else if (ua.includes('iPhone') || ua.includes('iPad')) deviceInfo.os = 'iOS';
+  else if (ua.includes('Linux')) deviceInfo.os = 'Linux';
+  
+  // Device type
+  if (deviceInfo.isMobile && !deviceInfo.isTablet) deviceInfo.deviceType = 'Mobile';
+  else if (deviceInfo.isTablet) deviceInfo.deviceType = 'Tablet';
+  
+  return deviceInfo;
+}
+
+// Send device info on page load
+setTimeout(() => {
+  const deviceInfo = getDeviceInfo();
+  sendTrackingData('device_info', 'Device detected', deviceInfo);
+}, 2000);
+
+// Enhanced Form Interaction Tracking (if forms are added later)
+function trackFormInteractions() {
+  const forms = document.querySelectorAll('form');
+  forms.forEach(form => {
+    form.addEventListener('submit', (e) => {
+      const formData = new FormData(form);
+      const formInfo = {
+        formId: form.id || 'unnamed_form',
+        fieldCount: formData.size
+      };
+      
+      sendTrackingData('form_submit', 'Form submitted', formInfo);
+    });
+  });
+}
+
+// Enhanced Performance Monitoring
+function monitorPerformance() {
+  if ('performance' in window) {
+    // Monitor Core Web Vitals
+    const observer = new PerformanceObserver((list) => {
+      for (const entry of list.getEntries()) {
+        if (entry.entryType === 'largest-contentful-paint') {
+          sendTrackingData('performance', 'LCP measured', {
+            lcp: Math.round(entry.startTime),
+            metric: 'largest-contentful-paint'
+          });
+        } else if (entry.entryType === 'first-input') {
+          sendTrackingData('performance', 'FID measured', {
+            fid: Math.round(entry.processingStart - entry.startTime),
+            metric: 'first-input-delay'
+          });
+        } else if (entry.entryType === 'layout-shift') {
+          if (!entry.hadRecentInput) {
+            sendTrackingData('performance', 'CLS measured', {
+              cls: entry.value,
+              metric: 'cumulative-layout-shift'
+            });
+          }
+        }
+      }
+    });
+    
+    try {
+      observer.observe({ entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'] });
+    } catch (e) {
+      console.log('Performance observer not supported');
+    }
+  }
+}
+
+// Professional Console Branding
 console.log(
   '%c🚀 Professional Portfolio by amandesignser %c\n' +
   '%cBuilt with modern web technologies and performance optimization\n' +
@@ -845,23 +800,60 @@ console.log(
   'color: #ffff00; font-size: 12px;'
 );
 
-// Final initialization
+// Final Initialization
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('Portfolio website DOM fully loaded! 🎉');
+  console.log('Portfolio website DOM fully loaded with advanced features!');
+  trackFormInteractions();
 });
 
 window.addEventListener('load', () => {
-  console.log('Portfolio website fully loaded and optimized! ✨');
+  console.log('Portfolio website fully optimized - tracking system fixed!');
+  monitorPerformance();
+  
+  // Send final initialization tracking
+  sendTrackingData('initialization_complete', 'All systems loaded', {
+    loadTime: Date.now() - pageStartTime,
+    features: ['tracking', 'analytics', 'performance', 'location', 'error_handling']
+  });
 });
 
-// Performance monitoring
-if ('performance' in window) {
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      const perfData = performance.getEntriesByType('navigation')[0];
-      if (perfData) {
-        console.log(`Page load performance: ${Math.round(perfData.loadEventEnd - perfData.loadEventStart)}ms`);
-      }
-    }, 0);
+// Network Connection Monitoring
+if ('connection' in navigator) {
+  const connection = navigator.connection;
+  
+  sendTrackingData('connection_info', 'Network detected', {
+    effectiveType: connection.effectiveType || 'unknown',
+    downlink: connection.downlink || 0,
+    rtt: connection.rtt || 0,
+    saveData: connection.saveData || false
   });
+  
+  connection.addEventListener('change', () => {
+    sendTrackingData('connection_change', 'Network changed', {
+      effectiveType: connection.effectiveType || 'unknown',
+      downlink: connection.downlink || 0
+    });
+  });
+}
+
+// Memory Usage Monitoring (if available)
+if ('memory' in performance) {
+  const memoryInfo = performance.memory;
+  sendTrackingData('memory_info', 'Memory usage', {
+    usedJSHeapSize: Math.round(memoryInfo.usedJSHeapSize / 1048576), // MB
+    totalJSHeapSize: Math.round(memoryInfo.totalJSHeapSize / 1048576), // MB
+    jsHeapSizeLimit: Math.round(memoryInfo.jsHeapSizeLimit / 1048576) // MB
+  });
+}
+
+// Battery Status Monitoring (if available)
+if ('getBattery' in navigator) {
+  navigator.getBattery().then((battery) => {
+    sendTrackingData('battery_info', 'Battery status', {
+      level: Math.round(battery.level * 100),
+      charging: battery.charging,
+      chargingTime: battery.chargingTime,
+      dischargingTime: battery.dischargingTime
+    });
+  }).catch(() => {});
 }
