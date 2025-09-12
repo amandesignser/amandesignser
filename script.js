@@ -362,30 +362,28 @@ async function sendTrackingData(eventType, eventDetails = '', additionalData = {
       ...additionalData
     };
 
+    
     // Send to Google Sheets
-    if (TRACKING_CONFIG.GOOGLE_SHEET_URL && TRACKING_CONFIG.GOOGLE_SHEET_URL !== "YOUR_GOOGLE_SHEET_WEBHOOK_URL_HERE") {
-      const response = await fetch(TRACKING_CONFIG.GOOGLE_SHEET_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
-      });
+    const response = await fetch(TRACKING_CONFIG.GOOGLE_SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload)
+    });
 
-      if (TRACKING_CONFIG.DEBUG) {
-        console.log('✓ Tracking data sent:', eventType, eventDetails);
-        console.log('📊 Payload:', payload);
-      }
-    } else if (TRACKING_CONFIG.DEBUG) {
-      console.warn('⚠️ Google Sheets URL not configured');
-      console.log('📊 Would send:', payload);
-    }
+    console.log("Data sent to Google Sheets:", eventType, eventDetails);
+    
+    // Also send to Google Analytics
+    gtag('event', 'custom_tracking', {
+      event_category: eventType,
+      event_label: eventDetails,
+      transport_type: 'beacon'
+    });
 
   } catch (error) {
-    if (TRACKING_CONFIG.DEBUG) {
-      console.warn('❌ Tracking failed:', error);
-    }
+    console.error("Tracking failed:", error);
   }
 }
 
