@@ -73,6 +73,7 @@ body {
   opacity: 0.6;
   animation: float 20s infinite linear;
   box-shadow: 0 0 6px rgba(0, 255, 255, 0.5);
+  will-change: transform;
 }
 
 .particle:nth-child(odd) {
@@ -194,6 +195,93 @@ body {
   transform: translateX(0);
 }
 
+/* MOBILE-RESPONSIVE EXPERTISE ICONS - COMPLETELY FIXED */
+.expertise-card {
+  transition: var(--transition-spring);
+  position: relative;
+}
+
+.expertise-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: rgba(0, 255, 255, 0.1);
+  border: 2px solid rgba(0, 255, 255, 0.3);
+  transition: var(--transition-spring);
+  will-change: transform, background, border-color;
+}
+
+.expertise-icon-symbol {
+  font-size: 40px !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Mobile responsive icon sizes - DETAILED BREAKPOINTS */
+@media (max-width: 768px) {
+  .expertise-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .expertise-icon-symbol {
+    font-size: 28px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .expertise-icon {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .expertise-icon-symbol {
+    font-size: 24px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .expertise-icon {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .expertise-icon-symbol {
+    font-size: 20px !important;
+  }
+}
+
+@media (max-width: 320px) {
+  .expertise-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .expertise-icon-symbol {
+    font-size: 18px !important;
+  }
+}
+
+/* Expertise card hover effects */
+.expertise-card:hover .expertise-icon {
+  background: rgba(0, 255, 255, 0.2);
+  border-color: rgba(0, 255, 255, 0.6);
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+}
+
+.expertise-card:hover {
+  transform: translateY(-5px) scale(1.02);
+}
+
 /* Enhanced Button Styles */
 .btn-primary {
   background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
@@ -289,6 +377,59 @@ body {
 .btn-secondary span {
   position: relative;
   z-index: 1;
+}
+
+/* Enhanced Status Badges */
+.status-badge {
+  background: rgba(0, 255, 0, 0.1);
+  border: 1px solid rgba(0, 255, 0, 0.3);
+  color: var(--neon-green);
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.status-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.status-badge:hover::before {
+  left: 100%;
+}
+
+.status-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 255, 0, 0.2);
+}
+
+/* Enhanced Year Badge */
+.year-badge {
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  color: var(--neon-cyan);
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  transition: var(--transition-smooth);
+}
+
+.year-badge:hover {
+  background: rgba(0, 255, 255, 0.2);
+  transform: scale(1.05);
 }
 
 /* Enhanced Project Card Hover Effects */
@@ -427,6 +568,53 @@ body {
   left: 0;
 }
 
+/* Professional Video Styling */
+.video-card {
+  position: relative;
+}
+
+.video-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px 12px 0 0;
+}
+
+.video-playbtn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  background: rgba(0, 255, 255, 0.9);
+  color: var(--primary-bg);
+  border-radius: 50px;
+  padding: 15px 20px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-spring);
+  font-size: 14px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 25px rgba(0, 255, 255, 0.3);
+  display: none;
+}
+
+.video-card.paused .video-playbtn {
+  display: block;
+}
+
+.video-playbtn:hover {
+  background: var(--neon-cyan);
+  transform: translate(-50%, -50%) scale(1.1);
+  box-shadow: 0 12px 35px rgba(0, 255, 255, 0.4);
+}
+
+.video-playbtn:active {
+  transform: translate(-50%, -50%) scale(0.95);
+}
+
 /* Professional Utility Classes */
 .container { 
   max-width: 1200px; 
@@ -552,106 +740,6 @@ body {
   50% { opacity: 0.5; }
 }
 
-/* Professional Video Styling */
-.video-card {
-  position: relative;
-}
-
-.video-card video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  border-radius: 12px 12px 0 0;
-}
-
-.video-playbtn {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  background: rgba(0, 255, 255, 0.9);
-  color: var(--primary-bg);
-  border-radius: 50px;
-  padding: 15px 20px;
-  font-weight: 700;
-  border: none;
-  cursor: pointer;
-  transition: var(--transition-spring);
-  font-size: 14px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 25px rgba(0, 255, 255, 0.3);
-  display: none;
-}
-
-.video-card.paused .video-playbtn {
-  display: block;
-}
-
-.video-playbtn:hover {
-  background: var(--neon-cyan);
-  transform: translate(-50%, -50%) scale(1.1);
-  box-shadow: 0 12px 35px rgba(0, 255, 255, 0.4);
-}
-
-.video-playbtn:active {
-  transform: translate(-50%, -50%) scale(0.95);
-}
-
-/* Enhanced Status Badges */
-.status-badge {
-  background: rgba(0, 255, 0, 0.1);
-  border: 1px solid rgba(0, 255, 0, 0.3);
-  color: var(--neon-green);
-  padding: 8px 16px;
-  border-radius: 25px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  backdrop-filter: blur(10px);
-  transition: var(--transition-smooth);
-  position: relative;
-  overflow: hidden;
-}
-
-.status-badge::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.2), transparent);
-  transition: left 0.5s ease;
-}
-
-.status-badge:hover::before {
-  left: 100%;
-}
-
-.status-badge:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 255, 0, 0.2);
-}
-
-/* Enhanced Year Badge */
-.year-badge {
-  background: rgba(0, 255, 255, 0.1);
-  border: 1px solid rgba(0, 255, 255, 0.3);
-  color: var(--neon-cyan);
-  padding: 6px 12px;
-  border-radius: 15px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  backdrop-filter: blur(10px);
-  transition: var(--transition-smooth);
-}
-
-.year-badge:hover {
-  background: rgba(0, 255, 255, 0.2);
-  transform: scale(1.05);
-}
-
 /* Professional Mobile Responsive Design */
 @media (max-width: 768px) {
   .container {
@@ -706,6 +794,19 @@ body {
   .project-card:hover {
     transform: translateY(-5px) scale(1.02);
   }
+  
+  /* Mobile expertise section adjustments */
+  .expertise-card {
+    margin-bottom: 1rem;
+  }
+  
+  .expertise-card:hover {
+    transform: translateY(-3px) scale(1.01);
+  }
+  
+  .expertise-card:hover .expertise-icon {
+    transform: scale(1.05) rotate(3deg);
+  }
 }
 
 @media (min-width: 769px) {
@@ -715,6 +816,9 @@ body {
   .md\:hidden { display: none; }
   .md\:block { display: block; }
   .mobile-menu-btn { display: none !important; }
+  .md\:p-8 { padding: 2rem; }
+  .md\:text-xl { font-size: 1.25rem; }
+  .md\:text-base { font-size: 1rem; }
 }
 
 /* Enhanced Accessibility and Performance */
@@ -750,6 +854,10 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  
+  .expertise-icon {
+    transform: none !important;
+  }
 }
 
 /* High contrast mode support */
@@ -764,6 +872,10 @@ body {
   
   .glass {
     border: 2px solid rgba(255, 255, 255, 0.5);
+  }
+  
+  .expertise-icon {
+    border: 3px solid rgba(0, 255, 255, 0.8);
   }
 }
 
@@ -785,5 +897,74 @@ body {
   .gradient-text {
     -webkit-text-fill-color: black;
     background: none;
+  }
+  
+  .expertise-icon {
+    background: white;
+    border: 2px solid black;
+  }
+  
+  .expertise-icon-symbol {
+    color: black !important;
+  }
+}
+
+/* Focus styles for accessibility */
+.btn-primary:focus,
+.btn-secondary:focus,
+.nav-link:focus,
+button:focus {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 2px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--primary-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 255, 0.5);
+}
+
+/* Selection styling */
+::selection {
+  background: rgba(0, 255, 255, 0.3);
+  color: var(--text-primary);
+}
+
+::-moz-selection {
+  background: rgba(0, 255, 255, 0.3);
+  color: var(--text-primary);
+}
+
+/* Performance optimizations */
+.particles,
+.particle {
+  will-change: transform;
+}
+
+.project-card img,
+.project-card video {
+  will-change: transform;
+}
+
+.expertise-icon {
+  will-change: transform, background, border-color;
+}
+
+/* Ultra wide screen support */
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1400px;
   }
 }
