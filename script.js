@@ -363,7 +363,7 @@ async function sendTrackingData(eventType, eventDetails = '', additionalData = {
     };
 
     // Send to Google Sheets
-    if (TRACKING_CONFIG.GOOGLE_SHEET_URL && TRACKING_CONFIG.GOOGLE_SHEET_URL !== "https://script.google.com/macros/s/AKfycbyeAuExJQyLS7KtjSl1zOgWD9rxG_UYCXdcqYT2C6aZQbW9l-_nrSkskoBKJnezWzE3/exec") {
+    if (TRACKING_CONFIG.GOOGLE_SHEET_URL && TRACKING_CONFIG.GOOGLE_SHEET_URL !== "YOUR_GOOGLE_SHEET_WEBHOOK_URL_HERE") {
       const response = await fetch(TRACKING_CONFIG.GOOGLE_SHEET_URL, {
         method: 'POST',
         mode: 'no-cors',
