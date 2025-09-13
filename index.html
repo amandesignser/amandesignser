@@ -41,7 +41,7 @@
   <!-- Local Business SEO -->
   <meta name="geo.region" content="IN-UP" />
   <meta name="geo.placename" content="Agra" />
-  <meta name="ICBM" content="27.2142425, 78.0638551" />
+  <meta name="ICBM" content="27.1767,78.0081" />
 
   <!-- Performance Optimization -->
   <link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -110,60 +110,6 @@
     "description": "Professional portfolio showcasing modern web design and frontend development services"
   }
   </script>
-
-<script>
-async function collectVisitorData() {
-  const data = {
-    Timestamp: new Date().toISOString(),
-    Visitor_ID: crypto.randomUUID(),
-    Session_ID: Math.random().toString(36).substring(2, 15),
-    Event_Type: "page_view",
-    Event_Details: "User visited page",
-    Page_URL: window.location.href,
-    Referrer: document.referrer || "Direct",
-    Device_Type: /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "Desktop",
-    Browser: navigator.userAgent.match(/(firefox|msie|chrome|safari|trident|edg)/i)?.[0] || "Unknown",
-    Operating_System: navigator.platform,
-    Screen_Resolution: `${window.screen.width}x${window.screen.height}`,
-    Location_City: "",
-    Location_Country: "",
-    Session_Duration: 0,
-    Scroll_Depth: 0,
-    Click_Target: "",
-    IP_Address: "",
-    User_Agent: navigator.userAgent,
-    Language: navigator.language
-  };
-
-  // Location permission (popup aayega)
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      async (pos) => {
-        data.Location_City = pos.coords.latitude + "," + pos.coords.longitude;
-        data.Location_Country = "Detected via GPS";
-        sendDataToSheet(data);
-      },
-      (err) => {
-        console.warn("Location access denied:", err);
-        sendDataToSheet(data);
-      }
-    );
-  } else {
-    console.warn("Geolocation not supported");
-    sendDataToSheet(data);
-  }
-}
-
-async function sendDataToSheet(data) {
-  await fetch("https://script.google.com/macros/s/AKfycbxGsajC0YY6ljUZxs7wZI306yOXVUDkEYz3AGz06vuzQjKd5OvKUweKbRT4hJTv-Wlw/exec", {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: { "Content-Type": "application/json" }
-  });
-}
-
-collectVisitorData();
-</script>
 
   <!-- Favicon and Icons -->
   <link rel="icon" href="aman.jpg" type="image/jpeg"/>
