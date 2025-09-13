@@ -1,9 +1,8 @@
 /**
- * Enhanced Portfolio Website JavaScript
  * @author Aman Kumar (amandesignser)
  */
 
-// Google Analytics Configuration (KEPT AS REQUESTED)
+// Google Analytics Configuration
 window.dataLayer = window.dataLayer || [];
 function gtag() { dataLayer.push(arguments); }
 gtag('js', new Date());
@@ -13,146 +12,683 @@ gtag('config', 'G-CN24ESW1EW', {
   send_page_view: true
 });
 
-// FIXED TRACKING SYSTEM CONFIGURATION
+// FIXED TRACKING SYSTEM - Simple & Working
 const TRACKING_CONFIG = {
-  // ACTUAL GOOGLE SHEET URL - WORKING
-  GOOGLE_SHEET_URL: "https://script.google.com/macros/s/AKfycbxGsajC0YY6ljUZxs7wZI306yOXVUDkEYz3AGz06vuzQjKd5OvKUweKbRT4hJTv-Wlw/exec",
-  
-  // Debug mode for testing
-  DEBUG: true,
-  
-  // Data collection settings
-  COLLECT_IP_LOCATION: true,
-  COLLECT_DEVICE_INFO: true,
-  COLLECT_USER_BEHAVIOR: true,
-  
-  // Privacy settings
-  RESPECT_DNT: true,
-  COOKIE_CONSENT_REQUIRED: true
+  WEB_APP_URL: "https://script.google.com/macros/s/AKfycby60lD7E-wO75H47SORUGQDm_MNbVG9O6hNGmzgPBQou5uQhHB3uyT7y8oDUg8HwJmn/exec",
+  DEBUG: false
 };
 
-console.log("Tracking system initialized with URL:", TRACKING_CONFIG.GOOGLE_SHEET_URL);
-
-// Privacy & Cookie Management
-let userConsent = {
-  analytics: false,
-  tracking: false,
-  location: false,
-  customized: false
-};
-
-// Check existing consent
-function checkExistingConsent() {
-  const savedConsent = localStorage.getItem('portfolio_consent');
-  if (savedConsent) {
-    userConsent = JSON.parse(savedConsent);
-    console.log("Found existing consent:", userConsent);
-    return true;
-  }
-  return false;
-}
-
-// Show cookie banner if consent not given
-function showCookieBanner() {
-  const banner = document.getElementById('cookieBanner');
-  if (banner && !checkExistingConsent()) {
-    setTimeout(() => {
-      banner.classList.add('show');
-      console.log("Cookie banner shown");
-    }, 2000);
-  }
-}
-
-// FIXED: Cookie consent functions with immediate location request
-function acceptCookies() {
-  userConsent = {
-    analytics: true,
-    tracking: true,
-    location: true,
-    customized: false
-  };
-  saveConsent();
-  hideCookieBanner();
-  initializeTracking();
-  
-  // IMMEDIATE location request after consent
-  setTimeout(() => {
-    requestLocationImmediately();
-  }, 1000);
-  
-  sendTrackingData('privacy', 'Cookies accepted - all permissions granted');
-  console.log("All cookies accepted, location permission requested");
-}
-
-function rejectCookies() {
-  userConsent = {
-    analytics: false,
-    tracking: false,
-    location: false,
-    customized: false
-  };
-  saveConsent();
-  hideCookieBanner();
-  sendTrackingData('privacy', 'Cookies rejected');
-  console.log("Cookies rejected");
-}
-
-function customizeCookies() {
-  userConsent = {
-    analytics: true,
-    tracking: false,
-    location: false,
-    customized: true
-  };
-  saveConsent();
-  hideCookieBanner();
-  sendTrackingData('privacy', 'Cookies customized - minimal tracking');
-  console.log("Cookies customized");
-}
-
-function saveConsent() {
-  localStorage.setItem('portfolio_consent', JSON.stringify(userConsent));
-  localStorage.setItem('portfolio_consent_date', new Date().toISOString());
-}
-
-function hideCookieBanner() {
-  const banner = document.getElementById('cookieBanner');
-  if (banner) {
-    banner.classList.remove('show');
-    setTimeout(() => {
-      banner.style.display = 'none';
-    }, 300);
-  }
-}
-
-// Enhanced Visitor & Session Management
-function generateId(prefix) {
-  return prefix + '_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
-}
-
+// Simple visitor ID management
 function getVisitorId() {
   let visitorId = localStorage.getItem('portfolio_visitor_id');
   if (!visitorId) {
-    visitorId = generateId('visitor');
+    visitorId = 'v_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
     localStorage.setItem('portfolio_visitor_id', visitorId);
-    localStorage.setItem('portfolio_first_visit', new Date().toISOString());
-    console.log("New visitor ID created:", visitorId);
   }
   return visitorId;
 }
 
+// Session ID management
 function getSessionId() {
   let sessionId = sessionStorage.getItem('portfolio_session_id');
   if (!sessionId) {
-    sessionId = generateId('session');
+    sessionId = 's_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
     sessionStorage.setItem('portfolio_session_id', sessionId);
-    sessionStorage.setItem('portfolio_session_start', new Date().toISOString());
-    console.log("New session ID created:", sessionId);
   }
   return sessionId;
 }
 
-// FIXED: Simplified Device Info Function
+// FIXED: Simple tracking function that works
+async function sendTrackingData(eventType, eventDetails = '', additionalData = {}) {
+  try {
+    const payload = {
+      timestamp: new Date().toISOString(),
+      visitorId: getVisitorId(),
+      sessionId: getSessionId(),
+      eventType: eventType,
+      eventDetails: eventDetails,
+      pageUrl: window.location.href,
+      pageTitle: document.title,
+      referrer: document.referrer || '',
+      userAgent: navigator.userAgent,
+      language: navigator.language || 'unknown',
+      screenResolution: `${screen.width}x${screen.height}`,
+      source: 'portfolio_website',
+      ...additionalData
+    };
+
+    // Use fetch with no-cors mode for Google Sheets
+    const response = await fetch(TRACKING_CONFIG.WEB_APP_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (TRACKING_CONFIG.DEBUG) {
+      console.log('Tracking data sent:', eventType, eventDetails);
+    }
+  } catch (error) {
+    if (TRACKING_CONFIG.DEBUG) {
+      console.warn('Tracking failed:', error);
+    }
+  }
+}
+
+// Professional Social Media Click Tracking - FIXED
+function trackClick(platform) {
+  try {
+    // Google Analytics tracking
+    gtag('event', 'social_click', {
+      event_category: 'Social Media',
+      event_label: platform,
+      transport_type: 'beacon'
+    });
+
+    // Custom tracking
+    sendTrackingData('social_click', `${platform} clicked`);
+    
+    console.log(`Social media click tracked: ${platform}`);
+  } catch (error) {
+    console.warn('Social tracking error:', error);
+  }
+}
+
+// Set current year dynamically
+if (document.getElementById('year')) {
+  document.getElementById('year').textContent = new Date().getFullYear();
+}
+
+// Performance-optimized particle system
+function createParticles() {
+  const particles = document.getElementById('particles');
+  if (!particles) return;
+  
+  // Adaptive particle count based on device capabilities
+  const isMobile = window.innerWidth < 768;
+  const isLowPerformance = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4;
+  const particleCount = isMobile ? 12 : (isLowPerformance ? 20 : 35);
+
+  // Clear existing particles
+  particles.innerHTML = '';
+
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    
+    // Random positioning and timing
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.animationDelay = Math.random() * 20 + 's';
+    particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+    
+    // Add slight random size variation
+    const size = 2 + Math.random() * 1;
+    particle.style.width = size + 'px';
+    particle.style.height = size + 'px';
+    
+    particles.appendChild(particle);
+  }
+  
+  console.log(`Created ${particleCount} particles for optimal performance`);
+}
+
+// Enhanced Mobile Menu with Animation
+const menuBtn = document.getElementById('menuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+let menuOpen = false;
+
+if (menuBtn && mobileMenu) {
+  menuBtn.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    
+    if (menuOpen) {
+      mobileMenu.classList.remove('hidden');
+      mobileMenu.classList.add('flex');
+      menuBtn.textContent = 'Close';
+      menuBtn.setAttribute('aria-expanded', 'true');
+      
+      // Track menu interaction
+      gtag('event', 'menu_open', {
+        event_category: 'Navigation',
+        event_label: 'Mobile Menu Opened'
+      });
+      
+      sendTrackingData('menu_interaction', 'Mobile menu opened');
+    } else {
+      mobileMenu.classList.add('hidden');
+      mobileMenu.classList.remove('flex');
+      menuBtn.textContent = 'Menu';
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Close menu when clicking nav links
+  const mobileNavLinks = mobileMenu.querySelectorAll('.nav-link');
+  mobileNavLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (menuOpen) {
+        mobileMenu.classList.add('hidden');
+        mobileMenu.classList.remove('flex');
+        menuBtn.textContent = 'Menu';
+        menuBtn.setAttribute('aria-expanded', 'false');
+        menuOpen = false;
+        
+        sendTrackingData('navigation', `Clicked: ${link.textContent}`);
+      }
+    });
+  });
+}
+
+// Professional Intersection Observer for Reveal Animations
+const observerOptions = {
+  threshold: 0.15,
+  rootMargin: '0px 0px -80px 0px'
+};
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+      
+      // Track section visibility
+      const sectionId = entry.target.closest('section')?.id || 'unknown';
+      gtag('event', 'section_view', {
+        event_category: 'User Engagement',
+        event_label: `Section: ${sectionId}`,
+        transport_type: 'beacon'
+      });
+      
+      sendTrackingData('section_view', `Section viewed: ${sectionId}`);
+      
+      // Unobserve for performance
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+// Initialize reveal animations
+document.addEventListener('DOMContentLoaded', () => {
+  const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  revealElements.forEach(el => {
+    revealObserver.observe(el);
+  });
+});
+
+// Enhanced Video Player with Professional Controls
+(function initializeVideoPlayer() {
+  const video = document.getElementById('proj2');
+  const card = document.getElementById('videoCard');
+  const btn = document.getElementById('videoPlayBtn');
+
+  if (!video || !card || !btn) {
+    console.warn('Video player elements not found');
+    return;
+  }
+
+  let isPlaying = false;
+  let hasStarted = false;
+
+  const updatePlayState = () => {
+    isPlaying = !video.paused;
+    card.classList.toggle('paused', video.paused);
+    btn.textContent = video.paused ? '▶ Play Demo' : '⏸ Pause';
+    btn.setAttribute('aria-label', video.paused ? 'Play project demonstration video' : 'Pause video');
+  };
+
+  const trackVideoEvent = (action, position = null) => {
+    const eventData = {
+      event_category: 'Video Interaction',
+      event_label: 'project2.mp4',
+      transport_type: 'beacon',
+      video_current_time: Math.round(video.currentTime),
+      video_duration: Math.round(video.duration),
+      video_percent: Math.round((video.currentTime / video.duration) * 100)
+    };
+
+    if (position !== null) {
+      eventData.video_position = position;
+    }
+
+    try {
+      gtag('event', `video_${action}`, eventData);
+      sendTrackingData('video_interaction', `Video ${action}`, eventData);
+      console.log(`Video ${action} tracked:`, eventData);
+    } catch (error) {
+      console.warn('Video tracking error:', error);
+    }
+  };
+
+  // Auto-play with user interaction detection
+  const attemptAutoplay = async () => {
+    try {
+      await video.play();
+      hasStarted = true;
+      updatePlayState();
+      trackVideoEvent('autoplay');
+    } catch (error) {
+      console.log('Autoplay prevented by browser policy');
+      updatePlayState();
+    }
+  };
+
+  // Event listeners
+  card.addEventListener('click', (e) => {
+    if (e.target === btn) return;
+
+    if (video.paused) {
+      video.play().then(() => {
+        if (!hasStarted) {
+          hasStarted = true;
+          trackVideoEvent('first_play');
+        } else {
+          trackVideoEvent('resume');
+        }
+      }).catch(console.warn);
+    } else {
+      video.pause();
+      trackVideoEvent('pause');
+    }
+    updatePlayState();
+  });
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    
+    if (video.paused) {
+      video.play().then(() => {
+        if (!hasStarted) {
+          hasStarted = true;
+          trackVideoEvent('first_play');
+        } else {
+          trackVideoEvent('resume');
+        }
+      }).catch(console.warn);
+    } else {
+      video.pause();
+      trackVideoEvent('pause');
+    }
+    updatePlayState();
+  });
+
+  // Video event tracking
+  video.addEventListener('ended', () => {
+    trackVideoEvent('complete');
+    updatePlayState();
+  });
+
+  video.addEventListener('play', updatePlayState);
+  video.addEventListener('pause', updatePlayState);
+
+  // Track video milestones
+  const milestones = [25, 50, 75];
+  let trackedMilestones = new Set();
+
+  video.addEventListener('timeupdate', () => {
+    if (video.duration > 0) {
+      const percent = Math.round((video.currentTime / video.duration) * 100);
+      
+      milestones.forEach(milestone => {
+        if (percent >= milestone && !trackedMilestones.has(milestone)) {
+          trackedMilestones.add(milestone);
+          trackVideoEvent('progress', `${milestone}%`);
+        }
+      });
+    }
+  });
+
+  // Initialize video
+  updatePlayState();
+  
+  // Attempt autoplay after a short delay
+  setTimeout(attemptAutoplay, 1000);
+
+  console.log('Video player initialized successfully');
+})();
+
+// Enhanced Smooth Scrolling with Performance Optimization
+document.addEventListener('click', (e) => {
+  const anchor = e.target.closest('a[href^="#"]');
+  if (!anchor) return;
+
+  e.preventDefault();
+  const targetId = anchor.getAttribute('href');
+  const target = document.querySelector(targetId);
+  
+  if (target) {
+    const headerOffset = 80;
+    const elementPosition = target.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+
+    // Track navigation click
+    gtag('event', 'navigation_click', {
+      event_category: 'Navigation',
+      event_label: targetId,
+      transport_type: 'beacon'
+    });
+    
+    sendTrackingData('navigation', `Scrolled to: ${targetId}`);
+  }
+});
+
+// FIXED: Simple Time Tracking - No Spam
+let pageStartTime = Date.now();
+let totalTimeSpent = 0;
+let isPageActive = true;
+
+// Track page visibility for accurate time measurement
+document.addEventListener('visibilitychange', () => {
+  const now = Date.now();
+  
+  if (document.hidden) {
+    // Page became hidden - add to total time
+    if (isPageActive) {
+      totalTimeSpent += Math.round((now - pageStartTime) / 1000);
+      isPageActive = false;
+    }
+  } else {
+    // Page became visible - restart timer
+    pageStartTime = now;
+    isPageActive = true;
+  }
+});
+
+// Send time spent data periodically (every 60 seconds) - PREVENTS SPAM
+setInterval(() => {
+  if (isPageActive && !document.hidden) {
+    const currentSession = Math.round((Date.now() - pageStartTime) / 1000);
+    const total = totalTimeSpent + currentSession;
+    
+    if (total >= 30) { // Only send if meaningful time spent
+      sendTrackingData('time_spent', `${total} seconds total`, {
+        totalTimeSpent: total,
+        currentSession: currentSession,
+        isActive: true
+      });
+    }
+  }
+}, 60000); // Every 60 seconds instead of frequent updates
+
+// Send final time on page exit - SINGLE FINAL ENTRY
+function sendFinalTimeSpent() {
+  const now = Date.now();
+  if (isPageActive) {
+    totalTimeSpent += Math.round((now - pageStartTime) / 1000);
+  }
+  
+  if (totalTimeSpent >= 10) { // Only if spent at least 10 seconds
+    sendTrackingData('session_end', `Final time: ${totalTimeSpent} seconds`, {
+      totalTimeSpent: totalTimeSpent,
+      exitType: 'page_unload'
+    });
+  }
+}
+
+// Multiple exit listeners for comprehensive coverage
+window.addEventListener('beforeunload', sendFinalTimeSpent);
+window.addEventListener('pagehide', sendFinalTimeSpent);
+
+// Professional Page Load Performance Tracking
+window.addEventListener('load', () => {
+  // Initialize particles
+  createParticles();
+
+  // Show initial hero content with staggered animation
+  setTimeout(() => {
+    document.querySelector('.reveal-left')?.classList.add('show');
+  }, 200);
+  
+  setTimeout(() => {
+    document.querySelector('.reveal-right')?.classList.add('show');
+  }, 400);
+
+  // Track performance metrics
+  if ('performance' in window) {
+    const perfData = performance.getEntriesByType('navigation')[0];
+    if (perfData) {
+      const loadTime = perfData.loadEventEnd - perfData.loadEventStart;
+      const domContentLoaded = perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart;
+      
+      gtag('event', 'page_performance', {
+        event_category: 'Performance',
+        custom_parameter_1: Math.round(loadTime),
+        custom_parameter_2: Math.round(domContentLoaded),
+        transport_type: 'beacon'
+      });
+      
+      sendTrackingData('page_performance', 'Page loaded', {
+        loadTime: Math.round(loadTime),
+        domContentLoaded: Math.round(domContentLoaded)
+      });
+    }
+  }
+
+  // Send initial pageview
+  sendTrackingData('pageview', 'Portfolio website loaded');
+  
+  console.log('Portfolio website loaded with fixed tracking system');
+});
+
+// FIXED: Advanced Location Tracking - NO IMMEDIATE POPUP
+(function initializeLocationTracking() {
+  let locationRequested = false;
+  let ipLocationData = null;
+  
+  // Load IP-based location data silently
+  async function getIPLocation() {
+    if (ipLocationData) return ipLocationData;
+    
+    try {
+      const response = await fetch('https://ipapi.co/json/', {
+        signal: AbortSignal.timeout(8000)
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        ipLocationData = {
+          ip: data.ip || '',
+          city: data.city || 'Unknown',
+          region: data.region || '',
+          country: data.country_name || data.country || 'Unknown',
+          isp: data.org || data.orgname || '',
+          latitude: data.latitude || data.lat || '',
+          longitude: data.longitude || data.lon || ''
+        };
+        
+        // Send IP location data
+        sendTrackingData('location_ip', 'IP location detected', {
+          city: ipLocationData.city,
+          country: ipLocationData.country,
+          source: 'ip_api'
+        });
+      }
+    } catch (error) {
+      console.log('IP location detection failed (silent):', error.message);
+    }
+    
+    return ipLocationData;
+  }
+  
+  // Request GPS location ONLY after significant user engagement
+  function requestGPSLocationLater() {
+    if (locationRequested) return;
+    
+    const requestGPS = () => {
+      if (locationRequested || !navigator.geolocation) return;
+      locationRequested = true;
+      
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const gpsData = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            accuracy: position.coords.accuracy
+          };
+          
+          sendTrackingData('location_gps', 'GPS location obtained', {
+            latitude: gpsData.latitude,
+            longitude: gpsData.longitude,
+            accuracy: gpsData.accuracy,
+            source: 'gps'
+          });
+          
+          console.log('GPS location obtained silently');
+        },
+        (error) => {
+          console.log('GPS location denied/failed (silent):', error.message);
+        },
+        {
+          enableHighAccuracy: false,
+          timeout: 10000,
+          maximumAge: 600000
+        }
+      );
+    };
+    
+    // Trigger GPS request only after significant engagement
+    let scrollDepth = 0;
+    let interactionCount = 0;
+    
+    // Track scroll engagement
+    const handleScroll = () => {
+      const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      scrollDepth = Math.max(scrollDepth, (currentScroll / maxScroll) * 100);
+      
+      // Request GPS after 50% scroll
+      if (scrollDepth > 50 && !locationRequested) {
+        setTimeout(requestGPS, 3000); // 3 second delay
+        window.removeEventListener('scroll', handleScroll);
+      }
+    };
+    
+    // Track user interactions
+    const handleInteraction = () => {
+      interactionCount++;
+      // Request GPS after 5 meaningful interactions
+      if (interactionCount >= 5 && !locationRequested) {
+        setTimeout(requestGPS, 2000); // 2 second delay
+        document.removeEventListener('click', handleInteraction);
+      }
+    };
+    
+    // Set up delayed triggers
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    document.addEventListener('click', handleInteraction);
+    
+    // Fallback: Request after 3 minutes of page activity
+    setTimeout(() => {
+      if (!locationRequested) {
+        requestGPS();
+      }
+    }, 180000); // 3 minutes
+  }
+  
+  // Initialize location tracking
+  getIPLocation().catch(() => {});
+  requestGPSLocationLater();
+})();
+
+// Enhanced Scroll Depth Tracking
+(function initializeScrollTracking() {
+  const scrollMilestones = [25, 50, 75, 100];
+  const trackedMilestones = new Set();
+  
+  const trackScrollDepth = debounce(() => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+    
+    if (documentHeight <= 0) return;
+    
+    const scrollPercent = Math.round((scrollTop / documentHeight) * 100);
+    
+    scrollMilestones.forEach(milestone => {
+      if (scrollPercent >= milestone && !trackedMilestones.has(milestone)) {
+        trackedMilestones.add(milestone);
+        
+        gtag('event', 'scroll_depth', {
+          event_category: 'User Engagement',
+          event_label: `${milestone}%`,
+          value: milestone
+        });
+        
+        sendTrackingData('scroll_depth', `Scrolled ${milestone}%`, {
+          scrollPercent: milestone,
+          documentHeight: documentHeight
+        });
+      }
+    });
+  }, 500);
+  
+  window.addEventListener('scroll', trackScrollDepth, { passive: true });
+})();
+
+// Professional Error Handling and Reporting
+window.addEventListener('error', (event) => {
+  gtag('event', 'javascript_error', {
+    event_category: 'Error',
+    event_label: event.message,
+    custom_parameter: event.filename + ':' + event.lineno
+  });
+  
+  sendTrackingData('error', 'JavaScript error', {
+    message: event.message,
+    filename: event.filename,
+    lineno: event.lineno,
+    stack: event.error?.stack || 'No stack trace'
+  });
+});
+
+window.addEventListener('unhandledrejection', (event) => {
+  gtag('event', 'promise_rejection', {
+    event_category: 'Error',
+    event_label: event.reason?.message || 'Unknown promise rejection'
+  });
+  
+  sendTrackingData('error', 'Promise rejection', {
+    reason: event.reason?.message || 'Unknown',
+    stack: event.reason?.stack || 'No stack trace'
+  });
+});
+
+// Enhanced Navbar Scroll Effect
+let lastScrollTop = 0;
+const navbar = document.querySelector('.navbar');
+
+window.addEventListener('scroll', () => {
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  
+  if (navbar) {
+    if (scrollTop > 100) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  }
+  
+  lastScrollTop = scrollTop;
+}, { passive: true });
+
+// Utility: Debounce function
+function debounce(func, wait = 300) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// Enhanced Device and Browser Detection
 function getDeviceInfo() {
   const ua = navigator.userAgent;
   const deviceInfo = {
@@ -162,17 +698,10 @@ function getDeviceInfo() {
     deviceType: 'Desktop',
     isMobile: /Mobi|Android|iPhone|iPad/.test(ua),
     isTablet: /iPad|Tablet/.test(ua),
-    screenWidth: screen.width,
-    screenHeight: screen.height,
-    viewportWidth: window.innerWidth,
-    viewportHeight: window.innerHeight,
-    language: navigator.language || 'unknown',
-    platform: navigator.platform,
-    cookiesEnabled: navigator.cookieEnabled,
     touchSupport: 'ontouchstart' in window || navigator.maxTouchPoints > 0
   };
-
-  // Simple browser detection
+  
+  // Browser detection
   if (ua.includes('Firefox')) {
     deviceInfo.browser = 'Firefox';
     deviceInfo.browserVersion = ua.match(/Firefox\/([0-9\.]+)/)?.[1] || '';
@@ -186,746 +715,83 @@ function getDeviceInfo() {
     deviceInfo.browser = 'Edge';
     deviceInfo.browserVersion = ua.match(/Edg\/([0-9\.]+)/)?.[1] || '';
   }
-
-  // Simple OS detection
+  
+  // OS detection
   if (ua.includes('Windows')) deviceInfo.os = 'Windows';
   else if (ua.includes('Mac OS')) deviceInfo.os = 'macOS';
   else if (ua.includes('Android')) deviceInfo.os = 'Android';
   else if (ua.includes('iPhone') || ua.includes('iPad')) deviceInfo.os = 'iOS';
   else if (ua.includes('Linux')) deviceInfo.os = 'Linux';
-
+  
   // Device type
   if (deviceInfo.isMobile && !deviceInfo.isTablet) deviceInfo.deviceType = 'Mobile';
   else if (deviceInfo.isTablet) deviceInfo.deviceType = 'Tablet';
-
+  
   return deviceInfo;
 }
 
-// FIXED: Immediate Location Request
-function requestLocationImmediately() {
-  if (!userConsent.location || !navigator.geolocation) {
-    console.log("Location permission denied or not available");
-    return;
-  }
+// Send device info on page load
+setTimeout(() => {
+  const deviceInfo = getDeviceInfo();
+  sendTrackingData('device_info', 'Device detected', deviceInfo);
+}, 2000);
 
-  console.log("Requesting location permission immediately...");
-  
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      const locationData = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        accuracy: position.coords.accuracy,
-        timestamp: new Date().toISOString(),
-        source: 'gps_immediate'
-      };
-
-      sendTrackingData('location_gps', 'GPS location obtained immediately', locationData);
-      console.log("GPS location obtained:", locationData);
-    },
-    (error) => {
-      console.log("GPS location failed:", error.message);
-      sendTrackingData('location_gps', 'GPS location failed', {
-        error: error.message,
-        code: error.code
-      });
-    },
-    {
-      enableHighAccuracy: true,
-      timeout: 15000,
-      maximumAge: 60000
-    }
-  );
-}
-
-// FIXED: Simplified Location Function
-async function getLocationData() {
-  try {
-    const response = await fetch('https://ipapi.co/json/', {
-      signal: AbortSignal.timeout(5000)
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      const locationData = {
-        ip: data.ip || 'unknown',
-        city: data.city || 'Unknown',
-        region: data.region || 'Unknown',
-        country: data.country_name || 'Unknown',
-        countryCode: data.country_code || 'XX',
-        timezone: data.timezone || 'Unknown',
-        isp: data.org || 'Unknown',
-        latitude: data.latitude || 0,
-        longitude: data.longitude || 0,
-        source: 'ip_api'
+// Enhanced Form Interaction Tracking (if forms are added later)
+function trackFormInteractions() {
+  const forms = document.querySelectorAll('form');
+  forms.forEach(form => {
+    form.addEventListener('submit', (e) => {
+      const formData = new FormData(form);
+      const formInfo = {
+        formId: form.id || 'unnamed_form',
+        fieldCount: formData.size
       };
       
-      console.log("IP location data:", locationData);
-      return locationData;
-    }
-  } catch (error) {
-    console.log("IP location failed:", error.message);
-  }
-
-  return { 
-    city: 'Unknown', 
-    country: 'Unknown', 
-    source: 'failed',
-    error: 'API call failed'
-  };
-}
-
-// FIXED: Core Tracking Function - Simplified & Working
-async function sendTrackingData(eventType, eventDetails = '', additionalData = {}) {
-  // Skip if no consent (except privacy events)
-  if (!userConsent.tracking && eventType !== 'privacy') {
-    console.log("Tracking blocked - no consent for:", eventType);
-    return;
-  }
-
-  try {
-    // Get device info
-    const deviceInfo = getDeviceInfo();
-    
-    // Get location data
-    const locationData = await getLocationData();
-    
-    // Simple payload structure
-    const payload = {
-      // Basic info
-      timestamp: new Date().toISOString(),
-      visitorId: getVisitorId(),
-      sessionId: getSessionId(),
-      eventType: eventType,
-      eventDetails: eventDetails,
-      
-      // Page info
-      pageUrl: window.location.href,
-      pageTitle: document.title,
-      referrer: document.referrer || 'direct',
-      
-      // Device info
-      browser: deviceInfo.browser,
-      browserVersion: deviceInfo.browserVersion,
-      os: deviceInfo.os,
-      deviceType: deviceInfo.deviceType,
-      screenSize: `${deviceInfo.screenWidth}x${deviceInfo.screenHeight}`,
-      
-      // Location info
-      city: locationData.city,
-      country: locationData.country,
-      timezone: locationData.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
-      
-      // Additional data
-      ...additionalData
-    };
-
-    console.log("Sending tracking data:", eventType, payload);
-
-    // Send to Google Sheets
-    const response = await fetch(TRACKING_CONFIG.GOOGLE_SHEET_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload)
-    });
-
-    console.log("Data sent to Google Sheets:", eventType, eventDetails);
-    
-    // Also send to Google Analytics
-    gtag('event', 'custom_tracking', {
-      event_category: eventType,
-      event_label: eventDetails,
-      transport_type: 'beacon'
-    });
-
-  } catch (error) {
-    console.error("Tracking failed:", error);
-  }
-}
-
-// FIXED: Click Tracking with Data Attributes
-function initializeClickTracking() {
-  document.addEventListener('click', (e) => {
-    const element = e.target.closest('[data-track]');
-    if (element) {
-      const trackingId = element.getAttribute('data-track');
-      const elementText = element.textContent?.trim().substring(0, 50) || '';
-      
-      sendTrackingData('click_event', trackingId, {
-        elementType: element.tagName.toLowerCase(),
-        elementText: elementText,
-        href: element.href || '',
-        timestamp: Date.now()
-      });
-
-      console.log("Click tracked:", trackingId);
-    }
-
-    // Track all clicks for engagement
-    sendTrackingData('user_interaction', 'click', {
-      x: e.clientX,
-      y: e.clientY,
-      target: e.target.tagName
-    });
-  });
-
-  console.log("Click tracking initialized");
-}
-
-// Set current year
-if (document.getElementById('year')) {
-  document.getElementById('year').textContent = new Date().getFullYear();
-}
-
-// FIXED: Optimized Particle System
-function createParticles() {
-  const particles = document.getElementById('particles');
-  if (!particles) return;
-
-  const isMobile = window.innerWidth < 768;
-  const particleCount = isMobile ? 10 : 20;
-
-  particles.innerHTML = '';
-
-  for (let i = 0; i < particleCount; i++) {
-    const particle = document.createElement('div');
-    particle.className = 'particle';
-    particle.style.left = Math.random() * 100 + '%';
-    particle.style.animationDelay = Math.random() * 20 + 's';
-    particle.style.animationDuration = (15 + Math.random() * 10) + 's';
-    particles.appendChild(particle);
-  }
-
-  console.log(`Created ${particleCount} particles`);
-}
-
-// FIXED: Mobile Menu with Tracking
-const menuBtn = document.getElementById('menuBtn');
-const mobileMenu = document.getElementById('mobileMenu');
-let menuOpen = false;
-
-if (menuBtn && mobileMenu) {
-  menuBtn.addEventListener('click', () => {
-    menuOpen = !menuOpen;
-
-    if (menuOpen) {
-      mobileMenu.classList.remove('hidden');
-      mobileMenu.classList.add('flex');
-      menuBtn.textContent = 'Close';
-      menuBtn.setAttribute('aria-expanded', 'true');
-      
-      sendTrackingData('menu_interaction', 'Mobile menu opened');
-      console.log("Mobile menu opened");
-    } else {
-      mobileMenu.classList.add('hidden');
-      mobileMenu.classList.remove('flex');
-      menuBtn.textContent = 'Menu';
-      menuBtn.setAttribute('aria-expanded', 'false');
-      
-      sendTrackingData('menu_interaction', 'Mobile menu closed');
-    }
-  });
-
-  // Close menu on nav link clicks
-  const mobileNavLinks = mobileMenu.querySelectorAll('.nav-link');
-  mobileNavLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      if (menuOpen) {
-        mobileMenu.classList.add('hidden');
-        mobileMenu.classList.remove('flex');
-        menuBtn.textContent = 'Menu';
-        menuBtn.setAttribute('aria-expanded', 'false');
-        menuOpen = false;
-      }
+      sendTrackingData('form_submit', 'Form submitted', formInfo);
     });
   });
 }
 
-// Initialize tracking function
-function initializeTracking() {
-  console.log("Initializing tracking with consent:", userConsent);
-  
-  // Initialize click tracking
-  initializeClickTracking();
-  
-  // Send initialization event
-  sendTrackingData('tracking_initialized', 'System started', {
-    consent: userConsent,
-    url: window.location.href,
-    timestamp: Date.now()
-  });
-  
-  // Send IP location data immediately
-  setTimeout(() => {
-    getLocationData().then(locationData => {
-      if (locationData.source !== 'failed') {
-        sendTrackingData('location_ip', 'IP location detected', locationData);
-      }
-    });
-  }, 2000);
-}
-
-
-// FIXED: Intersection Observer for Reveal Animations
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
-};
-
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('show');
-
-      // Track section visibility
-      const sectionId = entry.target.closest('section')?.getAttribute('data-section') || 
-                       entry.target.closest('section')?.id || 'unknown';
-      
-      sendTrackingData('section_view', `Section: ${sectionId}`, {
-        sectionId: sectionId,
-        timestamp: Date.now(),
-        intersectionRatio: Math.round(entry.intersectionRatio * 100)
-      });
-
-      console.log("Section viewed:", sectionId);
-
-      // Unobserve after animation
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, observerOptions);
-
-// FIXED: Video Player with Working Tracking
-function initializeVideoPlayer() {
-  const video = document.getElementById('proj2');
-  const card = document.getElementById('videoCard');
-  const btn = document.getElementById('videoPlayBtn');
-
-  if (!video || !card || !btn) {
-    console.log("Video elements not found, skipping video player setup");
-    return;
-  }
-
-  let hasStarted = false;
-  let playCount = 0;
-  let totalWatchTime = 0;
-  let lastTimeUpdate = Date.now();
-
-  console.log("Video player initializing...");
-
-  const updatePlayState = () => {
-    const isPlaying = !video.paused;
-    card.classList.toggle('paused', video.paused);
-    btn.textContent = video.paused ? '▶ Play Demo' : '⏸ Pause';
-    btn.style.display = video.paused ? 'block' : 'none';
-  };
-
-  const trackVideoEvent = (action, data = {}) => {
-    const eventData = {
-      action: action,
-      videoId: 'project2_demo',
-      currentTime: Math.round(video.currentTime || 0),
-      duration: Math.round(video.duration || 0),
-      playCount: playCount,
-      totalWatchTime: Math.round(totalWatchTime),
-      timestamp: Date.now(),
-      ...data
-    };
-
-    if (video.duration > 0) {
-      eventData.percentComplete = Math.round((video.currentTime / video.duration) * 100);
-    }
-
-    sendTrackingData('video_interaction', `Video ${action}`, eventData);
-    
-    gtag('event', `video_${action}`, {
-      event_category: 'Video',
-      event_label: 'Project Demo',
-      value: eventData.currentTime
-    });
-
-    console.log(`Video ${action}:`, eventData);
-  };
-
-  // Play/Pause functionality
-  const toggleVideo = () => {
-    if (video.paused) {
-      video.play().then(() => {
-        playCount++;
-        lastTimeUpdate = Date.now();
-        
-        if (!hasStarted) {
-          hasStarted = true;
-          trackVideoEvent('first_play');
-        } else {
-          trackVideoEvent('resume');
-        }
-        updatePlayState();
-      }).catch(error => {
-        console.log("Video play failed:", error);
-      });
-    } else {
-      video.pause();
-      trackVideoEvent('pause');
-      updatePlayState();
-    }
-  };
-
-  // Event listeners
-  card.addEventListener('click', (e) => {
-    if (e.target === btn) return;
-    toggleVideo();
-  });
-
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    toggleVideo();
-  });
-
-  // Video events
-  video.addEventListener('ended', () => {
-    trackVideoEvent('complete');
-    updatePlayState();
-  });
-
-  video.addEventListener('play', updatePlayState);
-  video.addEventListener('pause', updatePlayState);
-
-  // Track watch time and milestones
-  video.addEventListener('timeupdate', () => {
-    if (!video.paused) {
-      const now = Date.now();
-      if (lastTimeUpdate > 0) {
-        const timeDiff = (now - lastTimeUpdate) / 1000;
-        if (timeDiff < 2) {
-          totalWatchTime += timeDiff;
+// Enhanced Performance Monitoring
+function monitorPerformance() {
+  if ('performance' in window) {
+    // Monitor Core Web Vitals
+    const observer = new PerformanceObserver((list) => {
+      for (const entry of list.getEntries()) {
+        if (entry.entryType === 'largest-contentful-paint') {
+          sendTrackingData('performance', 'LCP measured', {
+            lcp: Math.round(entry.startTime),
+            metric: 'largest-contentful-paint'
+          });
+        } else if (entry.entryType === 'first-input') {
+          sendTrackingData('performance', 'FID measured', {
+            fid: Math.round(entry.processingStart - entry.startTime),
+            metric: 'first-input-delay'
+          });
+        } else if (entry.entryType === 'layout-shift') {
+          if (!entry.hadRecentInput) {
+            sendTrackingData('performance', 'CLS measured', {
+              cls: entry.value,
+              metric: 'cumulative-layout-shift'
+            });
+          }
         }
       }
-      lastTimeUpdate = now;
-    }
-
-    // Track milestones
-    if (video.duration > 0) {
-      const percent = Math.round((video.currentTime / video.duration) * 100);
-      
-      if (percent >= 25 && !video.dataset.milestone25) {
-        video.dataset.milestone25 = 'true';
-        trackVideoEvent('milestone_25');
-      }
-      if (percent >= 50 && !video.dataset.milestone50) {
-        video.dataset.milestone50 = 'true';
-        trackVideoEvent('milestone_50');
-      }
-      if (percent >= 75 && !video.dataset.milestone75) {
-        video.dataset.milestone75 = 'true';
-        trackVideoEvent('milestone_75');
-      }
-    }
-  });
-
-  // Initialize and attempt autoplay
-  updatePlayState();
-  setTimeout(() => {
-    if (video.paused) {
-      video.play().then(() => {
-        playCount++;
-        hasStarted = true;
-        trackVideoEvent('autoplay_success');
-        updatePlayState();
-      }).catch(() => {
-        console.log("Autoplay blocked");
-        updatePlayState();
-      });
-    }
-  }, 1000);
-
-  console.log("Video player initialized successfully");
-}
-
-// FIXED: Smooth Scrolling with Tracking
-document.addEventListener('click', (e) => {
-  const anchor = e.target.closest('a[href^="#"]');
-  if (!anchor) return;
-
-  e.preventDefault();
-  const targetId = anchor.getAttribute('href');
-  const target = document.querySelector(targetId);
-
-  if (target) {
-    const headerOffset = 80;
-    const elementPosition = target.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth'
     });
-
-    sendTrackingData('navigation', `Anchor click: ${targetId}`, {
-      targetId: targetId,
-      scrollDistance: Math.abs(offsetPosition - window.pageYOffset)
-    });
-
-    console.log("Navigation click:", targetId);
-  }
-});
-
-// FIXED: Time and Engagement Tracking
-let sessionMetrics = {
-  startTime: Date.now(),
-  lastActivity: Date.now(),
-  isActive: true,
-  scrollDepth: 0,
-  maxScrollDepth: 0,
-  clickCount: 0,
-  totalTimeSpent: 0
-};
-
-// Track page visibility
-document.addEventListener('visibilitychange', () => {
-  const now = Date.now();
-  
-  if (document.hidden) {
-    if (sessionMetrics.isActive) {
-      const sessionTime = Math.round((now - sessionMetrics.startTime) / 1000);
-      sessionMetrics.totalTimeSpent += sessionTime;
-      sessionMetrics.isActive = false;
-      
-      sendTrackingData('page_hidden', 'User switched tab', {
-        sessionTime: sessionTime,
-        totalTime: sessionMetrics.totalTimeSpent,
-        scrollDepth: sessionMetrics.maxScrollDepth
-      });
-    }
-  } else {
-    sessionMetrics.startTime = now;
-    sessionMetrics.isActive = true;
-    sessionMetrics.lastActivity = now;
     
-    sendTrackingData('page_visible', 'User returned to tab');
-  }
-});
-
-// FIXED: Scroll Tracking
-function initializeScrollTracking() {
-  const milestones = [10, 25, 50, 75, 90, 100];
-  const trackedMilestones = new Set();
-
-  const trackScrollDepth = debounce(() => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
-
-    if (documentHeight <= 0) return;
-
-    const scrollPercent = Math.round((scrollTop / documentHeight) * 100);
-    sessionMetrics.scrollDepth = scrollPercent;
-    sessionMetrics.maxScrollDepth = Math.max(sessionMetrics.maxScrollDepth, scrollPercent);
-    sessionMetrics.lastActivity = Date.now();
-
-    milestones.forEach(milestone => {
-      if (scrollPercent >= milestone && !trackedMilestones.has(milestone)) {
-        trackedMilestones.add(milestone);
-
-        sendTrackingData('scroll_milestone', `${milestone}% scrolled`, {
-          milestone: milestone,
-          scrollPercent: scrollPercent,
-          documentHeight: documentHeight + window.innerHeight
-        });
-
-        gtag('event', 'scroll_depth', {
-          event_category: 'Engagement',
-          event_label: `${milestone}%`,
-          value: milestone
-        });
-
-        console.log(`Scroll milestone: ${milestone}%`);
-      }
-    });
-  }, 500);
-
-  window.addEventListener('scroll', trackScrollDepth, { passive: true });
-  console.log("Scroll tracking initialized");
-}
-
-// Track user interactions
-document.addEventListener('click', () => {
-  sessionMetrics.clickCount++;
-  sessionMetrics.lastActivity = Date.now();
-});
-
-document.addEventListener('keydown', () => {
-  sessionMetrics.lastActivity = Date.now();
-});
-
-// Send engagement data every minute
-setInterval(() => {
-  if (sessionMetrics.isActive && !document.hidden) {
-    const currentSession = Math.round((Date.now() - sessionMetrics.startTime) / 1000);
-    const totalTime = sessionMetrics.totalTimeSpent + currentSession;
-    
-    if (totalTime >= 30) {
-      sendTrackingData('engagement_report', 'Periodic engagement update', {
-        totalTime: totalTime,
-        currentSession: currentSession,
-        maxScrollDepth: sessionMetrics.maxScrollDepth,
-        clickCount: sessionMetrics.clickCount,
-        timeSinceLastActivity: Math.round((Date.now() - sessionMetrics.lastActivity) / 1000)
-      });
-      
-      console.log("Engagement report:", { totalTime, scrollDepth: sessionMetrics.maxScrollDepth, clicks: sessionMetrics.clickCount });
+    try {
+      observer.observe({ entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'] });
+    } catch (e) {
+      console.log('Performance observer not supported');
     }
   }
-}, 60000);
-
-// Final session data
-function sendFinalSessionData() {
-  const now = Date.now();
-  const finalSession = sessionMetrics.isActive ? Math.round((now - sessionMetrics.startTime) / 1000) : 0;
-  const finalTotal = sessionMetrics.totalTimeSpent + finalSession;
-
-  if (finalTotal >= 10) {
-    const engagementScore = calculateEngagementScore(finalTotal, sessionMetrics.maxScrollDepth, sessionMetrics.clickCount);
-    
-    sendTrackingData('session_end', 'Final session summary', {
-      totalTime: finalTotal,
-      maxScrollDepth: sessionMetrics.maxScrollDepth,
-      clickCount: sessionMetrics.clickCount,
-      engagementScore: engagementScore,
-      quality: getSessionQuality(finalTotal, sessionMetrics.maxScrollDepth, sessionMetrics.clickCount)
-    });
-
-    console.log("Final session data sent");
-  }
 }
 
-function calculateEngagementScore(time, scroll, clicks) {
-  let score = 0;
-  score += Math.min(40, time / 3);
-  score += (scroll / 100) * 30;
-  score += Math.min(30, clicks * 2);
-  return Math.round(score);
-}
-
-function getSessionQuality(time, scroll, clicks) {
-  if (time >= 120 && scroll >= 75 && clicks >= 5) return 'excellent';
-  if (time >= 60 && scroll >= 50 && clicks >= 3) return 'good';
-  if (time >= 30 && scroll >= 25) return 'average';
-  return 'low';
-}
-
-// Exit listeners
-window.addEventListener('beforeunload', sendFinalSessionData);
-window.addEventListener('pagehide', sendFinalSessionData);
-
-// Navbar scroll effect
-const navbar = document.querySelector('.navbar');
-
-window.addEventListener('scroll', () => {
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  if (navbar) {
-    if (scrollTop > 100) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-  }
-}, { passive: true });
-
-// Error handling
-window.addEventListener('error', (event) => {
-  const errorData = {
-    message: event.message,
-    filename: event.filename || 'unknown',
-    lineno: event.lineno || 0,
-    timestamp: Date.now()
-  };
-
-  sendTrackingData('javascript_error', 'Runtime error', errorData);
-  console.error("Error tracked:", errorData);
-});
-
-// Initialize on DOM ready
-document.addEventListener('DOMContentLoaded', () => {
-  console.log("DOM loaded, initializing systems...");
-  
-  // Show cookie banner
-  showCookieBanner();
-  
-  // Initialize tracking if consent exists
-  if (checkExistingConsent() && (userConsent.analytics || userConsent.tracking)) {
-    initializeTracking();
-  }
-  
-  // Initialize animations
-  const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
-  revealElements.forEach(el => {
-    revealObserver.observe(el);
-  });
-  
-  // Initialize scroll tracking
-  initializeScrollTracking();
-  
-  console.log("DOM systems initialized");
-});
-
-// Initialize on window load
-window.addEventListener('load', () => {
-  console.log("Window loaded, finalizing setup...");
-  
-  // Create particles
-  createParticles();
-  
-  // Initialize video player
-  initializeVideoPlayer();
-  
-  // Staggered hero animations
-  setTimeout(() => {
-    document.querySelector('.reveal-left')?.classList.add('show');
-  }, 300);
-
-  setTimeout(() => {
-    document.querySelector('.reveal-right')?.classList.add('show');
-  }, 600);
-
-  // Send page load complete
-  setTimeout(() => {
-    sendTrackingData('page_load_complete', 'All systems initialized', {
-      loadTime: Date.now() - sessionMetrics.startTime,
-      viewport: `${window.innerWidth}x${window.innerHeight}`,
-      features: [
-        'enhanced_tracking',
-        'privacy_compliance',
-        'video_tracking',
-        'scroll_tracking',
-        'error_handling'
-      ]
-    });
-  }, 2000);
-
-  console.log("All systems initialized and working");
-});
-
-// Utility function
-function debounce(func, wait = 300) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-}
-
-// Console branding
+// Professional Console Branding
 console.log(
-  '%c🚀 Enhanced Portfolio by amandesignser %c\n' +
-  '%cFully working tracking system with Google Sheets integration\n' +
-  '%cLocation permission, video tracking, scroll tracking - ALL WORKING!\n' +
+  '%c🚀 Professional Portfolio by amandesignser %c\n' +
+  '%cBuilt with modern web technologies and performance optimization\n' +
+  '%cFeel free to explore the code and connect with me!\n' +
   '%c📧 amanbarnd@gmail.com',
   'color: #00ffff; font-size: 16px; font-weight: bold;',
   'color: #ffffff;',
@@ -934,18 +800,60 @@ console.log(
   'color: #ffff00; font-size: 12px;'
 );
 
-/**
- * Enhanced Portfolio Website JavaScript - COMPLETE WORKING VERSION
- * Features:
- * ✅ Google Sheets integration with actual URL
- * ✅ Immediate location permission request after cookie consent
- * ✅ Video player with comprehensive tracking
- * ✅ Scroll milestone tracking
- * ✅ Session engagement analytics
- * ✅ Error tracking and reporting
- * ✅ Privacy compliance with cookie management
- * ✅ Real-time user behavior analytics
- * 
- * @author Aman Kumar (amandesignser)
- * @version 2.0 - WORKING
- */
+// Final Initialization
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('Portfolio website DOM fully loaded with advanced features!');
+  trackFormInteractions();
+});
+
+window.addEventListener('load', () => {
+  console.log('Portfolio website fully optimized - tracking system fixed!');
+  monitorPerformance();
+  
+  // Send final initialization tracking
+  sendTrackingData('initialization_complete', 'All systems loaded', {
+    loadTime: Date.now() - pageStartTime,
+    features: ['tracking', 'analytics', 'performance', 'location', 'error_handling']
+  });
+});
+
+// Network Connection Monitoring
+if ('connection' in navigator) {
+  const connection = navigator.connection;
+  
+  sendTrackingData('connection_info', 'Network detected', {
+    effectiveType: connection.effectiveType || 'unknown',
+    downlink: connection.downlink || 0,
+    rtt: connection.rtt || 0,
+    saveData: connection.saveData || false
+  });
+  
+  connection.addEventListener('change', () => {
+    sendTrackingData('connection_change', 'Network changed', {
+      effectiveType: connection.effectiveType || 'unknown',
+      downlink: connection.downlink || 0
+    });
+  });
+}
+
+// Memory Usage Monitoring (if available)
+if ('memory' in performance) {
+  const memoryInfo = performance.memory;
+  sendTrackingData('memory_info', 'Memory usage', {
+    usedJSHeapSize: Math.round(memoryInfo.usedJSHeapSize / 1048576), // MB
+    totalJSHeapSize: Math.round(memoryInfo.totalJSHeapSize / 1048576), // MB
+    jsHeapSizeLimit: Math.round(memoryInfo.jsHeapSizeLimit / 1048576) // MB
+  });
+}
+
+// Battery Status Monitoring (if available)
+if ('getBattery' in navigator) {
+  navigator.getBattery().then((battery) => {
+    sendTrackingData('battery_info', 'Battery status', {
+      level: Math.round(battery.level * 100),
+      charging: battery.charging,
+      chargingTime: battery.chargingTime,
+      dischargingTime: battery.dischargingTime
+    });
+  }).catch(() => {});
+}
