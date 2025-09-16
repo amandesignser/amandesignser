@@ -1,7 +1,101 @@
 /**
- * Professional Portfolio JavaScript
+ * Professional Portfolio Website JavaScript
  * @author Aman Kumar (amandesignser)
  */
+
+// Google Analytics Configuration
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag('js', new Date());
+gtag('config', 'G-CN24ESW1EW', {
+  page_title: document.title,
+  page_location: window.location.href,
+  send_page_view: true
+});
+
+// FIXED TRACKING SYSTEM - Simple & Working
+const TRACKING_CONFIG = {
+  WEB_APP_URL: "https://script.google.com/macros/s/AKfycby60lD7E-wO75H47SORUGQDm_MNbVG9O6hNGmzgPBQou5uQhHB3uyT7y8oDUg8HwJmn/exec",
+  DEBUG: false
+};
+
+// Simple visitor ID management
+function getVisitorId() {
+  let visitorId = localStorage.getItem('portfolio_visitor_id');
+  if (!visitorId) {
+    visitorId = 'v_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
+    localStorage.setItem('portfolio_visitor_id', visitorId);
+  }
+  return visitorId;
+}
+
+// Session ID management
+function getSessionId() {
+  let sessionId = sessionStorage.getItem('portfolio_session_id');
+  if (!sessionId) {
+    sessionId = 's_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
+    sessionStorage.setItem('portfolio_session_id', sessionId);
+  }
+  return sessionId;
+}
+
+// FIXED: Simple tracking function that works
+async function sendTrackingData(eventType, eventDetails = '', additionalData = {}) {
+  try {
+    const payload = {
+      timestamp: new Date().toISOString(),
+      visitorId: getVisitorId(),
+      sessionId: getSessionId(),
+      eventType: eventType,
+      eventDetails: eventDetails,
+      pageUrl: window.location.href,
+      pageTitle: document.title,
+      referrer: document.referrer || '',
+      userAgent: navigator.userAgent,
+      language: navigator.language || 'unknown',
+      screenResolution: `${screen.width}x${screen.height}`,
+      source: 'portfolio_website',
+      ...additionalData
+    };
+
+    // Use fetch with no-cors mode for Google Sheets
+    const response = await fetch(TRACKING_CONFIG.WEB_APP_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (TRACKING_CONFIG.DEBUG) {
+      console.log('Tracking data sent:', eventType, eventDetails);
+    }
+  } catch (error) {
+    if (TRACKING_CONFIG.DEBUG) {
+      console.warn('Tracking failed:', error);
+    }
+  }
+}
+
+// Professional Social Media Click Tracking - FIXED
+function trackClick(platform) {
+  try {
+    // Google Analytics tracking
+    gtag('event', 'social_click', {
+      event_category: 'Social Media',
+      event_label: platform,
+      transport_type: 'beacon'
+    });
+
+    // Custom tracking
+    sendTrackingData('social_click', `${platform} clicked`);
+    
+    console.log(`Social media click tracked: ${platform}`);
+  } catch (error) {
+    console.warn('Social tracking error:', error);
+  }
+}
 
 // Set current year dynamically
 if (document.getElementById('year')) {
@@ -12,7 +106,7 @@ if (document.getElementById('year')) {
 function createParticles() {
   const particles = document.getElementById('particles');
   if (!particles) return;
-
+  
   // Adaptive particle count based on device capabilities
   const isMobile = window.innerWidth < 768;
   const isLowPerformance = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4;
@@ -21,72 +115,53 @@ function createParticles() {
   // Clear existing particles
   particles.innerHTML = '';
 
-  // Create particle fragment for better performance
-  const fragment = document.createDocumentFragment();
-
   for (let i = 0; i < particleCount; i++) {
     const particle = document.createElement('div');
     particle.className = 'particle';
-
-    // Random positioning and timing for natural movement
+    
+    // Random positioning and timing
     particle.style.left = Math.random() * 100 + '%';
     particle.style.animationDelay = Math.random() * 20 + 's';
     particle.style.animationDuration = (15 + Math.random() * 10) + 's';
-
+    
     // Add slight random size variation
     const size = 2 + Math.random() * 1;
     particle.style.width = size + 'px';
     particle.style.height = size + 'px';
-
-    // Random horizontal movement
-    particle.style.setProperty('--random-x', (Math.random() - 0.5) * 200 + 'px');
-
-    fragment.appendChild(particle);
+    
+    particles.appendChild(particle);
   }
-
-  particles.appendChild(fragment);
+  
   console.log(`Created ${particleCount} particles for optimal performance`);
 }
 
-// Enhanced Mobile Menu with smooth animations
+// Enhanced Mobile Menu with Animation
 const menuBtn = document.getElementById('menuBtn');
 const mobileMenu = document.getElementById('mobileMenu');
 let menuOpen = false;
 
 if (menuBtn && mobileMenu) {
-  // Menu toggle functionality
-  menuBtn.addEventListener('click', (e) => {
-    e.preventDefault();
+  menuBtn.addEventListener('click', () => {
     menuOpen = !menuOpen;
-
+    
     if (menuOpen) {
       mobileMenu.classList.remove('hidden');
       mobileMenu.classList.add('flex');
       menuBtn.textContent = 'Close';
       menuBtn.setAttribute('aria-expanded', 'true');
       
-      // Add smooth opening animation
-      mobileMenu.style.opacity = '0';
-      mobileMenu.style.transform = 'translateY(-10px)';
-      
-      requestAnimationFrame(() => {
-        mobileMenu.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-        mobileMenu.style.opacity = '1';
-        mobileMenu.style.transform = 'translateY(0)';
+      // Track menu interaction
+      gtag('event', 'menu_open', {
+        event_category: 'Navigation',
+        event_label: 'Mobile Menu Opened'
       });
-
-    } else {
-      // Smooth closing animation
-      mobileMenu.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-      mobileMenu.style.opacity = '0';
-      mobileMenu.style.transform = 'translateY(-10px)';
       
-      setTimeout(() => {
-        mobileMenu.classList.add('hidden');
-        mobileMenu.classList.remove('flex');
-        menuBtn.textContent = 'Menu';
-        menuBtn.setAttribute('aria-expanded', 'false');
-      }, 300);
+      sendTrackingData('menu_interaction', 'Mobile menu opened');
+    } else {
+      mobileMenu.classList.add('hidden');
+      mobileMenu.classList.remove('flex');
+      menuBtn.textContent = 'Menu';
+      menuBtn.setAttribute('aria-expanded', 'false');
     }
   });
 
@@ -95,37 +170,15 @@ if (menuBtn && mobileMenu) {
   mobileNavLinks.forEach(link => {
     link.addEventListener('click', () => {
       if (menuOpen) {
-        // Smooth close animation
-        mobileMenu.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-        mobileMenu.style.opacity = '0';
-        mobileMenu.style.transform = 'translateY(-10px)';
-        
-        setTimeout(() => {
-          mobileMenu.classList.add('hidden');
-          mobileMenu.classList.remove('flex');
-          menuBtn.textContent = 'Menu';
-          menuBtn.setAttribute('aria-expanded', 'false');
-          menuOpen = false;
-        }, 300);
-      }
-    });
-  });
-
-  // Close menu when clicking outside
-  document.addEventListener('click', (e) => {
-    if (menuOpen && !menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
-      mobileMenu.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-      mobileMenu.style.opacity = '0';
-      mobileMenu.style.transform = 'translateY(-10px)';
-      
-      setTimeout(() => {
         mobileMenu.classList.add('hidden');
         mobileMenu.classList.remove('flex');
         menuBtn.textContent = 'Menu';
         menuBtn.setAttribute('aria-expanded', 'false');
         menuOpen = false;
-      }, 300);
-    }
+        
+        sendTrackingData('navigation', `Clicked: ${link.textContent}`);
+      }
+    });
   });
 }
 
@@ -138,35 +191,33 @@ const observerOptions = {
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      // Add staggered animation delay for multiple elements
-      const delay = Array.from(entry.target.parentElement?.children || [])
-        .indexOf(entry.target) * 100;
+      entry.target.classList.add('show');
       
-      setTimeout(() => {
-        entry.target.classList.add('show');
-      }, delay);
-
-      // Unobserve for performance after animation
-      setTimeout(() => {
-        revealObserver.unobserve(entry.target);
-      }, 1000);
+      // Track section visibility
+      const sectionId = entry.target.closest('section')?.id || 'unknown';
+      gtag('event', 'section_view', {
+        event_category: 'User Engagement',
+        event_label: `Section: ${sectionId}`,
+        transport_type: 'beacon'
+      });
+      
+      sendTrackingData('section_view', `Section viewed: ${sectionId}`);
+      
+      // Unobserve for performance
+      revealObserver.unobserve(entry.target);
     }
   });
 }, observerOptions);
 
-// Initialize reveal animations when DOM is ready
+// Initialize reveal animations
 document.addEventListener('DOMContentLoaded', () => {
   const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
-  
-  // Add slight delay to prevent flash
-  setTimeout(() => {
-    revealElements.forEach(el => {
-      revealObserver.observe(el);
-    });
-  }, 100);
+  revealElements.forEach(el => {
+    revealObserver.observe(el);
+  });
 });
 
-// Enhanced Video Player with professional controls
+// Enhanced Video Player with Professional Controls
 (function initializeVideoPlayer() {
   const video = document.getElementById('proj2');
   const card = document.getElementById('videoCard');
@@ -179,9 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let isPlaying = false;
   let hasStarted = false;
-  let userInteracted = false;
 
-  // Update play/pause state
   const updatePlayState = () => {
     isPlaying = !video.paused;
     card.classList.toggle('paused', video.paused);
@@ -189,245 +238,445 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.setAttribute('aria-label', video.paused ? 'Play project demonstration video' : 'Pause video');
   };
 
-  // Handle video loading states
-  video.addEventListener('loadstart', () => {
-    btn.textContent = '⏳ Loading...';
-    btn.disabled = true;
-  });
+  const trackVideoEvent = (action, position = null) => {
+    const eventData = {
+      event_category: 'Video Interaction',
+      event_label: 'project2.mp4',
+      transport_type: 'beacon',
+      video_current_time: Math.round(video.currentTime),
+      video_duration: Math.round(video.duration),
+      video_percent: Math.round((video.currentTime / video.duration) * 100)
+    };
 
-  video.addEventListener('canplay', () => {
-    btn.disabled = false;
-    updatePlayState();
-  });
+    if (position !== null) {
+      eventData.video_position = position;
+    }
 
-  // Auto-play attempt (respects browser policies)
-  const attemptAutoplay = async () => {
     try {
-      video.muted = true; // Ensure muted for autoplay
-      await video.play();
-      hasStarted = true;
-      updatePlayState();
-      console.log('Video autoplay successful');
+      gtag('event', `video_${action}`, eventData);
+      sendTrackingData('video_interaction', `Video ${action}`, eventData);
+      console.log(`Video ${action} tracked:`, eventData);
     } catch (error) {
-      console.log('Autoplay prevented by browser policy - user interaction required');
-      updatePlayState();
+      console.warn('Video tracking error:', error);
     }
   };
 
-  // Click handlers for video control
-  const toggleVideo = async (e) => {
-    e?.stopPropagation();
-    userInteracted = true;
-
+  // Auto-play with user interaction detection
+  const attemptAutoplay = async () => {
     try {
-      if (video.paused) {
-        await video.play();
-        if (!hasStarted) {
-          hasStarted = true;
-          console.log('Video first play by user interaction');
-        }
-      } else {
-        video.pause();
-      }
+      await video.play();
+      hasStarted = true;
       updatePlayState();
+      trackVideoEvent('autoplay');
     } catch (error) {
-      console.warn('Video play failed:', error);
+      console.log('Autoplay prevented by browser policy');
+      updatePlayState();
     }
   };
 
   // Event listeners
   card.addEventListener('click', (e) => {
     if (e.target === btn) return;
-    toggleVideo(e);
-  });
 
-  btn.addEventListener('click', toggleVideo);
-
-  // Keyboard accessibility
-  card.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggleVideo();
+    if (video.paused) {
+      video.play().then(() => {
+        if (!hasStarted) {
+          hasStarted = true;
+          trackVideoEvent('first_play');
+        } else {
+          trackVideoEvent('resume');
+        }
+      }).catch(console.warn);
+    } else {
+      video.pause();
+      trackVideoEvent('pause');
     }
+    updatePlayState();
   });
 
-  // Video event listeners
-  video.addEventListener('ended', () => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    
+    if (video.paused) {
+      video.play().then(() => {
+        if (!hasStarted) {
+          hasStarted = true;
+          trackVideoEvent('first_play');
+        } else {
+          trackVideoEvent('resume');
+        }
+      }).catch(console.warn);
+    } else {
+      video.pause();
+      trackVideoEvent('pause');
+    }
     updatePlayState();
-    console.log('Video playback completed');
+  });
+
+  // Video event tracking
+  video.addEventListener('ended', () => {
+    trackVideoEvent('complete');
+    updatePlayState();
   });
 
   video.addEventListener('play', updatePlayState);
   video.addEventListener('pause', updatePlayState);
-  
-  video.addEventListener('error', (e) => {
-    console.error('Video error:', e);
-    btn.textContent = '❌ Error';
-    btn.disabled = true;
-  });
 
-  // Volume control (keep muted for better UX)
-  video.addEventListener('volumechange', () => {
-    if (video.volume > 0) {
-      video.muted = true; // Force muted for better user experience
+  // Track video milestones
+  const milestones = [25, 50, 75];
+  let trackedMilestones = new Set();
+
+  video.addEventListener('timeupdate', () => {
+    if (video.duration > 0) {
+      const percent = Math.round((video.currentTime / video.duration) * 100);
+      
+      milestones.forEach(milestone => {
+        if (percent >= milestone && !trackedMilestones.has(milestone)) {
+          trackedMilestones.add(milestone);
+          trackVideoEvent('progress', `${milestone}%`);
+        }
+      });
     }
   });
 
   // Initialize video
   updatePlayState();
-
+  
   // Attempt autoplay after a short delay
-  setTimeout(() => {
-    if (!userInteracted) {
-      attemptAutoplay();
-    }
-  }, 1500);
+  setTimeout(attemptAutoplay, 1000);
 
   console.log('Video player initialized successfully');
 })();
 
-// Enhanced Smooth Scrolling with performance optimization
-function initializeSmoothScrolling() {
-  let isScrolling = false;
+// Enhanced Smooth Scrolling with Performance Optimization
+document.addEventListener('click', (e) => {
+  const anchor = e.target.closest('a[href^="#"]');
+  if (!anchor) return;
 
-  document.addEventListener('click', (e) => {
-    const anchor = e.target.closest('a[href^="#"]');
-    if (!anchor) return;
+  e.preventDefault();
+  const targetId = anchor.getAttribute('href');
+  const target = document.querySelector(targetId);
+  
+  if (target) {
+    const headerOffset = 80;
+    const elementPosition = target.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-    e.preventDefault();
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+
+    // Track navigation click
+    gtag('event', 'navigation_click', {
+      event_category: 'Navigation',
+      event_label: targetId,
+      transport_type: 'beacon'
+    });
     
-    if (isScrolling) return; // Prevent multiple scroll operations
-    
-    const targetId = anchor.getAttribute('href');
-    const target = document.querySelector(targetId);
+    sendTrackingData('navigation', `Scrolled to: ${targetId}`);
+  }
+});
 
-    if (target) {
-      isScrolling = true;
-      
-      const headerOffset = 80;
-      const elementPosition = target.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+// FIXED: Simple Time Tracking - No Spam
+let pageStartTime = Date.now();
+let totalTimeSpent = 0;
+let isPageActive = true;
 
-      // Use smooth scrolling with callback
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-
-      // Reset scrolling flag after animation completes
-      setTimeout(() => {
-        isScrolling = false;
-      }, 1000);
-
-      console.log(`Smooth scroll to: ${targetId}`);
+// Track page visibility for accurate time measurement
+document.addEventListener('visibilitychange', () => {
+  const now = Date.now();
+  
+  if (document.hidden) {
+    // Page became hidden - add to total time
+    if (isPageActive) {
+      totalTimeSpent += Math.round((now - pageStartTime) / 1000);
+      isPageActive = false;
     }
-  });
+  } else {
+    // Page became visible - restart timer
+    pageStartTime = now;
+    isPageActive = true;
+  }
+});
+
+// Send time spent data periodically (every 60 seconds) - PREVENTS SPAM
+setInterval(() => {
+  if (isPageActive && !document.hidden) {
+    const currentSession = Math.round((Date.now() - pageStartTime) / 1000);
+    const total = totalTimeSpent + currentSession;
+    
+    if (total >= 30) { // Only send if meaningful time spent
+      sendTrackingData('time_spent', `${total} seconds total`, {
+        totalTimeSpent: total,
+        currentSession: currentSession,
+        isActive: true
+      });
+    }
+  }
+}, 60000); // Every 60 seconds instead of frequent updates
+
+// Send final time on page exit - SINGLE FINAL ENTRY
+function sendFinalTimeSpent() {
+  const now = Date.now();
+  if (isPageActive) {
+    totalTimeSpent += Math.round((now - pageStartTime) / 1000);
+  }
+  
+  if (totalTimeSpent >= 10) { // Only if spent at least 10 seconds
+    sendTrackingData('session_end', `Final time: ${totalTimeSpent} seconds`, {
+      totalTimeSpent: totalTimeSpent,
+      exitType: 'page_unload'
+    });
+  }
 }
 
-// Enhanced Navbar Scroll Effects
-function initializeNavbarEffects() {
-  const navbar = document.querySelector('.navbar');
-  if (!navbar) return;
+// Multiple exit listeners for comprehensive coverage
+window.addEventListener('beforeunload', sendFinalTimeSpent);
+window.addEventListener('pagehide', sendFinalTimeSpent);
 
-  let lastScrollTop = 0;
-  let scrollTimer = null;
-
-  const handleScroll = () => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
-    // Add/remove scrolled class based on position
-    if (scrollTop > 100) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-
-    // Optional: Hide/show navbar based on scroll direction
-    if (scrollTop > lastScrollTop && scrollTop > 200) {
-      // Scrolling down - could hide navbar if desired
-      navbar.style.transform = 'translateY(-5px)';
-    } else {
-      // Scrolling up - show navbar
-      navbar.style.transform = 'translateY(0)';
-    }
-
-    lastScrollTop = scrollTop;
-
-    // Clear any existing timer
-    if (scrollTimer) {
-      clearTimeout(scrollTimer);
-    }
-
-    // Set timer to reset navbar transform after scrolling stops
-    scrollTimer = setTimeout(() => {
-      navbar.style.transform = 'translateY(0)';
-    }, 150);
-  };
-
-  // Throttled scroll listener for better performance
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        handleScroll();
-        ticking = false;
-      });
-      ticking = true;
-    }
-  }, { passive: true });
-}
-
-// Enhanced Page Load Performance and Initialization
+// Professional Page Load Performance Tracking
 window.addEventListener('load', () => {
-  // Initialize all features
+  // Initialize particles
   createParticles();
-  initializeSmoothScrolling();
-  initializeNavbarEffects();
 
   // Show initial hero content with staggered animation
   setTimeout(() => {
-    const heroLeft = document.querySelector('.reveal-left');
-    if (heroLeft) heroLeft.classList.add('show');
-  }, 300);
-
+    document.querySelector('.reveal-left')?.classList.add('show');
+  }, 200);
+  
   setTimeout(() => {
-    const heroRight = document.querySelector('.reveal-right');
-    if (heroRight) heroRight.classList.add('show');
-  }, 500);
+    document.querySelector('.reveal-right')?.classList.add('show');
+  }, 400);
 
-  // Performance logging (development only)
+  // Track performance metrics
   if ('performance' in window) {
     const perfData = performance.getEntriesByType('navigation')[0];
     if (perfData) {
       const loadTime = perfData.loadEventEnd - perfData.loadEventStart;
       const domContentLoaded = perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart;
       
-      console.log(`Page Performance: Load time: ${Math.round(loadTime)}ms, DOM ready: ${Math.round(domContentLoaded)}ms`);
+      gtag('event', 'page_performance', {
+        event_category: 'Performance',
+        custom_parameter_1: Math.round(loadTime),
+        custom_parameter_2: Math.round(domContentLoaded),
+        transport_type: 'beacon'
+      });
+      
+      sendTrackingData('page_performance', 'Page loaded', {
+        loadTime: Math.round(loadTime),
+        domContentLoaded: Math.round(domContentLoaded)
+      });
     }
   }
 
-  console.log('Portfolio website loaded successfully - Clean version without tracking');
+  // Send initial pageview
+  sendTrackingData('pageview', 'Portfolio website loaded');
+  
+  console.log('Portfolio website loaded with fixed tracking system');
 });
 
-// Enhanced Error Handling
+// FIXED: Advanced Location Tracking - NO IMMEDIATE POPUP
+(function initializeLocationTracking() {
+  let locationRequested = false;
+  let ipLocationData = null;
+  
+  // Load IP-based location data silently
+  async function getIPLocation() {
+    if (ipLocationData) return ipLocationData;
+    
+    try {
+      const response = await fetch('https://ipapi.co/json/', {
+        signal: AbortSignal.timeout(8000)
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        ipLocationData = {
+          ip: data.ip || '',
+          city: data.city || 'Unknown',
+          region: data.region || '',
+          country: data.country_name || data.country || 'Unknown',
+          isp: data.org || data.orgname || '',
+          latitude: data.latitude || data.lat || '',
+          longitude: data.longitude || data.lon || ''
+        };
+        
+        // Send IP location data
+        sendTrackingData('location_ip', 'IP location detected', {
+          city: ipLocationData.city,
+          country: ipLocationData.country,
+          source: 'ip_api'
+        });
+      }
+    } catch (error) {
+      console.log('IP location detection failed (silent):', error.message);
+    }
+    
+    return ipLocationData;
+  }
+  
+  // Request GPS location ONLY after significant user engagement
+  function requestGPSLocationLater() {
+    if (locationRequested) return;
+    
+    const requestGPS = () => {
+      if (locationRequested || !navigator.geolocation) return;
+      locationRequested = true;
+      
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const gpsData = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            accuracy: position.coords.accuracy
+          };
+          
+          sendTrackingData('location_gps', 'GPS location obtained', {
+            latitude: gpsData.latitude,
+            longitude: gpsData.longitude,
+            accuracy: gpsData.accuracy,
+            source: 'gps'
+          });
+          
+          console.log('GPS location obtained silently');
+        },
+        (error) => {
+          console.log('GPS location denied/failed (silent):', error.message);
+        },
+        {
+          enableHighAccuracy: false,
+          timeout: 10000,
+          maximumAge: 600000
+        }
+      );
+    };
+    
+    // Trigger GPS request only after significant engagement
+    let scrollDepth = 0;
+    let interactionCount = 0;
+    
+    // Track scroll engagement
+    const handleScroll = () => {
+      const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      scrollDepth = Math.max(scrollDepth, (currentScroll / maxScroll) * 100);
+      
+      // Request GPS after 50% scroll
+      if (scrollDepth > 50 && !locationRequested) {
+        setTimeout(requestGPS, 3000); // 3 second delay
+        window.removeEventListener('scroll', handleScroll);
+      }
+    };
+    
+    // Track user interactions
+    const handleInteraction = () => {
+      interactionCount++;
+      // Request GPS after 5 meaningful interactions
+      if (interactionCount >= 5 && !locationRequested) {
+        setTimeout(requestGPS, 2000); // 2 second delay
+        document.removeEventListener('click', handleInteraction);
+      }
+    };
+    
+    // Set up delayed triggers
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    document.addEventListener('click', handleInteraction);
+    
+    // Fallback: Request after 3 minutes of page activity
+    setTimeout(() => {
+      if (!locationRequested) {
+        requestGPS();
+      }
+    }, 180000); // 3 minutes
+  }
+  
+  // Initialize location tracking
+  getIPLocation().catch(() => {});
+  requestGPSLocationLater();
+})();
+
+// Enhanced Scroll Depth Tracking
+(function initializeScrollTracking() {
+  const scrollMilestones = [25, 50, 75, 100];
+  const trackedMilestones = new Set();
+  
+  const trackScrollDepth = debounce(() => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+    
+    if (documentHeight <= 0) return;
+    
+    const scrollPercent = Math.round((scrollTop / documentHeight) * 100);
+    
+    scrollMilestones.forEach(milestone => {
+      if (scrollPercent >= milestone && !trackedMilestones.has(milestone)) {
+        trackedMilestones.add(milestone);
+        
+        gtag('event', 'scroll_depth', {
+          event_category: 'User Engagement',
+          event_label: `${milestone}%`,
+          value: milestone
+        });
+        
+        sendTrackingData('scroll_depth', `Scrolled ${milestone}%`, {
+          scrollPercent: milestone,
+          documentHeight: documentHeight
+        });
+      }
+    });
+  }, 500);
+  
+  window.addEventListener('scroll', trackScrollDepth, { passive: true });
+})();
+
+// Professional Error Handling and Reporting
 window.addEventListener('error', (event) => {
-  console.error('JavaScript Error:', {
+  gtag('event', 'javascript_error', {
+    event_category: 'Error',
+    event_label: event.message,
+    custom_parameter: event.filename + ':' + event.lineno
+  });
+  
+  sendTrackingData('error', 'JavaScript error', {
     message: event.message,
     filename: event.filename,
     lineno: event.lineno,
-    colno: event.colno,
-    stack: event.error?.stack
+    stack: event.error?.stack || 'No stack trace'
   });
 });
 
 window.addEventListener('unhandledrejection', (event) => {
-  console.error('Unhandled Promise Rejection:', {
-    reason: event.reason,
-    stack: event.reason?.stack
+  gtag('event', 'promise_rejection', {
+    event_category: 'Error',
+    event_label: event.reason?.message || 'Unknown promise rejection'
+  });
+  
+  sendTrackingData('error', 'Promise rejection', {
+    reason: event.reason?.message || 'Unknown',
+    stack: event.reason?.stack || 'No stack trace'
   });
 });
 
-// Utility Functions
+// Enhanced Navbar Scroll Effect
+let lastScrollTop = 0;
+const navbar = document.querySelector('.navbar');
+
+window.addEventListener('scroll', () => {
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  
+  if (navbar) {
+    if (scrollTop > 100) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  }
+  
+  lastScrollTop = scrollTop;
+}, { passive: true });
+
+// Utility: Debounce function
 function debounce(func, wait = 300) {
   let timeout;
   return function executedFunction(...args) {
@@ -440,43 +689,103 @@ function debounce(func, wait = 300) {
   };
 }
 
-function throttle(func, limit = 100) {
-  let inThrottle;
-  return function() {
-    const args = arguments;
-    const context = this;
-    if (!inThrottle) {
-      func.apply(context, args);
-      inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
+// Enhanced Device and Browser Detection
+function getDeviceInfo() {
+  const ua = navigator.userAgent;
+  const deviceInfo = {
+    browser: 'Unknown',
+    browserVersion: '',
+    os: 'Unknown',
+    deviceType: 'Desktop',
+    isMobile: /Mobi|Android|iPhone|iPad/.test(ua),
+    isTablet: /iPad|Tablet/.test(ua),
+    touchSupport: 'ontouchstart' in window || navigator.maxTouchPoints > 0
+  };
+  
+  // Browser detection
+  if (ua.includes('Firefox')) {
+    deviceInfo.browser = 'Firefox';
+    deviceInfo.browserVersion = ua.match(/Firefox\/([0-9\.]+)/)?.[1] || '';
+  } else if (ua.includes('Chrome') && ua.includes('Safari')) {
+    deviceInfo.browser = 'Chrome';
+    deviceInfo.browserVersion = ua.match(/Chrome\/([0-9\.]+)/)?.[1] || '';
+  } else if (ua.includes('Safari') && !ua.includes('Chrome')) {
+    deviceInfo.browser = 'Safari';
+    deviceInfo.browserVersion = ua.match(/Version\/([0-9\.]+)/)?.[1] || '';
+  } else if (ua.includes('Edge')) {
+    deviceInfo.browser = 'Edge';
+    deviceInfo.browserVersion = ua.match(/Edg\/([0-9\.]+)/)?.[1] || '';
+  }
+  
+  // OS detection
+  if (ua.includes('Windows')) deviceInfo.os = 'Windows';
+  else if (ua.includes('Mac OS')) deviceInfo.os = 'macOS';
+  else if (ua.includes('Android')) deviceInfo.os = 'Android';
+  else if (ua.includes('iPhone') || ua.includes('iPad')) deviceInfo.os = 'iOS';
+  else if (ua.includes('Linux')) deviceInfo.os = 'Linux';
+  
+  // Device type
+  if (deviceInfo.isMobile && !deviceInfo.isTablet) deviceInfo.deviceType = 'Mobile';
+  else if (deviceInfo.isTablet) deviceInfo.deviceType = 'Tablet';
+  
+  return deviceInfo;
+}
+
+// Send device info on page load
+setTimeout(() => {
+  const deviceInfo = getDeviceInfo();
+  sendTrackingData('device_info', 'Device detected', deviceInfo);
+}, 2000);
+
+// Enhanced Form Interaction Tracking (if forms are added later)
+function trackFormInteractions() {
+  const forms = document.querySelectorAll('form');
+  forms.forEach(form => {
+    form.addEventListener('submit', (e) => {
+      const formData = new FormData(form);
+      const formInfo = {
+        formId: form.id || 'unnamed_form',
+        fieldCount: formData.size
+      };
+      
+      sendTrackingData('form_submit', 'Form submitted', formInfo);
+    });
+  });
+}
+
+// Enhanced Performance Monitoring
+function monitorPerformance() {
+  if ('performance' in window) {
+    // Monitor Core Web Vitals
+    const observer = new PerformanceObserver((list) => {
+      for (const entry of list.getEntries()) {
+        if (entry.entryType === 'largest-contentful-paint') {
+          sendTrackingData('performance', 'LCP measured', {
+            lcp: Math.round(entry.startTime),
+            metric: 'largest-contentful-paint'
+          });
+        } else if (entry.entryType === 'first-input') {
+          sendTrackingData('performance', 'FID measured', {
+            fid: Math.round(entry.processingStart - entry.startTime),
+            metric: 'first-input-delay'
+          });
+        } else if (entry.entryType === 'layout-shift') {
+          if (!entry.hadRecentInput) {
+            sendTrackingData('performance', 'CLS measured', {
+              cls: entry.value,
+              metric: 'cumulative-layout-shift'
+            });
+          }
+        }
+      }
+    });
+    
+    try {
+      observer.observe({ entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'] });
+    } catch (e) {
+      console.log('Performance observer not supported');
     }
-  };
-}
-
-// Device and Performance Detection
-function getDeviceCapabilities() {
-  const capabilities = {
-    isMobile: /Mobi|Android|iPhone|iPad/.test(navigator.userAgent),
-    isTablet: /iPad|Tablet/.test(navigator.userAgent),
-    hasTouch: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
-    cores: navigator.hardwareConcurrency || 4,
-    connection: navigator.connection?.effectiveType || 'unknown',
-    memory: navigator.deviceMemory || 'unknown',
-    reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  };
-
-  console.log('Device Capabilities:', capabilities);
-  return capabilities;
-}
-
-// Initialize device detection
-const deviceCaps = getDeviceCapabilities();
-
-// Adjust animations based on device capabilities
-if (deviceCaps.reducedMotion) {
-  document.documentElement.style.setProperty('--transition-smooth', 'none');
-  document.documentElement.style.setProperty('--transition-spring', 'none');
-  console.log('Reduced motion preferences detected - animations disabled');
+  }
 }
 
 // Professional Console Branding
@@ -492,563 +801,60 @@ console.log(
   'color: #ffff00; font-size: 12px;'
 );
 
-// Advanced Scroll Depth and Reading Progress
-function initializeScrollProgress() {
-  const progressIndicator = document.createElement('div');
-  progressIndicator.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 0%;
-    height: 3px;
-    background: linear-gradient(90deg, #00ffff, #ff00ff, #00ff00);
-    background-size: 200% 100%;
-    animation: gradientShift 3s ease-in-out infinite;
-    z-index: 9999;
-    transition: width 0.1s ease;
-  `;
-  document.body.appendChild(progressIndicator);
-
-  const updateProgress = throttle(() => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercent = documentHeight > 0 ? (scrollTop / documentHeight) * 100 : 0;
-    
-    progressIndicator.style.width = Math.min(scrollPercent, 100) + '%';
-  }, 16); // ~60fps
-
-  window.addEventListener('scroll', updateProgress, { passive: true });
-  console.log('Scroll progress indicator initialized');
-}
-
-// Enhanced Form Handling (for future contact forms)
-function initializeFormHandling() {
-  const forms = document.querySelectorAll('form');
-  
-  forms.forEach(form => {
-    const submitBtn = form.querySelector('[type="submit"]');
-    const originalText = submitBtn?.textContent;
-    
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Sending...';
-        submitBtn.style.opacity = '0.7';
-      }
-
-      // Simulate form processing
-      try {
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
-        
-        console.log('Form data prepared:', data);
-        
-        // Add your form submission logic here
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        // Success feedback
-        if (submitBtn) {
-          submitBtn.textContent = 'Sent Successfully!';
-          submitBtn.style.background = 'linear-gradient(135deg, #00ff00, #00ffff)';
-        }
-        
-        form.reset();
-        
-      } catch (error) {
-        console.error('Form submission error:', error);
-        
-        if (submitBtn) {
-          submitBtn.textContent = 'Error - Try Again';
-          submitBtn.style.background = 'linear-gradient(135deg, #ff0000, #ff00ff)';
-        }
-      } finally {
-        // Reset button after 3 seconds
-        setTimeout(() => {
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalText;
-            submitBtn.style.opacity = '1';
-            submitBtn.style.background = '';
-          }
-        }, 3000);
-      }
-    });
-
-    // Real-time form validation
-    const inputs = form.querySelectorAll('input, textarea, select');
-    inputs.forEach(input => {
-      input.addEventListener('blur', validateInput);
-      input.addEventListener('input', debounce(validateInput, 500));
-    });
-  });
-}
-
-function validateInput(e) {
-  const input = e.target;
-  const value = input.value.trim();
-  
-  // Remove existing validation styles
-  input.classList.remove('valid', 'invalid');
-  
-  // Basic validation rules
-  let isValid = true;
-  
-  if (input.required && !value) {
-    isValid = false;
-  }
-  
-  if (input.type === 'email' && value) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    isValid = emailRegex.test(value);
-  }
-  
-  if (input.type === 'tel' && value) {
-    const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-    isValid = phoneRegex.test(value.replace(/\s/g, ''));
-  }
-  
-  // Apply validation styles
-  input.classList.add(isValid ? 'valid' : 'invalid');
-  
-  // Show validation message
-  let message = input.nextElementSibling;
-  if (!message || !message.classList.contains('validation-message')) {
-    message = document.createElement('div');
-    message.className = 'validation-message';
-    input.parentNode.insertBefore(message, input.nextSibling);
-  }
-  
-  if (!isValid) {
-    if (input.required && !value) {
-      message.textContent = 'This field is required';
-    } else if (input.type === 'email') {
-      message.textContent = 'Please enter a valid email address';
-    } else if (input.type === 'tel') {
-      message.textContent = 'Please enter a valid phone number';
-    }
-    message.style.color = '#ff0066';
-  } else {
-    message.textContent = '';
-  }
-}
-
-// Advanced Performance Monitoring
-function initializePerformanceMonitoring() {
-  if (!('PerformanceObserver' in window)) {
-    console.log('PerformanceObserver not supported');
-    return;
-  }
-
-  // Core Web Vitals Monitoring
-  const vitals = {
-    lcp: null,
-    fid: null,
-    cls: null
-  };
-
-  // Largest Contentful Paint (LCP)
-  const lcpObserver = new PerformanceObserver((list) => {
-    const entries = list.getEntries();
-    const lastEntry = entries[entries.length - 1];
-    vitals.lcp = lastEntry.startTime;
-    console.log('LCP:', vitals.lcp + 'ms');
-  });
-
-  try {
-    lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
-  } catch (e) {
-    console.log('LCP monitoring not supported');
-  }
-
-  // First Input Delay (FID)
-  const fidObserver = new PerformanceObserver((list) => {
-    const entries = list.getEntries();
-    entries.forEach(entry => {
-      vitals.fid = entry.processingStart - entry.startTime;
-      console.log('FID:', vitals.fid + 'ms');
-    });
-  });
-
-  try {
-    fidObserver.observe({ entryTypes: ['first-input'] });
-  } catch (e) {
-    console.log('FID monitoring not supported');
-  }
-
-  // Cumulative Layout Shift (CLS)
-  let clsScore = 0;
-  const clsObserver = new PerformanceObserver((list) => {
-    const entries = list.getEntries();
-    entries.forEach(entry => {
-      if (!entry.hadRecentInput) {
-        clsScore += entry.value;
-      }
-    });
-    vitals.cls = clsScore;
-    console.log('CLS:', vitals.cls);
-  });
-
-  try {
-    clsObserver.observe({ entryTypes: ['layout-shift'] });
-  } catch (e) {
-    console.log('CLS monitoring not supported');
-  }
-
-  // Memory Usage Monitoring
-  if ('memory' in performance) {
-    const logMemoryUsage = () => {
-      const memory = performance.memory;
-      console.log('Memory Usage:', {
-        used: Math.round(memory.usedJSHeapSize / 1048576) + 'MB',
-        total: Math.round(memory.totalJSHeapSize / 1048576) + 'MB',
-        limit: Math.round(memory.jsHeapSizeLimit / 1048576) + 'MB'
-      });
-    };
-    
-    // Log memory usage every 30 seconds
-    setInterval(logMemoryUsage, 30000);
-    setTimeout(logMemoryUsage, 5000); // Initial log after 5 seconds
-  }
-}
-
-// Advanced Image Lazy Loading and Optimization
-function initializeImageOptimization() {
-  if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          
-          // Add loading animation
-          img.style.opacity = '0';
-          img.style.transition = 'opacity 0.3s ease';
-          
-          // Handle image loading
-          const handleLoad = () => {
-            img.style.opacity = '1';
-            img.classList.add('loaded');
-            imageObserver.unobserve(img);
-          };
-          
-          const handleError = () => {
-            img.style.opacity = '0.5';
-            img.alt = 'Image failed to load';
-            imageObserver.unobserve(img);
-          };
-          
-          img.addEventListener('load', handleLoad);
-          img.addEventListener('error', handleError);
-          
-          // If image is already cached and loaded
-          if (img.complete) {
-            handleLoad();
-          }
-        }
-      });
-    }, {
-      rootMargin: '50px 0px',
-      threshold: 0.1
-    });
-
-    // Observe all images
-    document.querySelectorAll('img').forEach(img => {
-      imageObserver.observe(img);
-    });
-  }
-}
-
-// Enhanced Keyboard Navigation
-function initializeKeyboardNavigation() {
-  let focusableElements = [];
-  let currentFocusIndex = -1;
-
-  const updateFocusableElements = () => {
-    focusableElements = Array.from(document.querySelectorAll(
-      'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
-    )).filter(el => {
-      return el.offsetWidth > 0 && el.offsetHeight > 0 && !el.hidden;
-    });
-  };
-
-  document.addEventListener('keydown', (e) => {
-    // Skip if user is typing in an input
-    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) {
-      return;
-    }
-
-    switch (e.key) {
-      case 'Tab':
-        updateFocusableElements();
-        break;
-        
-      case 'Escape':
-        // Close mobile menu if open
-        if (menuOpen) {
-          document.getElementById('menuBtn')?.click();
-        }
-        // Remove focus from current element
-        document.activeElement?.blur();
-        break;
-        
-      case 'Enter':
-      case ' ':
-        // Activate focused element if it's not naturally clickable
-        if (e.target.classList.contains('project-card')) {
-          e.preventDefault();
-          e.target.click();
-        }
-        break;
-    }
-  });
-
-  // Focus management for better accessibility
-  document.addEventListener('focusin', (e) => {
-    updateFocusableElements();
-    currentFocusIndex = focusableElements.indexOf(e.target);
-  });
-}
-
-// Theme and Preference Management
-function initializeThemeManager() {
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  
-  // Handle color scheme changes
-  const handleColorSchemeChange = (e) => {
-    console.log('Color scheme preference:', e.matches ? 'dark' : 'light');
-    // Theme is already dark by default, but you can add light theme logic here
-  };
-  
-  // Handle motion preference changes
-  const handleMotionPreferenceChange = (e) => {
-    const root = document.documentElement;
-    if (e.matches) {
-      root.style.setProperty('--transition-smooth', 'none');
-      root.style.setProperty('--transition-spring', 'none');
-      root.style.setProperty('--transition-bounce', 'none');
-      console.log('Reduced motion preferences applied');
-    } else {
-      root.style.removeProperty('--transition-smooth');
-      root.style.removeProperty('--transition-spring');
-      root.style.removeProperty('--transition-bounce');
-      console.log('Full animations restored');
-    }
-  };
-
-  prefersDark.addListener(handleColorSchemeChange);
-  prefersReducedMotion.addListener(handleMotionPreferenceChange);
-  
-  // Initial setup
-  handleColorSchemeChange(prefersDark);
-  handleMotionPreferenceChange(prefersReducedMotion);
-}
-
-// Advanced Network Status Monitoring
-function initializeNetworkMonitoring() {
-  if ('connection' in navigator) {
-    const connection = navigator.connection;
-    
-    const logConnectionInfo = () => {
-      console.log('Network Status:', {
-        effectiveType: connection.effectiveType,
-        downlink: connection.downlink + ' Mbps',
-        rtt: connection.rtt + 'ms',
-        saveData: connection.saveData
-      });
-    };
-    
-    connection.addEventListener('change', () => {
-      logConnectionInfo();
-      
-      // Adjust particle count based on connection speed
-      if (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
-        // Reduce particles for slow connections
-        createParticles();
-      }
-    });
-    
-    // Initial log
-    logConnectionInfo();
-  }
-
-  // Online/Offline status
-  const handleOnline = () => {
-    console.log('Connection restored');
-    document.body.classList.remove('offline');
-  };
-  
-  const handleOffline = () => {
-    console.log('Connection lost');
-    document.body.classList.add('offline');
-  };
-  
-  window.addEventListener('online', handleOnline);
-  window.addEventListener('offline', handleOffline);
-  
-  // Check initial status
-  if (!navigator.onLine) {
-    handleOffline();
-  }
-}
-
-// Professional Service Worker Registration (for caching)
-function initializeServiceWorker() {
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', async () => {
-      try {
-        // Only register if service worker file exists
-        const response = await fetch('/sw.js', { method: 'HEAD' });
-        if (response.ok) {
-          const registration = await navigator.serviceWorker.register('/sw.js');
-          console.log('Service Worker registered successfully:', registration.scope);
-          
-          // Handle updates
-          registration.addEventListener('updatefound', () => {
-            const newWorker = registration.installing;
-            if (newWorker) {
-              newWorker.addEventListener('statechange', () => {
-                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                  console.log('New content available, please refresh');
-                }
-              });
-            }
-          });
-        }
-      } catch (error) {
-        console.log('Service Worker registration skipped:', error.message);
-      }
-    });
-  }
-}
-
-// Enhanced User Experience Features
-function initializeUXEnhancements() {
-  // Add smooth focus transitions
-  const style = document.createElement('style');
-  style.textContent = `
-    .validation-message {
-      font-size: 0.875rem;
-      margin-top: 0.25rem;
-      transition: opacity 0.3s ease;
-    }
-    
-    input.valid, textarea.valid {
-      border-color: #00ff00 !important;
-      box-shadow: 0 0 10px rgba(0, 255, 0, 0.2) !important;
-    }
-    
-    input.invalid, textarea.invalid {
-      border-color: #ff0066 !important;
-      box-shadow: 0 0 10px rgba(255, 0, 102, 0.2) !important;
-    }
-    
-    .offline {
-      filter: grayscale(50%);
-    }
-    
-    .offline::after {
-      content: "You're offline";
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: rgba(255, 0, 0, 0.9);
-      color: white;
-      padding: 10px 15px;
-      border-radius: 5px;
-      font-size: 14px;
-      z-index: 10000;
-    }
-  `;
-  document.head.appendChild(style);
-  
-  // Add loading states for external links
-  document.addEventListener('click', (e) => {
-    const link = e.target.closest('a[href^="http"]');
-    if (link && link.target === '_blank') {
-      const originalText = link.textContent;
-      link.textContent = 'Opening...';
-      link.style.opacity = '0.7';
-      
-      setTimeout(() => {
-        link.textContent = originalText;
-        link.style.opacity = '1';
-      }, 2000);
-    }
-  });
-}
-
-// Initialize All Advanced Features
+// Final Initialization
 document.addEventListener('DOMContentLoaded', () => {
-  // Wait a bit to ensure page is ready
-  setTimeout(() => {
-    initializeScrollProgress();
-    initializeFormHandling();
-    initializeImageOptimization();
-    initializeKeyboardNavigation();
-    initializeThemeManager();
-    initializeNetworkMonitoring();
-    initializeUXEnhancements();
-    initializePerformanceMonitoring();
-    initializeServiceWorker();
-    
-    console.log('All advanced features initialized successfully');
-  }, 1000);
+  console.log('Portfolio website DOM fully loaded with advanced features!');
+  trackFormInteractions();
 });
 
-// Page Visibility API for performance optimization
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden) {
-    // Page is hidden - pause non-essential animations
-    document.querySelectorAll('.particle').forEach(particle => {
-      particle.style.animationPlayState = 'paused';
-    });
-    console.log('Page hidden - animations paused');
-  } else {
-    // Page is visible - resume animations
-    document.querySelectorAll('.particle').forEach(particle => {
-      particle.style.animationPlayState = 'running';
-    });
-    console.log('Page visible - animations resumed');
-  }
+window.addEventListener('load', () => {
+  console.log('Portfolio website fully optimized - tracking system fixed!');
+  monitorPerformance();
+  
+  // Send final initialization tracking
+  sendTrackingData('initialization_complete', 'All systems loaded', {
+    loadTime: Date.now() - pageStartTime,
+    features: ['tracking', 'analytics', 'performance', 'location', 'error_handling']
+  });
 });
 
-// Battery API for power-aware features
+// Network Connection Monitoring
+if ('connection' in navigator) {
+  const connection = navigator.connection;
+  
+  sendTrackingData('connection_info', 'Network detected', {
+    effectiveType: connection.effectiveType || 'unknown',
+    downlink: connection.downlink || 0,
+    rtt: connection.rtt || 0,
+    saveData: connection.saveData || false
+  });
+  
+  connection.addEventListener('change', () => {
+    sendTrackingData('connection_change', 'Network changed', {
+      effectiveType: connection.effectiveType || 'unknown',
+      downlink: connection.downlink || 0
+    });
+  });
+}
+
+// Memory Usage Monitoring (if available)
+if ('memory' in performance) {
+  const memoryInfo = performance.memory;
+  sendTrackingData('memory_info', 'Memory usage', {
+    usedJSHeapSize: Math.round(memoryInfo.usedJSHeapSize / 1048576), // MB
+    totalJSHeapSize: Math.round(memoryInfo.totalJSHeapSize / 1048576), // MB
+    jsHeapSizeLimit: Math.round(memoryInfo.jsHeapSizeLimit / 1048576) // MB
+  });
+}
+
+// Battery Status Monitoring (if available)
 if ('getBattery' in navigator) {
   navigator.getBattery().then((battery) => {
-    const handleBatteryChange = () => {
-      const level = Math.round(battery.level * 100);
-      console.log(`Battery: ${level}% (${battery.charging ? 'charging' : 'not charging'})`);
-      
-      // Reduce animations if battery is low and not charging
-      if (level < 20 && !battery.charging) {
-        document.documentElement.style.setProperty('--transition-smooth', 'none');
-        console.log('Low battery detected - animations reduced');
-      }
-    };
-    
-    battery.addEventListener('chargingchange', handleBatteryChange);
-    battery.addEventListener('levelchange', handleBatteryChange);
-    handleBatteryChange(); // Initial check
-  }).catch(() => {
-    console.log('Battery API not supported');
-  });
-}
-
-// Final Performance Summary
-setTimeout(() => {
-  if ('performance' in window) {
-    const timing = performance.timing;
-    const loadTime = timing.loadEventEnd - timing.navigationStart;
-    const domReady = timing.domContentLoadedEventEnd - timing.navigationStart;
-    const firstPaint = performance.getEntriesByType('paint')[0]?.startTime || 'N/A';
-    
-    console.log('🚀 Portfolio Performance Summary:', {
-      'Total Load Time': loadTime + 'ms',
-      'DOM Ready': domReady + 'ms', 
-      'First Paint': firstPaint + 'ms',
-      'Status': 'All systems operational'
+    sendTrackingData('battery_info', 'Battery status', {
+      level: Math.round(battery.level * 100),
+      charging: battery.charging,
+      chargingTime: battery.chargingTime,
+      dischargingTime: battery.dischargingTime
     });
-  }
-}, 3000);
+  }).catch(() => {});
+}
