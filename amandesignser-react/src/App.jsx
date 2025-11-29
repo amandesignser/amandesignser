@@ -45,10 +45,10 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className="max-w-[1280px] mx-auto p-8 text-center min-h-screen flex flex-col">
       <Particles />
       <Navbar />
-      <main>
+      <main className="flex-grow">
         <Hero />
         <About />
         <Expertise />

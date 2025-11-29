@@ -55,25 +55,33 @@ const Navbar = () => {
     };
 
     return (
-        <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-            <div className="container">
+        <nav className={`fixed top-0 w-full z-50 transition-all duration-300 border-b border-cyan-500/20 ${scrolled ? 'bg-[#0a0a0f]/95 backdrop-blur-md shadow-[0_4px_20px_rgba(0,255,255,0.1)]' : 'bg-[#0a0a0f]/80 backdrop-blur-sm'}`}>
+            <div className="max-w-7xl mx-auto px-6">
                 <div className="flex items-center justify-between py-4">
-                    <a href="#home" className="navbar-brand" onClick={(e) => handleNavClick(e, '#home')}>
+                    <a href="#home" className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 animate-gradient-shift hover:scale-105 transition-transform duration-300" onClick={(e) => handleNavClick(e, '#home')}>
                         AMANDESIGNSER
                     </a>
 
                     {/* Desktop Navigation Menu */}
-                    <div className="navbar-nav desktop md:flex items-center gap-6 hidden" id="navMenu">
-                        <a href="#about" className="nav-link" onClick={(e) => handleNavClick(e, '#about')}>About</a>
-                        <a href="#skills" className="nav-link" onClick={(e) => handleNavClick(e, '#skills')}>Expertise</a>
-                        <a href="#portfolio" className="nav-link" onClick={(e) => handleNavClick(e, '#portfolio')}>Portfolio</a>
-                        <a href="#contact" className="nav-link" onClick={(e) => handleNavClick(e, '#contact')}>Contact</a>
+                    <div className="hidden md:flex items-center gap-8" id="navMenu">
+                        {['About', 'Expertise', 'Portfolio', 'Contact'].map((item) => (
+                            <a
+                                key={item}
+                                href={`#${item.toLowerCase() === 'expertise' ? 'skills' : item.toLowerCase()}`}
+                                className="text-gray-400 hover:text-cyan-400 font-medium px-3 py-2 transition-all duration-300 relative group overflow-hidden"
+                                onClick={(e) => handleNavClick(e, `#${item.toLowerCase() === 'expertise' ? 'skills' : item.toLowerCase()}`)}
+                            >
+                                <span className="relative z-10">{item}</span>
+                                <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-pink-500 transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+                                <span className="absolute top-0 left-0 w-full h-full bg-cyan-400/5 -translate-x-full group-hover:translate-x-0 transition-transform duration-300 -z-0 rounded-md"></span>
+                            </a>
+                        ))}
                     </div>
 
                     {/* Mobile Menu Button */}
                     <button
                         id="menuBtn"
-                        className="mobile-menu-btn md:hidden px-4 py-3 rounded-lg border border-cyan-500/30 text-cyan-500 hover:bg-cyan-500/10 font-semibold"
+                        className="md:hidden px-4 py-2 rounded-lg border border-cyan-500/30 text-cyan-500 hover:bg-cyan-500/10 font-semibold transition-colors"
                         aria-label="Open navigation menu"
                         aria-expanded={menuOpen}
                         onClick={toggleMenu}
@@ -83,11 +91,17 @@ const Navbar = () => {
                 </div>
 
                 {/* Mobile Navigation Menu */}
-                <div id="mobileMenu" className={`${menuOpen ? 'flex' : 'hidden'} flex-col gap-3 py-4 border-t border-cyan-500/20`}>
-                    <a href="#about" className="nav-link" onClick={(e) => handleNavClick(e, '#about')}>About</a>
-                    <a href="#skills" className="nav-link" onClick={(e) => handleNavClick(e, '#skills')}>Expertise</a>
-                    <a href="#portfolio" className="nav-link" onClick={(e) => handleNavClick(e, '#portfolio')}>Portfolio</a>
-                    <a href="#contact" className="nav-link" onClick={(e) => handleNavClick(e, '#contact')}>Contact</a>
+                <div id="mobileMenu" className={`${menuOpen ? 'flex' : 'hidden'} flex-col gap-4 py-6 border-t border-cyan-500/20 animate-fade-in`}>
+                    {['About', 'Expertise', 'Portfolio', 'Contact'].map((item) => (
+                        <a
+                            key={item}
+                            href={`#${item.toLowerCase() === 'expertise' ? 'skills' : item.toLowerCase()}`}
+                            className="text-gray-300 hover:text-cyan-400 font-medium text-lg px-4 py-2 rounded-lg hover:bg-white/5 transition-all"
+                            onClick={(e) => handleNavClick(e, `#${item.toLowerCase() === 'expertise' ? 'skills' : item.toLowerCase()}`)}
+                        >
+                            {item}
+                        </a>
+                    ))}
                 </div>
             </div>
         </nav>
