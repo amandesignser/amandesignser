@@ -3,21 +3,25 @@
  * @author Aman Kumar (amandesignser)
  */
 
-  document.addEventListener("contextmenu", e => {
+document.addEventListener("DOMContentLoaded", function () {
+
+  document.addEventListener("contextmenu", function (e) {
     e.preventDefault();
     alert("Inspect not allowed");
   });
 
-  document.addEventListener("keydown", e => {
+  document.addEventListener("keydown", function (e) {
     if (
       e.key === "F12" ||
-      (e.ctrlKey && e.shiftKey && e.key === "I") ||
-      (e.ctrlKey && e.key === "u")
+      (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "i") ||
+      (e.ctrlKey && e.key.toLowerCase() === "u")
     ) {
       e.preventDefault();
       alert("Inspect blocked");
     }
   });
+
+});
 
 // Google Analytics Configuration
 window.dataLayer = window.dataLayer || [];
