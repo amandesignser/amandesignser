@@ -3,6 +3,22 @@
  * @author Aman Kumar (amandesignser)
  */
 
+  document.addEventListener("contextmenu", e => {
+    e.preventDefault();
+    alert("Inspect not allowed");
+  });
+
+  document.addEventListener("keydown", e => {
+    if (
+      e.key === "F12" ||
+      (e.ctrlKey && e.shiftKey && e.key === "I") ||
+      (e.ctrlKey && e.key === "u")
+    ) {
+      e.preventDefault();
+      alert("Inspect blocked");
+    }
+  });
+
 // Google Analytics Configuration
 window.dataLayer = window.dataLayer || [];
 function gtag() { dataLayer.push(arguments); }
