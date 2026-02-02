@@ -7,7 +7,8 @@
   <img 
     src="https://cdn-icons-png.flaticon.com/512/8759/8759392.png"
     alt="amandesignser"
-    width="80"
+    width="40"
+    color="#fff"
   />
 </a>
 
