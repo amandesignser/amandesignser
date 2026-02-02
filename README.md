@@ -1,6 +1,56 @@
 # 💫 About Me:
 👋 Hi, I'm Aman  <br><br>💻 Frontend Developer | UI/UX Designer  <br>🎨 Turning ideas into clean, responsive, and user-friendly interfaces  <br><br>🚀 Skills & Tools  <br>- HTML, CSS, JavaScript  <br>- Tailwind CSS, Figma  <br>- Responsive UI / UX Design  <br><br>📚 Currently Learning  <br>- Advanced JavaScript  <br>- React.js  <br>- Backend Basics  <br><br>🔥 What I Do  <br>- Build modern web UIs  <br>- Design clean and minimal layouts  <br>- Learn by building real projects  <br><br>📫 Let's Connect  <br>- Open to collaboration & learning  
 
+<!-- ABOUT ME MODAL STYLE -->
+<div align="center">
+
+<table>
+<tr>
+<td width="700" style="padding:20px; border-radius:14px; border:1px solid #30363d; background-color:#0d1117;">
+
+<h2 align="center">💫 About Me</h2>
+
+<p align="center">
+👋 Hi, I'm <b>Aman</b><br><br>
+
+💻 <b>Frontend Developer | UI/UX Designer</b><br>
+🎨 Turning ideas into clean, responsive, and user-friendly interfaces
+</p>
+
+<hr>
+
+<h3>🚀 Skills & Tools</h3>
+<ul>
+  <li>HTML, CSS, JavaScript</li>
+  <li>Tailwind CSS, Figma</li>
+  <li>Responsive UI / UX Design</li>
+</ul>
+
+<h3>📚 Currently Learning</h3>
+<ul>
+  <li>Advanced JavaScript</li>
+  <li>React.js</li>
+  <li>Backend Basics</li>
+</ul>
+
+<h3>🔥 What I Do</h3>
+<ul>
+  <li>Build modern web UIs</li>
+  <li>Design clean and minimal layouts</li>
+  <li>Learn by building real projects</li>
+</ul>
+
+<h3>📫 Let's Connect</h3>
+<ul>
+  <li>Open to collaboration & learning</li>
+</ul>
+
+</td>
+</tr>
+</table>
+
+</div>
+
 
 ## 🌐 Socials:
 [![Bluesky](https://img.shields.io/badge/bluesky-0285FF?style=for-the-badge&logo=bluesky&logoColor=%23FFFFFF)](https://bsky.app/profile/amandesignser) [![Facebook](https://img.shields.io/badge/Facebook-%231877F2.svg?logo=Facebook&logoColor=white)](https://facebook.com/amandesignser) [![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/amandesignser) [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/amandesignser) [![Pinterest](https://img.shields.io/badge/Pinterest-%23E60023.svg?logo=Pinterest&logoColor=white)](https://pinterest.com/amandesignser) [![Reddit](https://img.shields.io/badge/Reddit-%23FF4500.svg?logo=Reddit&logoColor=white)](https://reddit.com/user/amandesignser) [![X](https://img.shields.io/badge/X-black.svg?logo=X&logoColor=white)](https://x.com/amandesignser) [![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?logo=YouTube&logoColor=white)](https://youtube.com/@amandesignser) [![Codepen](https://img.shields.io/badge/Codepen-000000?logo=codepen&logoColor=white)](https://codepen.io/amandesignser) <a href="https://amandesignser.live/">
