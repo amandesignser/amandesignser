@@ -1,49 +1,87 @@
-# 💫 About Me:
-👋 Hi, I'm Aman  <br><br>💻 Frontend Developer | UI/UX Designer  <br>🎨 Turning ideas into clean, responsive, and user-friendly interfaces  <br><br>🚀 Skills & Tools  <br>- HTML, CSS, JavaScript  <br>- Tailwind CSS, Figma  <br>- Responsive UI / UX Design  <br><br>📚 Currently Learning  <br>- Advanced JavaScript  <br>- React.js  <br>- Backend Basics  <br><br>🔥 What I Do  <br>- Build modern web UIs  <br>- Design clean and minimal layouts  <br>- Learn by building real projects  <br><br>📫 Let's Connect  <br>- Open to collaboration & learning  
-
-<!-- ABOUT ME MODAL STYLE -->
+<!-- PREMIUM ABOUT ME CARD -->
 <div align="center">
 
 <table>
 <tr>
-<td width="700" style="padding:20px; border-radius:14px; border:1px solid #30363d; background-color:#0d1117;">
+<td width="820" style="
+  padding:28px;
+  border-radius:20px;
+  border:1.5px solid #ff4d4d;
+  background: linear-gradient(145deg, #0d1117, #0f172a);
+  color:#c9d1d9;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+">
 
-<h2 align="center">💫 About Me</h2>
+<h2 align="center" style="
+  font-size:30px;
+  color:#ff4d4d;
+  margin-bottom:10px;
+">
+💫 About Me
+</h2>
 
-<p align="center">
-👋 Hi, I'm <b>Aman</b><br><br>
-
-💻 <b>Frontend Developer | UI/UX Designer</b><br>
-🎨 Turning ideas into clean, responsive, and user-friendly interfaces
+<p align="center" style="
+  font-size:16px;
+  color:#8b949e;
+">
+👋 Hi, I'm <span style="color:#58a6ff; font-weight:600;">Aman</span>
 </p>
 
-<hr>
+<p align="center" style="
+  font-size:18px;
+  color:#e6edf3;
+  font-weight:600;
+">
+💻 Frontend Developer | UI/UX Designer
+</p>
 
-<h3>🚀 Skills & Tools</h3>
-<ul>
-  <li>HTML, CSS, JavaScript</li>
-  <li>Tailwind CSS, Figma</li>
-  <li>Responsive UI / UX Design</li>
+<p align="center" style="
+  font-size:15px;
+  color:#a5b4fc;
+  margin-bottom:20px;
+">
+🎨 Turning ideas into clean, responsive & user-friendly interfaces
+</p>
+
+<hr style="border:0.5px solid #30363d; margin:20px 0;">
+
+<h3 style="color:#22c55e; font-size:20px;">🚀 Skills & Tools</h3>
+<ul style="font-size:15px; color:#c9d1d9;">
+  <li><span style="color:#facc15;">HTML</span>, <span style="color:#38bdf8;">CSS</span>, <span style="color:#f97316;">JavaScript</span></li>
+  <li><span style="color:#06b6d4;">Tailwind CSS</span>, <span style="color:#a78bfa;">Figma</span></li>
+  <li style="color:#93c5fd;">Responsive UI / UX Design</li>
 </ul>
 
-<h3>📚 Currently Learning</h3>
-<ul>
-  <li>Advanced JavaScript</li>
-  <li>React.js</li>
-  <li>Backend Basics</li>
+<h3 style="color:#f472b6; font-size:20px;">📚 Currently Learning</h3>
+<ul style="font-size:15px;">
+  <li style="color:#fbbf24;">Advanced JavaScript</li>
+  <li style="color:#61dafb;">React.js</li>
+  <li style="color:#fb7185;">Backend Basics</li>
 </ul>
 
-<h3>🔥 What I Do</h3>
-<ul>
-  <li>Build modern web UIs</li>
-  <li>Design clean and minimal layouts</li>
-  <li>Learn by building real projects</li>
+<h3 style="color:#fb923c; font-size:20px;">🔥 What I Do</h3>
+<ul style="font-size:15px;">
+  <li style="color:#e5e7eb;">Build modern web UIs</li>
+  <li style="color:#c084fc;">Design clean & minimal layouts</li>
+  <li style="color:#34d399;">Learn by building real projects</li>
 </ul>
 
-<h3>📫 Let's Connect</h3>
-<ul>
-  <li>Open to collaboration & learning</li>
-</ul>
+<hr style="border:0.5px solid #30363d; margin:20px 0;">
+
+<p align="center" style="
+  font-size:16px;
+  color:#58a6ff;
+  font-weight:600;
+">
+📫 Let's Connect
+</p>
+
+<p align="center" style="
+  font-size:14px;
+  color:#8b949e;
+">
+Open to collaboration & learning 🚀
+</p>
 
 </td>
 </tr>
