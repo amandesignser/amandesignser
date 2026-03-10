@@ -1,4 +1,4 @@
-# 💫 About Me:
+# 💫 About Me :
 👋 Hi, I'm Aman  <br><br>💻 Frontend Developer | UI/UX Designer  <br>🎨 Turning ideas into clean, responsive, and user-friendly interfaces  <br><br>🚀 Skills & Tools  <br>- HTML, CSS, JavaScript  <br>- Tailwind CSS, Figma  <br>- Responsive UI / UX Design  <br><br>📚 Currently Learning  <br>- Advanced JavaScript  <br>- React.js  <br>- Backend Basics  <br><br>🔥 What I Do  <br>- Build modern web UIs  <br>- Design clean and minimal layouts  <br>- Learn by building real projects  <br><br>📫 Let's Connect  <br>- Open to collaboration & learning
 
 ## 🌐 Socials:
